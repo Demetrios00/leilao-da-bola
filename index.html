@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Leilão da Bola</title>
-<meta name="description" content="Jogo de leilão de futebol: monte um time com $100 contra 15 técnicos, escolha entre 10 ligas, troque, escale e dispute 3 temporadas.">
+<meta name="description" content="Jogo de leilão de futebol: monte um time com $100 contra até 19 técnicos, escolha entre 10 ligas, troque, contrate do exterior e dispute até 5 temporadas.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600&display=swap">
@@ -247,6 +247,25 @@ td.pts{font-weight:700;font-family:var(--display);font-size:18px}
 .scorers li{display:flex;gap:8px;align-items:center}
 .scorers .g{margin-left:auto;font-family:var(--display);font-size:20px;font-weight:700}
 
+.opt{margin:0 0 14px}
+.opt>span{display:block;font-weight:600;font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg button{flex:1;min-width:44px;background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:8px 6px;font-family:var(--display);font-size:22px;font-weight:700;line-height:1.1}
+.seg button.on{border-color:var(--accent);background:var(--lead);color:var(--accent)}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.filters select{flex:1;min-width:130px;background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:9px 10px;color:var(--fg)}
+.extgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:16px;align-items:start}
+.rowp.x{grid-template-columns:auto minmax(0,1fr) auto auto}
+.price{font-family:var(--display);font-size:22px;font-weight:700;color:var(--accent);min-width:48px;text-align:right}
+.lgmini{display:inline-flex;gap:6px;align-items:center}
+.scroll{max-height:560px;overflow-y:auto;padding-right:4px}
+.mode{display:flex;gap:8px;flex-wrap:wrap}
+.mode button{flex:1;min-width:140px;text-align:left;background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.mode button b{display:block;font-family:var(--display);font-size:20px}
+.mode button small{color:var(--muted)}
+.mode button.on{border-color:var(--accent);background:var(--lead)}
+.hist{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.hist span{background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:4px 10px;font-size:13px}
 #toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--fg);color:var(--bg);padding:10px 18px;border-radius:999px;font-weight:600;opacity:0;pointer-events:none;transition:.25s;z-index:50;max-width:90vw;text-align:center}
 #toast.on{opacity:1;transform:translate(-50%,0)}
 
@@ -256,7 +275,7 @@ td.pts{font-weight:700;font-family:var(--display);font-size:18px}
 }
 @media (max-width:860px){
   .hero{grid-template-columns:minmax(0,1fr)}
-  .market,.lineup,.champ{grid-template-columns:minmax(0,1fr)}
+  .market,.lineup,.champ,.extgrid{grid-template-columns:minmax(0,1fr)}
 }
 @media (max-width:640px){
   .game{grid-template-columns:minmax(0,1fr)}
@@ -287,1023 +306,1819 @@ td.pts{font-weight:700;font-family:var(--display);font-size:18px}
 <script>
 window.LIGAS = window.LIGAS || [];
 window.LIGAS.push({
-  id: 'br', nome: 'Brasileirão Série A', pais: 'Brasil', bandeira: '🇧🇷',
-  clubes: [
-    ['FLA','Flamengo','#c8102e'], ['PAL','Palmeiras','#006437'], ['BOT','Botafogo','#1a1a1a'], ['CRU','Cruzeiro','#003a8f'],
-    ['COR','Corinthians','#2b2b2b'], ['SAO','São Paulo','#e2001a'], ['FLU','Fluminense','#7a0d2a'], ['VAS','Vasco','#3a3a3a'],
-    ['INT','Internacional','#e30613'], ['GRE','Grêmio','#0d80bf'], ['CAM','Atlético-MG','#111111'], ['BAH','Bahia','#0057b8'],
-    ['FOR','Fortaleza','#00428c'], ['SAN','Santos','#5a5a5a'], ['BRA','Bragantino','#d6001c'], ['MIR','Mirassol','#f2b705'],
-    ['VIT','Vitória','#b3001b'], ['JUV','Juventude','#00923f'], ['SPO','Sport','#d4001a'], ['CEA','Ceará','#222222']
-  ],
+  id: 'br', nome: "Brasileirão Série A", pais: "Brasil", bandeira: '',
+  clubes: [["PAL","Palmeiras","#006437"],["FLA","Flamengo","#c8102e"],["CRU","Cruzeiro","#1a4fa3"],["COR","Corinthians","#4a4a4a"],["VAS","Vasco","#2b2b2b"],["BOT","Botafogo","#555555"],["BAH","Bahia","#1d59a8"],["FLU","Fluminense","#8a1538"],["SAN","Santos","#8c8c8c"],["CAM","Atlético-MG","#444444"],["CAP","Athletico-PR","#c1121f"],["RBB","Bragantino","#d32f2f"],["SAO","São Paulo","#e30613"],["GRE","Grêmio","#0d80bf"],["INT","Internacional","#e5050f"],["VIT","Vitória","#c8102e"],["CFC","Coritiba","#0b6b3a"],["MIR","Mirassol","#f2b705"],["REM","Remo","#1c3f94"],["CHA","Chapecoense","#1a8a3c"]],
   jogadores: [
-    // Goleiros
-    ['Rossi','GOL',78,'FLA'], ['Weverton','GOL',78,'PAL'], ['Cássio','GOL',76,'CRU'], ['Hugo Souza','GOL',77,'COR'],
-    ['Fábio','GOL',74,'FLU'], ['John','GOL',75,'BOT'], ['Léo Jardim','GOL',77,'VAS'], ['Rafael','GOL',74,'SAO'],
-    ['Rochet','GOL',75,'INT'], ['Volpi','GOL',73,'GRE'], ['Everson','GOL',75,'CAM'], ['Ronaldo','GOL',72,'BAH'],
-    ['João Ricardo','GOL',73,'FOR'], ['Gabriel Brazão','GOL',72,'SAN'], ['Cleiton','GOL',72,'BRA'], ['Walter','GOL',72,'MIR'],
-    ['Lucas Arcanjo','GOL',72,'VIT'], ['Jandrei','GOL',70,'JUV'],
-    // Zagueiros
-    ['Léo Pereira','ZAG',79,'FLA'], ['Danilo','ZAG',76,'FLA'], ['Fabrício Bruno','ZAG',77,'CRU'], ['Villalba','ZAG',73,'CRU'],
-    ['Gustavo Gómez','ZAG',78,'PAL'], ['Murilo','ZAG',77,'PAL'], ['Alexander Barboza','ZAG',76,'BOT'], ['Bruno Fuchs','ZAG',75,'BOT'],
-    ['Félix Torres','ZAG',75,'COR'], ['Gustavo Henrique','ZAG',74,'COR'], ['Lucas Beraldo','ZAG',75,'SAO'], ['Arboleda','ZAG',75,'SAO'],
-    ['Ruan Tressoldi','ZAG',72,'SAO'], ['Thiago Silva','ZAG',77,'FLU'], ['Ignácio','ZAG',73,'FLU'], ['João Victor','ZAG',74,'VAS'],
-    ['Vitão','ZAG',72,'INT'], ['Kannemann','ZAG',76,'GRE'], ['Viery','ZAG',72,'GRE'], ['Lyanco','ZAG',74,'CAM'],
-    ['Junior Alonso','ZAG',74,'CAM'], ['David Duarte','ZAG',73,'BAH'], ['Gabriel Xavier','ZAG',71,'BAH'], ['Brítez','ZAG',73,'FOR'],
-    ['Kuscevic','ZAG',72,'FOR'], ['Gil','ZAG',72,'SAN'], ['Luan Peres','ZAG',73,'SAN'], ['Eduardo Santos','ZAG',70,'BRA'],
-    ['Camutanga','ZAG',70,'VIT'], ['Rafael Thyere','ZAG',70,'SPO'],
-    // Laterais e alas
-    ['Ayrton Lucas','LAT',77,'FLA'], ['Varela','LAT',74,'FLA'], ['Piquerez','LAT',78,'PAL'], ['Marcos Rocha','LAT',73,'PAL'],
-    ['Vitinho','LAT',73,'BOT'], ['Cuiabano','LAT',72,'BOT'], ['Kaiki Bruno','LAT',72,'CRU'], ['William','LAT',72,'CRU'],
-    ['Matheuzinho','LAT',72,'COR'], ['Wendell','LAT',75,'SAO'], ['Samuel Xavier','LAT',72,'FLU'], ['Gabriel Fuentes','LAT',73,'FLU'],
-    ['Paulo Henrique','LAT',73,'VAS'], ['Puma Rodríguez','LAT',73,'VAS'], ['Bernabei','LAT',72,'INT'], ['Mayk','LAT',71,'GRE'],
-    ['Guilherme Arana','LAT',77,'CAM'], ['Luciano Juba','LAT',76,'BAH'], ['Gilberto','LAT',73,'BAH'], ['Tinga','LAT',73,'FOR'],
-    ['Escobar','LAT',71,'SAN'], ['Juninho Capixaba','LAT',73,'BRA'], ['Reinaldo','LAT',70,'MIR'], ['Ramon','LAT',70,'VIT'],
-    // Meias e volantes
-    ['Arrascaeta','MEI',85,'FLA'], ['De la Cruz','MEI',82,'FLA'], ['Gerson','MEI',82,'FLA'], ['Pulgar','MEI',75,'FLA'],
-    ['Raphael Veiga','MEI',79,'PAL'], ['Richard Ríos','MEI',77,'PAL'], ['Aníbal Moreno','MEI',76,'PAL'], ['Marlon Freitas','MEI',76,'BOT'],
-    ['Gregore','MEI',74,'BOT'], ['Matheus Pereira','MEI',81,'CRU'], ['Christian','MEI',75,'CRU'], ['Rodrigo Garro','MEI',79,'COR'],
-    ['Maycon','MEI',72,'COR'], ['Raniele','MEI',72,'COR'], ['Oscar','MEI',77,'SAO'], ['Bobadilla','MEI',73,'SAO'],
-    ['Martinelli','MEI',74,'FLU'], ['Philippe Coutinho','MEI',79,'VAS'], ['Alan Patrick','MEI',77,'INT'], ['Villasanti','MEI',75,'GRE'],
-    ['Cristaldo','MEI',74,'GRE'], ['Scarpa','MEI',76,'CAM'], ['Everton Ribeiro','MEI',76,'BAH'], ['Jean Lucas','MEI',73,'BAH'],
-    ['Cauly','MEI',74,'BAH'], ['Rincón','MEI',72,'SAN'], ['Nenê','MEI',70,'JUV'], ['Mandaca','MEI',70,'JUV'],
-    ['Lucas Lima','MEI',70,'SPO'], ['Lucas Mugni','MEI',70,'CEA'], ['Richardson','MEI',70,'CEA'], ['Neto Moura','MEI',70,'MIR'],
-    // Atacantes e pontas
-    ['Pedro','ATA',80,'FLA'], ['Bruno Henrique','ATA',78,'FLA'], ['Luiz Araújo','ATA',77,'FLA'], ['Gabigol','ATA',78,'CRU'],
-    ['Kaio Jorge','ATA',76,'CRU'], ['Vitor Roque','ATA',78,'PAL'], ['Paulinho','ATA',77,'PAL'], ['Savarino','ATA',77,'BOT'],
-    ['Arthur Cabral','ATA',75,'BOT'], ['Memphis Depay','ATA',80,'COR'], ['Yuri Alberto','ATA',78,'COR'], ['Calleri','ATA',78,'SAO'],
-    ['Lucas Moura','ATA',76,'SAO'], ['Germán Cano','ATA',77,'FLU'], ['Jhon Arias','ATA',78,'FLU'], ['Vegetti','ATA',77,'VAS'],
-    ['Braithwaite','ATA',75,'GRE'], ['Hulk','ATA',78,'CAM'], ['Neymar','ATA',80,'SAN'], ['Borré','ATA',74,'INT'],
-    ['Eduardo Sasha','ATA',73,'BRA'], ['Gabriel Taliari','ATA',70,'JUV'], ['Pedro Lima','ATA',70,'SPO'], ['Gustavo Coutinho','ATA',70,'SPO'],
-    ['Aylon','ATA',70,'CEA'], ['Pulga','ATA',70,'CEA'], ['Negueba','ATA',71,'MIR'], ['Janderson','ATA',70,'VIT']
+    ["Hugo Souza","GOL",82,"COR"],
+    ["Gabriel Brazão","GOL",82,"SAN"],
+    ["Agustín Rossi","GOL",82,"FLA"],
+    ["Otávio","GOL",78,"CRU"],
+    ["Carlos Miguel","GOL",81,"PAL"],
+    ["Pedro Morisco","GOL",79,"CFC"],
+    ["Léo Jardim","GOL",80,"VAS"],
+    ["Andrew","GOL",77,"FLA"],
+    ["Mycael","GOL",76,"CAP"],
+    ["Gabriel Batista","GOL",76,"BOT"],
+    ["Lucas Arcanjo","GOL",76,"VIT"],
+    ["Gabriel Delfim","GOL",74,"CAM"],
+    ["Anthoni","GOL",74,"INT"],
+    ["Matheus Cunha","GOL",73,"INT"],
+    ["Warleson","GOL",72,"BOT"],
+    ["Ronaldo","GOL",72,"BAH"],
+    ["João Paulo","GOL",73,"SAN"],
+    ["Guido Herrera","GOL",72,"BAH"],
+    ["Carlos Coronel","GOL",70,"SAO"],
+    ["Gabriel Grando","GOL",70,"GRE"],
+    ["Kauê","GOL",66,"COR"],
+    ["Pedro Rangel","GOL",68,"CFC"],
+    ["Daniel Fuzato","GOL",67,"VAS"],
+    ["Tiago Volpi","GOL",69,"RBB"],
+    ["Léo Aragão","GOL",67,"CRU"],
+    ["Weverton","GOL",68,"GRE"],
+    ["Ivan","GOL",66,"REM"],
+    ["Pedro Cobra","GOL",62,"CAM"],
+    ["Arthur Dias","ZAG",78,"CAP"],
+    ["Léo Ortiz","ZAG",79,"FLA"],
+    ["Jonathan Jesus","ZAG",78,"CRU"],
+    ["Robert Renan","ZAG",79,"VAS"],
+    ["Léo Pereira","ZAG",79,"FLA"],
+    ["Vitão","ZAG",78,"FLA"],
+    ["Fabrício Bruno","ZAG",78,"CRU"],
+    ["Carlos Cuesta","ZAG",79,"VAS"],
+    ["Gustavo Marques","ZAG",76,"RBB"],
+    ["Gabriel Pereira","ZAG",75,"VAS"],
+    ["Murilo","ZAG",74,"PAL"],
+    ["Arthur Chaves","ZAG",74,"BOT"],
+    ["Juan Pablo Freytes","ZAG",74,"FLU"],
+    ["João Ananias","ZAG",71,"SAN"],
+    ["Gustavo Martins","ZAG",74,"GRE"],
+    ["Alexander Barboza","ZAG",75,"PAL"],
+    ["Lyanco","ZAG",74,"CAM"],
+    ["Bruno Fuchs","ZAG",73,"PAL"],
+    ["Luis Benedetti","ZAG",70,"PAL"],
+    ["João Pedro Tchoca","ZAG",71,"COR"],
+    ["Lucas Freitas","ZAG",73,"VAS"],
+    ["Ruan","ZAG",73,"CAM"],
+    ["Carlos Terán","ZAG",73,"CAP"],
+    ["Alix","ZAG",73,"RBB"],
+    ["Victor Gabriel","ZAG",71,"INT"],
+    ["Ignácio","ZAG",72,"FLU"],
+    ["Guzmán Rodríguez","ZAG",72,"RBB"],
+    ["Jemmes","ZAG",71,"FLU"],
+    ["Luciano Juba","LAT",80,"BAH"],
+    ["Joaquín Piquerez","LAT",78,"PAL"],
+    ["Cuiabano","LAT",78,"VAS"],
+    ["Agustín Giay","LAT",76,"PAL"],
+    ["Renan Lodi","LAT",78,"CAM"],
+    ["Matheuzinho","LAT",77,"COR"],
+    ["Vitinho","LAT",77,"BOT"],
+    ["Matheus Bidu","LAT",76,"COR"],
+    ["Lucas Esquivel","LAT",76,"CAP"],
+    ["Juninho Capixaba","LAT",76,"RBB"],
+    ["Alexandro Bernabei","LAT",78,"INT"],
+    ["Gabriel Menino","LAT",75,"SAN"],
+    ["Bruno Gomes","LAT",75,"INT"],
+    ["Khellven","LAT",74,"PAL"],
+    ["Lucas Piton","LAT",74,"VAS"],
+    ["Guilherme Arana","LAT",74,"FLU"],
+    ["Emerson Royal","LAT",73,"FLA"],
+    ["Natanael","LAT",73,"CAM"],
+    ["Arthur Gabriel","LAT",70,"PAL"],
+    ["Ayrton Lucas","LAT",72,"FLA"],
+    ["Gabriel Rojas","LAT",72,"CRU"],
+    ["Pedro Lima","LAT",69,"SAO"],
+    ["Igor Formiga","LAT",72,"MIR"],
+    ["Angelo Preciado","LAT",71,"CAM"],
+    ["Gastón Benavídez","LAT",72,"CAP"],
+    ["Agustín Sant'Anna","LAT",71,"RBB"],
+    ["Marlon","LAT",71,"GRE"],
+    ["Kauã Moraes","LAT",67,"CRU"],
+    ["Danilo","MEI",84,"BOT"],
+    ["Lucas Paquetá","MEI",83,"FLA"],
+    ["Breno Bidon","MEI",81,"COR"],
+    ["Mauricio","MEI",81,"PAL"],
+    ["Martinelli","MEI",81,"FLU"],
+    ["Gerson","MEI",78,"CRU"],
+    ["André","MEI",77,"COR"],
+    ["Jorge Carrascal","MEI",80,"FLA"],
+    ["Jean Lucas","MEI",80,"BAH"],
+    ["Hércules","MEI",80,"FLU"],
+    ["Andreas Pereira","MEI",79,"PAL"],
+    ["Evertton Araújo","MEI",79,"FLA"],
+    ["Giorgian de Arrascaeta","MEI",80,"FLA"],
+    ["Matheus Pereira","MEI",79,"CRU"],
+    ["Marcos Antônio","MEI",78,"SAO"],
+    ["Gabriel Bontempo","MEI",77,"SAN"],
+    ["Rodrigo Garro","MEI",78,"COR"],
+    ["Nicolás Acevedo","MEI",79,"BAH"],
+    ["Rodrigo Nestor","MEI",77,"BAH"],
+    ["Zé Lucas","MEI",73,"CRU"],
+    ["Santiago Sosa","MEI",76,"VAS"],
+    ["Cristian Medina","MEI",76,"BOT"],
+    ["Victor Hugo","MEI",74,"CAM"],
+    ["João Cruz","MEI",73,"CAP"],
+    ["Damián Bobadilla","MEI",76,"SAO"],
+    ["Neymar","MEI",78,"SAN"],
+    ["Alan Lescano","MEI",76,"VAS"],
+    ["Nicolás Cruz","MEI",75,"FLA"],
+    ["Caio Alexandre","MEI",75,"BAH"],
+    ["Dudu","MEI",72,"CAP"],
+    ["Cauan Barros","MEI",77,"VAS"],
+    ["Rodriguinho","MEI",77,"RBB"],
+    ["Juan Nardoni","MEI",77,"GRE"],
+    ["Marlon Freitas","MEI",75,"PAL"],
+    ["Matheus Henrique","MEI",74,"CRU"],
+    ["Erick Noriega","MEI",74,"GRE"],
+    ["Emiliano Martínez","MEI",73,"PAL"],
+    ["Ramon Rique","MEI",70,"VAS"],
+    ["Erick","MEI",73,"BAH"],
+    ["Luciano Acosta","MEI",74,"FLU"],
+    ["Miguelito","MEI",72,"SAN"],
+    ["Alexsander","MEI",73,"CAM"],
+    ["Kevin Castaño","MEI",73,"CAM"],
+    ["Juan Portilla","MEI",73,"CAP"],
+    ["Fabinho","MEI",73,"RBB"],
+    ["Ignacio Sosa","MEI",73,"RBB"],
+    ["Gustavo Scarpa","MEI",74,"CAM"],
+    ["Bruno Zapelli","MEI",73,"CAP"],
+    ["Vitor Roque","ATA",83,"PAL"],
+    ["José Manuel López","ATA",84,"PAL"],
+    ["Kaio Jorge","ATA",82,"CRU"],
+    ["Yuri Alberto","ATA",82,"COR"],
+    ["Pedro","ATA",82,"FLA"],
+    ["Samuel Lino","ATA",81,"FLA"],
+    ["Kevin Viveros","ATA",81,"CAP"],
+    ["Jhon Arias","ATA",80,"PAL"],
+    ["Andrés Gómez","ATA",80,"VAS"],
+    ["Álvaro Montoro","ATA",76,"BOT"],
+    ["Erick Pulga","ATA",79,"BAH"],
+    ["Keny Arroyo","ATA",75,"CRU"],
+    ["John Kennedy","ATA",78,"FLU"],
+    ["Benjamín Rollheiser","ATA",78,"SAN"],
+    ["Luis Sinisterra","ATA",80,"CRU"],
+    ["Ramón Sosa","ATA",77,"PAL"],
+    ["Gonzalo Plata","ATA",77,"FLA"],
+    ["Luciano Rodríguez","ATA",77,"CRU"],
+    ["Arthur Cabral","ATA",77,"BOT"],
+    ["Agustín Canobbio","ATA",77,"FLU"],
+    ["Ruan Pablo","ATA",73,"BAH"],
+    ["Jefferson Savarino","ATA",76,"FLU"],
+    ["Tomás Cuello","ATA",76,"CAM"],
+    ["Mateo Cassierra","ATA",76,"CAM"],
+    ["Lucas Barbosa","ATA",76,"RBB"],
+    ["Artur","ATA",76,"SAO"],
+    ["Francis Amuzu","ATA",76,"GRE"],
+    ["Isidro Pitta","ATA",76,"RBB"],
+    ["Luiz Araújo","ATA",75,"FLA"],
+    ["Gabriel Pec","ATA",75,"CRU"],
+    ["Alejo Veliz","ATA",75,"BAH"],
+    ["Tetê","ATA",75,"GRE"],
+    ["Johan Carbonero","ATA",75,"INT"],
+    ["Álvaro Barreal","ATA",77,"SAN"],
+    ["Paulinho","ATA",77,"PAL"],
+    ["Nuno Moreira","ATA",77,"VAS"],
+    ["Memphis Depay","ATA",75,"COR"],
+    ["Gui Negão","ATA",71,"COR"],
+    ["Facundo Colidio","ATA",74,"VAS"],
+    ["Matheus Martins","ATA",74,"BOT"],
+    ["Riquelme","ATA",71,"FLU"],
+    ["Rodrigo Castillo","ATA",74,"FLU"],
+    ["Everton","ATA",74,"SAN"],
+    ["Carlos Vinícius","ATA",75,"GRE"],
+    ["Joaquín Lavega","ATA",73,"CFC"],
+    ["Lucas Ronier","ATA",76,"CFC"],
+    ["Alan Minda","ATA",76,"CAM"],
+    ["Kaio César","ATA",72,"COR"]
   ]
 });
 
 window.LIGAS = window.LIGAS || [];
 window.LIGAS.push({
-  id: 'en', nome: 'Premier League', pais: 'Inglaterra', bandeira: '\u{1F3F4}\u{E0067}\u{E0062}\u{E0065}\u{E006E}\u{E0067}\u{E007F}',
-  clubes: [
-    ['MCI','Manchester City','#6cabdd'], ['ARS','Arsenal','#ef0107'], ['LIV','Liverpool','#c8102e'], ['CHE','Chelsea','#034694'],
-    ['MUN','Manchester United','#da291c'], ['TOT','Tottenham','#132257'], ['NEW','Newcastle','#241f20'], ['AVL','Aston Villa','#670e36'],
-    ['BHA','Brighton','#0057b8'], ['CRY','Crystal Palace','#1b458f'], ['BRE','Brentford','#e30613'], ['FUL','Fulham','#1f1f1f'],
-    ['WHU','West Ham','#7a263a'], ['NFO','Nottingham Forest','#dd0000'], ['BOU','Bournemouth','#b50e12'], ['EVE','Everton','#003399'],
-    ['WOL','Wolves','#fdb913'], ['LEE','Leeds United','#ffcd00'], ['BUR','Burnley','#6c1d45'], ['SUN','Sunderland','#eb172b']
-  ],
+  id: 'en', nome: "Premier League", pais: "Inglaterra", bandeira: '',
+  clubes: [["MCI","Manchester City","#6cabdd"],["ARS","Arsenal","#ef0107"],["CHE","Chelsea","#034694"],["LIV","Liverpool","#c8102e"],["MUN","Manchester United","#da291c"],["TOT","Tottenham","#132257"],["NEW","Newcastle","#303030"],["BHA","Brighton","#0057b8"],["BRE","Brentford","#e30613"],["AVL","Aston Villa","#670e36"],["BOU","Bournemouth","#b50e12"],["CRY","Crystal Palace","#1b458f"],["NFO","Nottingham Forest","#dd0000"],["SUN","Sunderland","#eb172b"],["LEE","Leeds","#2a5db0"],["EVE","Everton","#003399"],["FUL","Fulham","#444444"],["IPS","Ipswich","#0e4ea0"],["COV","Coventry","#69b7e3"],["HUL","Hull City","#f5a31a"]],
   jogadores: [
-    // GOL (18)
-    ['Raya','GOL',83,'ARS'], ['Alisson','GOL',85,'LIV'], ['Donnarumma','GOL',85,'MCI'], ['Robert Sánchez','GOL',74,'CHE'],
-    ['Lammens','GOL',75,'MUN'], ['Pope','GOL',79,'NEW'], ['Vicario','GOL',77,'TOT'], ['Emiliano Martínez','GOL',82,'AVL'],
-    ['Dean Henderson','GOL',78,'CRY'], ['Verbruggen','GOL',74,'BHA'], ['Kelleher','GOL',76,'BRE'], ['Leno','GOL',77,'FUL'],
-    ['Sels','GOL',76,'NFO'], ['Petrović','GOL',75,'BOU'], ['Pickford','GOL',80,'EVE'], ['José Sá','GOL',74,'WOL'],
-    ['Dúbravka','GOL',72,'BUR'], ['Roefs','GOL',75,'SUN'],
-    // ZAG (30)
-    ['Saliba','ZAG',87,'ARS'], ['Gabriel','ZAG',85,'ARS'], ['Van Dijk','ZAG',86,'LIV'], ['Konaté','ZAG',82,'LIV'],
-    ['Gvardiol','ZAG',84,'MCI'], ['Rúben Dias','ZAG',83,'MCI'], ['Colwill','ZAG',80,'CHE'], ['Lisandro Martínez','ZAG',80,'MUN'],
-    ['De Ligt','ZAG',79,'MUN'], ['Botman','ZAG',82,'NEW'], ['Van de Ven','ZAG',83,'TOT'], ['Cristian Romero','ZAG',84,'TOT'],
-    ['Pau Torres','ZAG',80,'AVL'], ['Konsa','ZAG',80,'AVL'], ['Lacroix','ZAG',79,'CRY'], ['Van Hecke','ZAG',79,'BHA'],
-    ['Nathan Collins','ZAG',76,'BRE'], ['Bassey','ZAG',75,'FUL'], ['Andersen','ZAG',77,'FUL'], ['Todibo','ZAG',77,'WHU'],
-    ['Murillo','ZAG',80,'NFO'], ['Milenković','ZAG',77,'NFO'], ['Zabarnyi','ZAG',76,'BOU'], ['Senesi','ZAG',77,'BOU'],
-    ['Tarkowski','ZAG',79,'EVE'], ['Branthwaite','ZAG',80,'EVE'], ['Agbadou','ZAG',73,'WOL'], ['Rodon','ZAG',75,'LEE'],
-    ['Alderete','ZAG',74,'SUN'], ['Maxime Estève','ZAG',71,'BUR'],
-    // LAT (24)
-    ['Ben White','LAT',82,'ARS'], ['Calafiori','LAT',83,'ARS'], ['Robertson','LAT',80,'LIV'], ['Matheus Nunes','LAT',80,'MCI'],
-    ['Cucurella','LAT',82,'CHE'], ['Reece James','LAT',81,'CHE'], ['Dalot','LAT',78,'MUN'], ['Livramento','LAT',77,'NEW'],
-    ['Pedro Porro','LAT',80,'TOT'], ['Matty Cash','LAT',80,'AVL'], ['Muñoz','LAT',80,'CRY'], ['Estupiñán','LAT',76,'BHA'],
-    ['Rico Henry','LAT',75,'BRE'], ['Kayode','LAT',73,'BRE'], ['Antonee Robinson','LAT',75,'FUL'], ['Wan-Bissaka','LAT',74,'WHU'],
-    ['Neco Williams','LAT',78,'NFO'], ['Aina','LAT',75,'NFO'], ['Álex Jiménez','LAT',77,'BOU'], ['Mykolenko','LAT',72,'EVE'],
-    ['Hugo Bueno','LAT',69,'WOL'], ['Bogle','LAT',72,'LEE'], ['Kyle Walker','LAT',74,'BUR'], ['Trai Hume','LAT',70,'SUN'],
-    // MEI (32)
-    ['Rice','MEI',87,'ARS'], ['Ødegaard','MEI',86,'ARS'], ['Eze','MEI',81,'ARS'], ['Mac Allister','MEI',84,'LIV'],
-    ['Szoboszlai','MEI',84,'LIV'], ['Wirtz','MEI',85,'LIV'], ['Gravenberch','MEI',84,'LIV'], ['Rodri','MEI',89,'MCI'],
-    ['Foden','MEI',85,'MCI'], ['Bernardo Silva','MEI',85,'MCI'], ['Reijnders','MEI',82,'MCI'], ['Cole Palmer','MEI',86,'CHE'],
-    ['Enzo Fernández','MEI',83,'CHE'], ['Caicedo','MEI',84,'CHE'], ['Bruno Fernandes','MEI',85,'MUN'], ['Mainoo','MEI',77,'MUN'],
-    ['Bruno Guimarães','MEI',84,'NEW'], ['Tonali','MEI',82,'NEW'], ['Joelinton','MEI',79,'NEW'], ['Maddison','MEI',80,'TOT'],
-    ['Xavi Simons','MEI',80,'TOT'], ['Tielemans','MEI',79,'AVL'], ['Wharton','MEI',80,'CRY'], ['Baleba','MEI',76,'BHA'],
-    ['Lukić','MEI',74,'FUL'], ['Soucek','MEI',73,'WHU'], ['Gibbs-White','MEI',80,'NFO'], ['James Garner','MEI',77,'EVE'],
-    ['João Gomes','MEI',76,'WOL'], ['Ampadu','MEI',74,'LEE'], ['Cullen','MEI',70,'BUR'], ['Xhaka','MEI',79,'SUN'],
-    // ATA (28)
-    ['Saka','ATA',88,'ARS'], ['Martinelli','ATA',81,'ARS'], ['Gyökeres','ATA',84,'ARS'], ['Salah','ATA',89,'LIV'],
-    ['Isak','ATA',85,'LIV'], ['Ekitiké','ATA',82,'LIV'], ['Haaland','ATA',92,'MCI'], ['Doku','ATA',82,'MCI'],
-    ['Marmoush','ATA',81,'MCI'], ['Pedro Neto','ATA',80,'CHE'], ['João Pedro','ATA',81,'CHE'], ['Estêvão','ATA',79,'CHE'],
-    ['Mbeumo','ATA',82,'MUN'], ['Cunha','ATA',81,'MUN'], ['Sesko','ATA',79,'MUN'], ['Gordon','ATA',82,'NEW'],
-    ['Woltemade','ATA',79,'NEW'], ['Kulusevski','ATA',78,'TOT'], ['Brennan Johnson','ATA',78,'TOT'], ['Watkins','ATA',80,'AVL'],
-    ['Mateta','ATA',80,'CRY'], ['Ismaïla Sarr','ATA',78,'CRY'], ['Mitoma','ATA',77,'BHA'], ['Welbeck','ATA',75,'BHA'],
-    ['Bowen','ATA',80,'WHU'], ['Chris Wood','ATA',77,'NFO'], ['Calvert-Lewin','ATA',76,'LEE'], ['Brobbey','ATA',76,'SUN']
+    ["Gianluigi Donnarumma","GOL",90,"MCI"],
+    ["Bart Verbruggen","GOL",89,"BHA"],
+    ["Senne Lammens","GOL",88,"MUN"],
+    ["James Trafford","GOL",88,"LEE"],
+    ["Caoimhín Kelleher","GOL",88,"BRE"],
+    ["Zion Suzuki","GOL",88,"AVL"],
+    ["Robin Roefs","GOL",88,"SUN"],
+    ["Giorgi Mamardashvili","GOL",87,"LIV"],
+    ["Djordje Petrović","GOL",87,"BOU"],
+    ["Lukas Hornicek","GOL",87,"NEW"],
+    ["Mike Penders","GOL",85,"CHE"],
+    ["Carl Rushworth","GOL",86,"COV"],
+    ["Konstantinos Tzolakis","GOL",86,"HUL"],
+    ["Antonín Kinský","GOL",85,"TOT"],
+    ["Alisson","GOL",86,"LIV"],
+    ["Jordan Pickford","GOL",84,"EVE"],
+    ["Kjell Scherpen","GOL",82,"IPS"],
+    ["Emiliano Martínez","GOL",83,"CHE"],
+    ["Michele Di Gregorio","GOL",80,"BOU"],
+    ["Illan Meslier","GOL",78,"ARS"],
+    ["Bernd Leno","GOL",80,"FUL"],
+    ["Gerónimo Rulli","GOL",79,"MCI"],
+    ["Kepa Arrizabalaga","GOL",78,"ARS"],
+    ["Walter Benítez","GOL",77,"CRY"],
+    ["Michael Zetterer","GOL",77,"LEE"],
+    ["John Victor","GOL",75,"NFO"],
+    ["Matz Sels","GOL",77,"NFO"],
+    ["Gabriel Slonina","GOL",73,"CHE"],
+    ["William Saliba","ZAG",91,"ARS"],
+    ["Gabriel","ZAG",90,"ARS"],
+    ["Marc Guéhi","ZAG",90,"MCI"],
+    ["Jérémy Jacquet","ZAG",87,"LIV"],
+    ["Luka Vuskovic","ZAG",86,"BHA"],
+    ["Maxence Lacroix","ZAG",89,"CHE"],
+    ["Jan Hecke","ZAG",89,"TOT"],
+    ["Abdukodir Khusanov","ZAG",86,"MCI"],
+    ["Piero Hincapié","ZAG",87,"ARS"],
+    ["Ezri Konsa","ZAG",87,"ARS"],
+    ["Levi Colwill","ZAG",87,"CHE"],
+    ["Malick Thiaw","ZAG",87,"NEW"],
+    ["Murillo","ZAG",87,"NFO"],
+    ["Micky Ven","ZAG",89,"TOT"],
+    ["Rúben Dias","ZAG",89,"MCI"],
+    ["Lisandro Martínez","ZAG",87,"MUN"],
+    ["Leny Yoro","ZAG",85,"MUN"],
+    ["Jarrad Branthwaite","ZAG",87,"EVE"],
+    ["Ousmane Diomande","ZAG",85,"NFO"],
+    ["Cristhian Mosquera","ZAG",85,"ARS"],
+    ["Honest Ahanor","ZAG",83,"CRY"],
+    ["Tarik Muharemović","ZAG",86,"LEE"],
+    ["Sven Botman","ZAG",85,"NEW"],
+    ["Jaydee Canvot","ZAG",82,"CRY"],
+    ["Wesley Fofana","ZAG",85,"CHE"],
+    ["Sepp Berg","ZAG",85,"BRE"],
+    ["Vitor Reis","ZAG",82,"MCI"],
+    ["Josh Acheampong","ZAG",82,"CHE"],
+    ["Josko Gvardiol","LAT",89,"MCI"],
+    ["Nico O'Reilly","LAT",87,"MCI"],
+    ["Jurriën Timber","LAT",88,"ARS"],
+    ["Riccardo Calafiori","LAT",88,"ARS"],
+    ["Reece James","LAT",90,"CHE"],
+    ["Lewis Hall","LAT",86,"NEW"],
+    ["Matheus Nunes","LAT",86,"MCI"],
+    ["Jorrel Hato","LAT",83,"CHE"],
+    ["Marco Palestra","LAT",84,"CHE"],
+    ["Pedro Porro","LAT",86,"TOT"],
+    ["Tino Livramento","LAT",86,"NEW"],
+    ["Ferdi Kadioglu","LAT",85,"BHA"],
+    ["Michael Kayode","LAT",84,"BRE"],
+    ["Rayan Aït-Nouri","LAT",84,"MCI"],
+    ["Ben White","LAT",84,"ARS"],
+    ["Malo Gusto","LAT",84,"CHE"],
+    ["Milos Kerkez","LAT",84,"LIV"],
+    ["Archie Gray","LAT",81,"TOT"],
+    ["El Diouf","LAT",83,"BRE"],
+    ["Ian Maatsen","LAT",84,"AVL"],
+    ["Adrien Truffert","LAT",84,"BOU"],
+    ["Neco Williams","LAT",84,"NFO"],
+    ["Jeremie Frimpong","LAT",84,"LIV"],
+    ["Diogo Dalot","LAT",84,"MUN"],
+    ["Amar Dedić","LAT",84,"NEW"],
+    ["Maxim De Cuyper","LAT",84,"BHA"],
+    ["Keane Lewis-Potter","LAT",84,"BRE"],
+    ["Rico Lewis","LAT",81,"MCI"],
+    ["Elliot Anderson","MEI",92,"MCI"],
+    ["Enzo Fernández","MEI",92,"MCI"],
+    ["Declan Rice","MEI",92,"ARS"],
+    ["Rayan Cherki","MEI",91,"MCI"],
+    ["Cole Palmer","MEI",91,"CHE"],
+    ["Moisés Caicedo","MEI",90,"CHE"],
+    ["Dominik Szoboszlai","MEI",90,"LIV"],
+    ["Ayyoub Bouaddi","MEI",87,"MCI"],
+    ["Sandro Tonali","MEI",90,"TOT"],
+    ["Florian Wirtz","MEI",90,"LIV"],
+    ["Morgan Gibbs-White","MEI",89,"NFO"],
+    ["Martin Ødegaard","MEI",86,"ARS"],
+    ["Bruno Guimarães","MEI",89,"ARS"],
+    ["Ryan Gravenberch","MEI",89,"LIV"],
+    ["Kobbie Mainoo","MEI",87,"MUN"],
+    ["Adam Wharton","MEI",87,"CRY"],
+    ["Alexis Mac Allister","MEI",88,"LIV"],
+    ["Mateus Fernandes","MEI",87,"TOT"],
+    ["Alex Scott","MEI",88,"BOU"],
+    ["Phil Foden","MEI",88,"MCI"],
+    ["Myles Lewis-Skelly","MEI",85,"ARS"],
+    ["Johan Manzambi","MEI",86,"AVL"],
+    ["Carlos Baleba","MEI",90,"MUN"],
+    ["Martín Zubimendi","MEI",90,"ARS"],
+    ["Eberechi Eze","MEI",88,"ARS"],
+    ["Nico González","MEI",86,"NEW"],
+    ["Mamadou Sangaré","MEI",86,"BRE"],
+    ["Boubacar Kamara","MEI",86,"AVL"],
+    ["James Garner","MEI",86,"EVE"],
+    ["Andrey Santos","MEI",84,"MUN"],
+    ["Yasin Ayari","MEI",86,"BHA"],
+    ["Valentín Barco","MEI",84,"CHE"],
+    ["Youri Tielemans","MEI",85,"MUN"],
+    ["Lucas Bergvall","MEI",82,"TOT"],
+    ["João Gomes","MEI",85,"AVL"],
+    ["Noah Sadiki","MEI",84,"SUN"],
+    ["Kiernan Dewsbury-Hall","MEI",85,"EVE"],
+    ["Josh King","MEI",82,"FUL"],
+    ["Jacob Ramsey","MEI",84,"NEW"],
+    ["Jack Hinshelwood","MEI",83,"BHA"],
+    ["Conor Gallagher","MEI",84,"TOT"],
+    ["Yegor Yarmolyuk","MEI",82,"BRE"],
+    ["Anton Stach","MEI",84,"LEE"],
+    ["Hayden Hackney","MEI",84,"EVE"],
+    ["Lewis Miley","MEI",81,"NEW"],
+    ["Diego Gómez","MEI",84,"BHA"],
+    ["Mikkel Damsgaard","MEI",84,"BRE"],
+    ["Tyler Adams","MEI",84,"BOU"],
+    ["Erling Haaland","ATA",95,"MCI"],
+    ["Morgan Rogers","ATA",92,"CHE"],
+    ["Bukayo Saka","ATA",91,"ARS"],
+    ["Bradley Barcola","ATA",90,"LIV"],
+    ["João Pedro","ATA",90,"CHE"],
+    ["Alexander Isak","ATA",90,"LIV"],
+    ["Estêvão","ATA",86,"CHE"],
+    ["Hugo Ekitiké","ATA",86,"LIV"],
+    ["Antoine Semenyo","ATA",86,"MCI"],
+    ["Jérémy Doku","ATA",89,"MCI"],
+    ["Cody Gakpo","ATA",89,"LIV"],
+    ["Bryan Mbeumo","ATA",89,"MUN"],
+    ["Benjamin Šeško","ATA",89,"MUN"],
+    ["Matheus Cunha","ATA",89,"MUN"],
+    ["Junior Kroupi","ATA",90,"BOU"],
+    ["Iliman Ndiaye","ATA",88,"MCI"],
+    ["Igor Thiago","ATA",88,"BRE"],
+    ["Kai Havertz","ATA",88,"ARS"],
+    ["Pedro Neto","ATA",88,"CHE"],
+    ["Rayan","ATA",85,"BOU"],
+    ["Viktor Gyökeres","ATA",87,"ARS"],
+    ["Matias Fernandez-Pardo","ATA",86,"NEW"],
+    ["Yankuba Minteh","ATA",86,"BHA"],
+    ["Max Dowman","ATA",83,"ARS"],
+    ["Rio Ngumoha","ATA",83,"LIV"],
+    ["Sávio","ATA",85,"TOT"],
+    ["Omar Marmoush","ATA",86,"TOT"],
+    ["Bazoumana Touré","ATA",83,"NEW"],
+    ["Kevin Schade","ATA",86,"BRE"],
+    ["Ibrahim Mbaye","ATA",83,"AVL"],
+    ["Brian Brobbey","ATA",88,"SUN"],
+    ["Noni Madueke","ATA",86,"ARS"],
+    ["Amad Diallo","ATA",86,"MUN"],
+    ["Mohammed Kudus","ATA",86,"TOT"],
+    ["Nicolas Jackson","ATA",86,"AVL"],
+    ["Ismaïla Sarr","ATA",86,"CRY"],
+    ["Geovany Quenda","ATA",82,"CHE"],
+    ["Christos Tzolis","ATA",85,"ARS"],
+    ["Víctor Muñoz","ATA",85,"LIV"],
+    ["Charalampos Kostoulas","ATA",82,"BHA"],
+    ["Jørgen Strand Larsen","ATA",85,"CRY"],
+    ["Liam Delap","ATA",85,"NFO"],
+    ["Marcus Rashford","ATA",84,"MUN"],
+    ["Patrick Dorgu","ATA",83,"MUN"],
+    ["Harvey Barnes","ATA",84,"NEW"],
+    ["Anthony Elanga","ATA",84,"NEW"],
+    ["Dango Ouattara","ATA",84,"BRE"],
+    ["Evanilson","ATA",84,"BOU"]
   ]
 });
 
 window.LIGAS = window.LIGAS || [];
 window.LIGAS.push({
-  id: 'es', nome: 'La Liga', pais: 'Espanha', bandeira: '🇪🇸',
-  clubes: [
-    ['RMA','Real Madrid','#c7cde0'],
-    ['BAR','Barcelona','#a50044'],
-    ['ATM','Atlético de Madrid','#cb3524'],
-    ['ATH','Athletic Club','#ee2523'],
-    ['VIL','Villarreal','#fbe122'],
-    ['BET','Real Betis','#0bb363'],
-    ['RSO','Real Sociedad','#0067b1'],
-    ['SEV','Sevilla','#e1262c'],
-    ['VAL','Valencia','#f58220'],
-    ['GIR','Girona','#cd2534'],
-    ['CEL','Celta de Vigo','#8ac3ee'],
-    ['GET','Getafe','#2a6fb5'],
-    ['OSA','Osasuna','#c8102e'],
-    ['RAY','Rayo Vallecano','#e2231a'],
-    ['MLL','Mallorca','#b3001b'],
-    ['ALA','Alavés','#0761af'],
-    ['LEV','Levante','#b4053f'],
-    ['ELC','Elche','#00904a'],
-    ['ESP','Espanyol','#007fc8'],
-    ['OVI','Real Oviedo','#1c4fa0']
-  ],
+  id: 'es', nome: "La Liga", pais: "Espanha", bandeira: '',
+  clubes: [["RMA","Real Madrid","#9aa4b2"],["BAR","Barcelona","#a50044"],["ATM","Atlético de Madrid","#cb3524"],["VIL","Villarreal","#f5d100"],["RSO","Real Sociedad","#0067b1"],["BET","Betis","#0bb363"],["ATH","Athletic Club","#ee2523"],["CEL","Celta","#8ac3ee"],["SEV","Sevilla","#d4202c"],["VAL","Valencia","#ee7203"],["ESP","Espanyol","#007fc8"],["DEP","Deportivo","#0b5ea8"],["RAC","Racing Santander","#0a7d3a"],["RAY","Rayo Vallecano","#c8102e"],["GET","Getafe","#005999"],["LEV","Levante","#a3182d"],["OSA","Osasuna","#d91a21"],["ELC","Elche","#0b8a3a"],["ALA","Alavés","#005ca9"],["MAL","Málaga","#2f6fba"]],
   jogadores: [
-    // GOL
-    ['Courtois','GOL',88,'RMA'],
-    ['Joan García','GOL',82,'BAR'],
-    ['Oblak','GOL',85,'ATM'],
-    ['Unai Simón','GOL',83,'ATH'],
-    ['Luiz Júnior','GOL',75,'VIL'],
-    ['Álvaro Valles','GOL',74,'BET'],
-    ['Remiro','GOL',79,'RSO'],
-    ['Vlachodimos','GOL',74,'SEV'],
-    ['Mamardashvili','GOL',83,'VAL'],
-    ['Gazzaniga','GOL',73,'GIR'],
-    ['David Soria','GOL',76,'GET'],
-    ['Sergio Herrera','GOL',74,'OSA'],
-    ['Batalla','GOL',74,'RAY'],
-    ['Leo Román','GOL',73,'MLL'],
-    ['Sivera','GOL',74,'ALA'],
-    ['Dmitrović','GOL',73,'ESP'],
-    ['Dituro','GOL',70,'ELC'],
-    ['Escandell','GOL',69,'OVI'],
-    // ZAG
-    ['Rüdiger','ZAG',83,'RMA'],
-    ['Militão','ZAG',82,'RMA'],
-    ['Huijsen','ZAG',80,'RMA'],
-    ['Cubarsí','ZAG',84,'BAR'],
-    ['Araújo','ZAG',82,'BAR'],
-    ['Íñigo Martínez','ZAG',79,'BAR'],
-    ['José María Giménez','ZAG',82,'ATM'],
-    ['Le Normand','ZAG',81,'ATM'],
-    ['Dani Vivian','ZAG',81,'ATH'],
-    ['Laporte','ZAG',79,'ATH'],
-    ['Foyth','ZAG',77,'VIL'],
-    ['Logan Costa','ZAG',75,'VIL'],
-    ['Marc Bartra','ZAG',75,'BET'],
-    ['Zubeldia','ZAG',79,'RSO'],
-    ['Loïc Badé','ZAG',77,'SEV'],
-    ['César Tárrega','ZAG',74,'VAL'],
-    ['Krejčí','ZAG',76,'GIR'],
-    ['Blind','ZAG',72,'GIR'],
-    ['Starfelt','ZAG',76,'CEL'],
-    ['Djené','ZAG',74,'GET'],
-    ['Catena','ZAG',76,'OSA'],
-    ['Herrando','ZAG',75,'OSA'],
-    ['Lejeune','ZAG',74,'RAY'],
-    ['Valjent','ZAG',74,'MLL'],
-    ['Raíllo','ZAG',75,'MLL'],
-    ['Abqar','ZAG',73,'ALA'],
-    ['Leandro Cabrera','ZAG',74,'ESP'],
-    ['Elgezabal','ZAG',71,'LEV'],
-    ['Bigas','ZAG',72,'ELC'],
-    ['Dani Calvo','ZAG',71,'OVI'],
-    // LAT
-    ['Alexander-Arnold','LAT',84,'RMA'],
-    ['Carvajal','LAT',82,'RMA'],
-    ['Carreras','LAT',79,'RMA'],
-    ['Koundé','LAT',84,'BAR'],
-    ['Balde','LAT',82,'BAR'],
-    ['Nahuel Molina','LAT',79,'ATM'],
-    ['Ruggeri','LAT',76,'ATM'],
-    ['Berchiche','LAT',78,'ATH'],
-    ['Pedraza','LAT',76,'VIL'],
-    ['Aitor Ruibal','LAT',74,'BET'],
-    ['Aihen Muñoz','LAT',74,'RSO'],
-    ['Adrià Pedrosa','LAT',75,'SEV'],
-    ['Gayà','LAT',82,'VAL'],
-    ['Arnau Martínez','LAT',75,'GIR'],
-    ['Mingueza','LAT',77,'CEL'],
-    ['Javi Galán','LAT',76,'CEL'],
-    ['Diego Rico','LAT',72,'GET'],
-    ['Abel Bretones','LAT',73,'OSA'],
-    ['Rațiu','LAT',77,'RAY'],
-    ['Pep Chavarría','LAT',73,'RAY'],
-    ['Mojica','LAT',75,'MLL'],
-    ['Maffeo','LAT',75,'MLL'],
-    ['Tenaglia','LAT',74,'ALA'],
-    ['El Hilali','LAT',72,'ESP'],
-    // MEI
-    ['Bellingham','MEI',90,'RMA'],
-    ['Pedri','MEI',89,'BAR'],
-    ['Valverde','MEI',86,'RMA'],
-    ['Tchouaméni','MEI',84,'RMA'],
-    ['Frenkie de Jong','MEI',85,'BAR'],
-    ['Arda Güler','MEI',83,'RMA'],
-    ['Camavinga','MEI',82,'RMA'],
-    ['Dani Olmo','MEI',83,'BAR'],
-    ['Fermín López','MEI',80,'BAR'],
-    ['Rodrigo De Paul','MEI',82,'ATM'],
-    ['Marcos Llorente','MEI',82,'ATM'],
-    ['Koke','MEI',79,'ATM'],
-    ['Álex Baena','MEI',81,'ATM'],
-    ['Oihan Sancet','MEI',82,'ATH'],
-    ['Thomas Partey','MEI',79,'VIL'],
-    ['Alberto Moleiro','MEI',80,'VIL'],
-    ['Isco','MEI',80,'BET'],
-    ['Lo Celso','MEI',79,'BET'],
-    ['Brais Méndez','MEI',80,'RSO'],
-    ['Djibril Sow','MEI',76,'SEV'],
-    ['Pepelu','MEI',77,'VAL'],
-    ['Yangel Herrera','MEI',76,'GIR'],
-    ['Fran Beltrán','MEI',76,'CEL'],
-    ['Arambarri','MEI',76,'GET'],
-    ['Olasagasti','MEI',72,'LEV'],
-    ['Aimar Oroz','MEI',76,'OSA'],
-    ['Lucas Torró','MEI',76,'OSA'],
-    ['Óscar Valentín','MEI',75,'RAY'],
-    ['Sergi Darder','MEI',76,'MLL'],
-    ['Colombatto','MEI',71,'OVI'],
-    ['Edu Expósito','MEI',75,'ESP'],
-    ['Gerard Gumbau','MEI',72,'ELC'],
-    // ATA
-    ['Mbappé','ATA',93,'RMA'],
-    ['Vinícius Jr','ATA',90,'RMA'],
-    ['Rodrygo','ATA',83,'RMA'],
-    ['Lamine Yamal','ATA',93,'BAR'],
-    ['Raphinha','ATA',88,'BAR'],
-    ['Lewandowski','ATA',84,'BAR'],
-    ['Griezmann','ATA',86,'ATM'],
-    ['Julián Álvarez','ATA',86,'ATM'],
-    ['Nico Williams','ATA',85,'ATH'],
-    ['Iñaki Williams','ATA',80,'ATH'],
-    ['Mikautadze','ATA',79,'VIL'],
-    ['Antony','ATA',80,'BET'],
-    ['Abde','ATA',79,'BET'],
-    ['Oyarzabal','ATA',84,'RSO'],
-    ['Kubo','ATA',82,'RSO'],
-    ['Akor Adams','ATA',75,'SEV'],
-    ['Tsyhankov','ATA',76,'GIR'],
-    ['Iago Aspas','ATA',81,'CEL'],
-    ['Borja Mayoral','ATA',77,'GET'],
-    ['Budimir','ATA',79,'OSA'],
-    ['Isi Palazón','ATA',77,'RAY'],
-    ['Muriqi','ATA',78,'MLL'],
-    ['Puado','ATA',76,'ESP'],
-    ['Toni Martínez','ATA',73,'ALA'],
-    ['Rafa Mir','ATA',74,'ELC'],
-    ['José Luis Morales','ATA',73,'LEV'],
-    ['Rondón','ATA',72,'OVI'],
-    ['Roger Brugué','ATA',72,'LEV']
+    ["Joan García","GOL",90,"BAR"],
+    ["Unai Simón","GOL",86,"ATH"],
+    ["Thibaut Courtois","GOL",86,"RMA"],
+    ["Jan Oblak","GOL",85,"ATM"],
+    ["Andriy Lunin","GOL",82,"RMA"],
+    ["Luiz Júnior","GOL",82,"VIL"],
+    ["Álvaro Valles","GOL",81,"BET"],
+    ["Ionuț Radu","GOL",81,"CEL"],
+    ["Álex Remiro","GOL",82,"RSO"],
+    ["Leo Román","GOL",81,"DEP"],
+    ["Julen Agirrezabala","GOL",78,"RAC"],
+    ["Dominik Livakovic","GOL",77,"BAR"],
+    ["Kayne van Oevelen","GOL",76,"VAL"],
+    ["Altay Bayındır","GOL",76,"CEL"],
+    ["Juan Musso","GOL",75,"ATM"],
+    ["Diego Conde","GOL",74,"BET"],
+    ["Álex Padilla","GOL",74,"ATH"],
+    ["Odysseas Vlachodimos","GOL",75,"SEV"],
+    ["Fran González","GOL",73,"SEV"],
+    ["Emil Audero","GOL",74,"RAY"],
+    ["David Soria","GOL",75,"GET"],
+    ["Sergio Herrera","GOL",75,"OSA"],
+    ["Stole Dimitrievski","GOL",73,"VAL"],
+    ["Simon Eriksson","GOL",69,"RAC"],
+    ["Jiri Letacek","GOL",72,"GET"],
+    ["Dani Cárdenas","GOL",71,"RAY"],
+    ["Mathew Ryan","GOL",73,"LEV"],
+    ["Álvaro Ferllo","GOL",70,"DEP"],
+    ["Pau Cubarsí","ZAG",88,"BAR"],
+    ["Dean Huijsen","ZAG",87,"RMA"],
+    ["Marc Pubill","ZAG",87,"ATM"],
+    ["Ibrahima Konaté","ZAG",87,"RMA"],
+    ["Eric García","ZAG",87,"BAR"],
+    ["Gerard Martín","ZAG",86,"BAR"],
+    ["Cristian Romero","ZAG",86,"ATM"],
+    ["Dávid Hancko","ZAG",85,"ATM"],
+    ["Renato Veiga","ZAG",85,"VIL"],
+    ["Natan","ZAG",85,"BET"],
+    ["Jon Martín","ZAG",80,"RSO"],
+    ["Mamadou Sarr","ZAG",81,"RSO"],
+    ["Dani Vivian","ZAG",82,"ATH"],
+    ["Éder Militão","ZAG",82,"RMA"],
+    ["Robin Le Normand","ZAG",82,"ATM"],
+    ["Javi Rodríguez","ZAG",82,"CEL"],
+    ["Raúl Asencio","ZAG",84,"RMA"],
+    ["Logan Costa","ZAG",81,"VIL"],
+    ["Pau Navarro","ZAG",79,"VIL"],
+    ["Enzo Boyomo","ZAG",81,"OSA"],
+    ["Kike Salas","ZAG",80,"SEV"],
+    ["Valentín Gómez","ZAG",79,"BET"],
+    ["Jeanuël Belocian","ZAG",78,"RAC"],
+    ["César Tárrega","ZAG",78,"VAL"],
+    ["Aymeric Laporte","ZAG",78,"ATH"],
+    ["Andrés Castrín","ZAG",77,"SEV"],
+    ["Arouna Sangante","ZAG",77,"SEV"],
+    ["Axel Tape","ZAG",74,"LEV"],
+    ["Marc Cucurella","LAT",88,"RMA"],
+    ["Trent Alexander-Arnold","LAT",88,"RMA"],
+    ["Jules Koundé","LAT",87,"BAR"],
+    ["Álvaro Carreras","LAT",86,"RMA"],
+    ["Alejandro Balde","LAT",86,"BAR"],
+    ["Denzel Dumfries","LAT",82,"RMA"],
+    ["Carlos Romero","LAT",82,"VIL"],
+    ["Xavi Espart","LAT",84,"BAR"],
+    ["Andrei Rațiu","LAT",82,"RAY"],
+    ["Alejandro Grimaldo","LAT",82,"ATM"],
+    ["Marcos Llorente","LAT",82,"ATM"],
+    ["Santiago Mouriño","LAT",81,"VIL"],
+    ["Alex Freeman","LAT",78,"VIL"],
+    ["Sergio Gómez","LAT",80,"RSO"],
+    ["Jon Aramburu","LAT",80,"RSO"],
+    ["Héctor Fort","LAT",77,"RSO"],
+    ["Omar El Hilali","LAT",80,"ESP"],
+    ["Sergio Carreira","LAT",78,"CEL"],
+    ["Quilindschy Hartman","LAT",78,"ESP"],
+    ["Arnau Martínez","LAT",77,"VAL"],
+    ["Jorge Salinas","LAT",74,"RAC"],
+    ["Sergi Cardona","LAT",77,"VIL"],
+    ["Fran García","LAT",76,"BET"],
+    ["João Cancelo","LAT",76,"BAR"],
+    ["Andrés García","LAT",75,"GET"],
+    ["Ángel Ortiz","LAT",73,"BET"],
+    ["Javi Rueda","LAT",74,"CEL"],
+    ["Juan Iglesias","LAT",74,"SEV"],
+    ["Jude Bellingham","MEI",93,"RMA"],
+    ["Pedri","MEI",93,"BAR"],
+    ["Fermín López","MEI",91,"BAR"],
+    ["Arda Güler","MEI",89,"RMA"],
+    ["Federico Valverde","MEI",87,"RMA"],
+    ["Aurélien Tchouaméni","MEI",88,"RMA"],
+    ["Pablo Barrios","MEI",88,"ATM"],
+    ["Dani Olmo","MEI",88,"BAR"],
+    ["Rodri","MEI",85,"BAR"],
+    ["Eduardo Camavinga","MEI",86,"RMA"],
+    ["Morten Hjulmand","MEI",86,"ATM"],
+    ["Marc Bernal","MEI",82,"BAR"],
+    ["Pape Gueye","MEI",85,"VIL"],
+    ["Kang-in Lee","MEI",84,"ATM"],
+    ["Gavi","MEI",81,"BAR"],
+    ["Frenkie de Jong","MEI",82,"BAR"],
+    ["Jon Gorrotxategi","MEI",82,"RSO"],
+    ["Mikel Jauregizar","MEI",82,"ATH"],
+    ["Oihan Sancet","MEI",82,"ATH"],
+    ["Javi Guerra","MEI",82,"VAL"],
+    ["Bernardo Silva","MEI",83,"RMA"],
+    ["Thiago Pitarch","MEI",78,"RMA"],
+    ["Rodrigo Mendoza","MEI",80,"ATM"],
+    ["Johnny Cardoso","MEI",81,"ATM"],
+    ["Lucien Agoumé","MEI",81,"SEV"],
+    ["Harvey Elliott","MEI",81,"VAL"],
+    ["Carlos Macià","MEI",77,"VIL"],
+    ["Luka Sucic","MEI",80,"RSO"],
+    ["Ilaix Moriba","MEI",80,"CEL"],
+    ["Miguel Román","MEI",80,"CEL"],
+    ["Youssouf Fofana","MEI",80,"SEV"],
+    ["Marc Casadó","MEI",80,"DEP"],
+    ["Nathan Saliba","MEI",82,"VIL"],
+    ["Beñat Prados","MEI",78,"ATH"],
+    ["Urko Zárate","MEI",78,"ESP"],
+    ["Facundo Buonanotte","MEI",77,"ELC"],
+    ["Obed Vargas","MEI",76,"ATM"],
+    ["Beñat Turrientes","MEI",77,"RSO"],
+    ["Facundo Bernal","MEI",77,"BET"],
+    ["Peio Canales","MEI",76,"ATH"],
+    ["Lorenzo Amatucci","MEI",76,"DEP"],
+    ["Mario Martín","MEI",76,"GET"],
+    ["Antonio Blanco","MEI",77,"ALA"],
+    ["Nelson Deossa","MEI",77,"BET"],
+    ["Orel Mangala","MEI",77,"GET"],
+    ["Santi Comesaña","MEI",76,"VIL"],
+    ["Pablo Fornals","MEI",76,"BET"],
+    ["Pepelu","MEI",76,"VAL"],
+    ["Lamine Yamal","ATA",92,"BAR"],
+    ["Kylian Mbappé","ATA",94,"RMA"],
+    ["Vinicius Junior","ATA",92,"RMA"],
+    ["Yan Diomande","ATA",89,"RMA"],
+    ["Julián Álvarez","ATA",91,"ATM"],
+    ["Anthony Gordon","ATA",89,"BAR"],
+    ["Raphinha","ATA",85,"BAR"],
+    ["Alberto Moleiro","ATA",86,"VIL"],
+    ["Álex Baena","ATA",86,"ATM"],
+    ["Rodrygo","ATA",86,"RMA"],
+    ["Carlos Espí","ATA",84,"RMA"],
+    ["Karim Adeyemi","ATA",85,"BAR"],
+    ["Giuliano Simeone","ATA",85,"ATM"],
+    ["Georges Mikautadze","ATA",85,"VIL"],
+    ["Abde Ezzalzouli","ATA",85,"BET"],
+    ["Antony","ATA",85,"BET"],
+    ["Nico Williams","ATA",85,"ATH"],
+    ["Endrick","ATA",86,"RMA"],
+    ["Ademola Lookman","ATA",86,"ATM"],
+    ["Brahim Díaz","ATA",84,"RMA"],
+    ["Jonathan David","ATA",84,"ATM"],
+    ["Yeremay Hernández","ATA",82,"DEP"],
+    ["Mikel Oyarzabal","ATA",84,"RSO"],
+    ["Takefusa Kubo","ATA",81,"RSO"],
+    ["Orri Óskarsson","ATA",80,"RSO"],
+    ["Troy Parrott","ATA",81,"BET"],
+    ["Williot Swedberg","ATA",80,"CEL"],
+    ["Roberto Fernández","ATA",81,"ESP"],
+    ["Yassir Zabiri","ATA",80,"RAC"],
+    ["Cucho Hernández","ATA",81,"BET"],
+    ["Ander Barrenetxea","ATA",83,"RSO"],
+    ["Gabriel Jesus","ATA",80,"BAR"],
+    ["Alexander Sørloth","ATA",80,"ATM"],
+    ["Rubén Vargas","ATA",80,"SEV"],
+    ["Lucas Stassin","ATA",78,"SEV"],
+    ["Tajon Buchanan","ATA",78,"VIL"],
+    ["Jorge de Frutos","ATA",78,"RAY"],
+    ["Hugo Duro","ATA",78,"VAL"],
+    ["Ferran Jutglà","ATA",77,"CEL"],
+    ["Félix Correia","ATA",77,"SEV"],
+    ["Tyrhys Dolan","ATA",77,"ESP"],
+    ["Sergio Camello","ATA",77,"RAY"],
+    ["Martín Satriano","ATA",77,"GET"],
+    ["Chupe","ATA",76,"MAL"],
+    ["Petar Ratkov","ATA",77,"LEV"],
+    ["Karl Etta Eyong","ATA",77,"LEV"],
+    ["Jesse Bisiwu","ATA",73,"BAR"],
+    ["Hugo Álvarez","ATA",76,"CEL"]
   ]
 });
 
 window.LIGAS = window.LIGAS || [];
 window.LIGAS.push({
-  id: 'it', nome: 'Serie A', pais: 'Itália', bandeira: '🇮🇹',
-  clubes: [
-    ['INT','Inter','#0068a8'],
-    ['MIL','Milan','#fb090b'],
-    ['JUV','Juventus','#8c8c8c'],
-    ['NAP','Napoli','#12a0d7'],
-    ['ATA','Atalanta','#2a6ebb'],
-    ['ROM','Roma','#d9822b'],
-    ['LAZ','Lazio','#87d8f7'],
-    ['FIO','Fiorentina','#6f2da8'],
-    ['BOL','Bologna','#a21c26'],
-    ['TOR','Torino','#9b2335'],
-    ['UDI','Udinese','#b0b0b0'],
-    ['GEN','Genoa','#a3142c'],
-    ['CAG','Cagliari','#c8102e'],
-    ['COM','Como','#1a5eb8'],
-    ['CRE','Cremonese','#b5323a'],
-    ['PIS','Pisa','#2f6db5'],
-    ['SAS','Sassuolo','#00a651'],
-    ['VER','Hellas Verona','#2a5db0'],
-    ['LEC','Lecce','#e7512d'],
-    ['PAR','Parma','#f2d03b']
-  ],
+  id: 'it', nome: "Serie A", pais: "Itália", bandeira: '',
+  clubes: [["INT","Inter","#0068a8"],["JUV","Juventus","#333333"],["COM","Como","#1b4f9c"],["MIL","Milan","#fb090b"],["ROM","Roma","#8e1f2f"],["ATA","Atalanta","#1e71b8"],["NAP","Napoli","#12a0d7"],["FIO","Fiorentina","#5b2d8e"],["LAZ","Lazio","#87d8f7"],["BOL","Bologna","#1a2f5a"],["SAS","Sassuolo","#00a859"],["TOR","Torino","#8a1c2b"],["GEN","Genoa","#b20f2c"],["UDI","Udinese","#555555"],["PAR","Parma","#f5c400"],["CAG","Cagliari","#a31e32"],["VEN","Venezia","#0b6a4c"],["FRO","Frosinone","#f2c500"],["MON","Monza","#d4202c"],["LEC","Lecce","#f2c200"]],
   jogadores: [
-    // Goleiros
-    ['Sommer','GOL',80,'INT'],
-    ['Maignan','GOL',85,'MIL'],
-    ['Di Gregorio','GOL',77,'JUV'],
-    ['Meret','GOL',77,'NAP'],
-    ['Carnesecchi','GOL',79,'ATA'],
-    ['Svilar','GOL',80,'ROM'],
-    ['Provedel','GOL',75,'LAZ'],
-    ['De Gea','GOL',77,'FIO'],
-    ['Skorupski','GOL',74,'BOL'],
-    ['V. Milinkovic-Savic','GOL',76,'TOR'],
-    ['Okoye','GOL',73,'UDI'],
-    ['Caprile','GOL',71,'CAG'],
-    ['Butez','GOL',72,'COM'],
-    ['Audero','GOL',70,'CRE'],
-    ['Muric','GOL',72,'SAS'],
-    ['Montipò','GOL',71,'VER'],
-    ['Falcone','GOL',70,'LEC'],
-    ['Suzuki','GOL',72,'PAR'],
-    // Zagueiros
-    ['Bastoni','ZAG',86,'INT'],
-    ['Akanji','ZAG',80,'INT'],
-    ['Acerbi','ZAG',75,'INT'],
-    ['Tomori','ZAG',79,'MIL'],
-    ['Pavlovic','ZAG',78,'MIL'],
-    ['Gabbia','ZAG',77,'MIL'],
-    ['Bremer','ZAG',82,'JUV'],
-    ['Gatti','ZAG',77,'JUV'],
-    ['Buongiorno','ZAG',80,'NAP'],
-    ['Rrahmani','ZAG',79,'NAP'],
-    ['Hien','ZAG',78,'ATA'],
-    ['Scalvini','ZAG',77,'ATA'],
-    ['Ndicka','ZAG',79,'ROM'],
-    ['Mancini','ZAG',77,'ROM'],
-    ['Romagnoli','ZAG',78,'LAZ'],
-    ['Gila','ZAG',76,'LAZ'],
-    ['Pongracic','ZAG',76,'FIO'],
-    ['Lucumí','ZAG',76,'BOL'],
-    ['Coco','ZAG',73,'TOR'],
-    ['Bijol','ZAG',75,'UDI'],
-    ['Vásquez','ZAG',74,'GEN'],
-    ['de Winter','ZAG',73,'GEN'],
-    ['Mina','ZAG',72,'CAG'],
-    ['Diego Carlos','ZAG',73,'COM'],
-    ['Baschirotto','ZAG',70,'CRE'],
-    ['Canestrelli','ZAG',68,'PIS'],
-    ['Idzes','ZAG',72,'SAS'],
-    ['Valentini','ZAG',68,'VER'],
-    ['Gaspar','ZAG',69,'LEC'],
-    ['Troilo','ZAG',69,'PAR'],
-    // Laterais e alas
-    ['Dimarco','LAT',83,'INT'],
-    ['Dumfries','LAT',82,'INT'],
-    ['Estupiñán','LAT',76,'MIL'],
-    ['Saelemaekers','LAT',74,'MIL'],
-    ['Cambiaso','LAT',82,'JUV'],
-    ['Cabal','LAT',76,'JUV'],
-    ['Di Lorenzo','LAT',79,'NAP'],
-    ['Spinazzola','LAT',75,'NAP'],
-    ['Zappacosta','LAT',74,'ATA'],
-    ['Bellanova','LAT',75,'ATA'],
-    ['Wesley','LAT',75,'ROM'],
-    ['Angeliño','LAT',74,'ROM'],
-    ['Marusic','LAT',72,'LAZ'],
-    ['Gosens','LAT',77,'FIO'],
-    ['Dodô','LAT',74,'FIO'],
-    ['Miranda','LAT',72,'BOL'],
-    ['Lazaro','LAT',72,'TOR'],
-    ['Pedersen','LAT',72,'TOR'],
-    ['Zemura','LAT',71,'UDI'],
-    ['Obert','LAT',69,'CAG'],
-    ['Moreno','LAT',70,'COM'],
-    ['Touré','LAT',67,'PIS'],
-    ['Gallo','LAT',69,'LEC'],
-    ['Delprato','LAT',69,'PAR'],
-    // Meio-campistas
-    ['Barella','MEI',84,'INT'],
-    ['Calhanoglu','MEI',84,'INT'],
-    ['Rabiot','MEI',82,'MIL'],
-    ['Modric','MEI',81,'MIL'],
-    ['Fofana','MEI',76,'MIL'],
-    ['Locatelli','MEI',78,'JUV'],
-    ['K. Thuram','MEI',80,'JUV'],
-    ['McTominay','MEI',83,'NAP'],
-    ['De Bruyne','MEI',85,'NAP'],
-    ['Lobotka','MEI',80,'NAP'],
-    ['De Roon','MEI',77,'ATA'],
-    ['Éderson','MEI',78,'ATA'],
-    ['Koné','MEI',78,'ROM'],
-    ['Pellegrini','MEI',79,'ROM'],
-    ['Cristante','MEI',76,'ROM'],
-    ['Guendouzi','MEI',78,'LAZ'],
-    ['Mandragora','MEI',76,'FIO'],
-    ['Freuler','MEI',75,'BOL'],
-    ['Ferguson','MEI',76,'BOL'],
-    ['Vlasic','MEI',76,'TOR'],
-    ['Karlström','MEI',71,'UDI'],
-    ['Frendrup','MEI',75,'GEN'],
-    ['Malinovskyi','MEI',73,'GEN'],
-    ['Adopo','MEI',72,'CAG'],
-    ['Nico Paz','MEI',77,'COM'],
-    ['Da Cunha','MEI',75,'COM'],
-    ['Vandeputte','MEI',69,'CRE'],
-    ['Marin','MEI',69,'PIS'],
-    ['Thorstvedt','MEI',71,'SAS'],
-    ['Serdar','MEI',69,'VER'],
-    ['Ramadani','MEI',67,'LEC'],
-    ['Bernabé','MEI',72,'PAR'],
-    // Atacantes
-    ['Lautaro','ATA',89,'INT'],
-    ['M. Thuram','ATA',83,'INT'],
-    ['Leão','ATA',84,'MIL'],
-    ['Pulisic','ATA',82,'MIL'],
-    ['Yildiz','ATA',83,'JUV'],
-    ['David','ATA',80,'JUV'],
-    ['Vlahovic','ATA',78,'JUV'],
-    ['Lukaku','ATA',79,'NAP'],
-    ['Neres','ATA',79,'NAP'],
-    ['Lookman','ATA',82,'ATA'],
-    ['Scamacca','ATA',77,'ATA'],
-    ['Dybala','ATA',80,'ROM'],
-    ['Soulé','ATA',79,'ROM'],
-    ['Zaccagni','ATA',77,'LAZ'],
-    ['Isaksen','ATA',75,'LAZ'],
-    ['Kean','ATA',79,'FIO'],
-    ['Gudmundsson','ATA',76,'FIO'],
-    ['Orsolini','ATA',76,'BOL'],
-    ['Simeone','ATA',75,'TOR'],
-    ['Lucca','ATA',74,'UDI'],
-    ['Vitinha','ATA',72,'GEN'],
-    ['Piccoli','ATA',71,'CAG'],
-    ['Douvikas','ATA',72,'COM'],
-    ['Vardy','ATA',71,'CRE'],
-    ['Tramoni','ATA',68,'PIS'],
-    ['Berardi','ATA',76,'SAS'],
-    ['Orban','ATA',71,'VER'],
-    ['Pellegrino','ATA',70,'PAR']
+    ["Mile Svilar","GOL",88,"ROM"],
+    ["Marco Carnesecchi","GOL",90,"ATA"],
+    ["Mike Maignan","GOL",87,"MIL"],
+    ["Robert Sánchez","GOL",84,"COM"],
+    ["Vanja Milinković-Savić","GOL",84,"NAP"],
+    ["Guglielmo Vicario","GOL",82,"JUV"],
+    ["Josep Martínez","GOL",81,"INT"],
+    ["Christos Mandas","GOL",81,"LAZ"],
+    ["Jean Butez","GOL",81,"COM"],
+    ["Edoardo Motta","GOL",78,"LAZ"],
+    ["Ivan Provedel","GOL",75,"INT"],
+    ["Lorenzo Torriani","GOL",70,"MIL"],
+    ["Oliver Christensen","GOL",70,"FIO"],
+    ["Neto","GOL",69,"JUV"],
+    ["Devis Vásquez","GOL",67,"ROM"],
+    ["Pierluigi Gollini","GOL",68,"ROM"],
+    ["Marco Sportiello","GOL",69,"ATA"],
+    ["Nikita Contini","GOL",64,"NAP"],
+    ["Luca Lezzerini","GOL",65,"FIO"],
+    ["Raffaele Di Gennaro","GOL",65,"INT"],
+    ["Carlo Pinsoglio","GOL",66,"JUV"],
+    ["Mauro Vigorito","GOL",66,"COM"],
+    ["Davide Renzetti","GOL",61,"LAZ"],
+    ["Giorgio De Marzi","GOL",61,"ROM"],
+    ["Claudio Pugliese","GOL",61,"NAP"],
+    ["Sommer","GOL",80,"INT"],
+    ["Di Gregorio","GOL",77,"JUV"],
+    ["Meret","GOL",77,"NAP"],
+    ["Alessandro Bastoni","ZAG",89,"INT"],
+    ["Yann Bisseck","ZAG",87,"INT"],
+    ["Jacobo Ramón","ZAG",85,"COM"],
+    ["Strahinja Pavlović","ZAG",86,"MIL"],
+    ["Giorgio Scalvini","ZAG",84,"ATA"],
+    ["Bremer","ZAG",85,"JUV"],
+    ["Trevoh Chalobah","ZAG",85,"COM"],
+    ["Evan Ndicka","ZAG",85,"ROM"],
+    ["Pierre Kalulu","ZAG",87,"JUV"],
+    ["Mario Gila","ZAG",87,"MIL"],
+    ["Koni De Winter","ZAG",83,"MIL"],
+    ["Alessandro Buongiorno","ZAG",85,"NAP"],
+    ["Lloyd Kelly","ZAG",83,"JUV"],
+    ["Jhon Lucumí","ZAG",83,"JUV"],
+    ["Isak Hien","ZAG",85,"ATA"],
+    ["Konstantinos Koulierakis","ZAG",81,"ROM"],
+    ["Oliver Provstgaard","ZAG",82,"LAZ"],
+    ["Oumar Solet","ZAG",84,"UDI"],
+    ["Leonardo Balerdi","ZAG",82,"ROM"],
+    ["Daniele Ghilardi","ZAG",82,"ROM"],
+    ["Thomas Kristensen","ZAG",82,"ATA"],
+    ["Sam Beukema","ZAG",82,"NAP"],
+    ["Pietro Comuzzo","ZAG",84,"TOR"],
+    ["Manuel Akanji","ZAG",82,"INT"],
+    ["Rafa Marín","ZAG",81,"NAP"],
+    ["Radu Drăgușin","ZAG",81,"FIO"],
+    ["Gianluca Mancini","ZAG",81,"ROM"],
+    ["Benoît Badiashile","ZAG",81,"NAP"],
+    ["Federico Dimarco","LAT",86,"INT"],
+    ["Wesley","LAT",85,"ROM"],
+    ["Djed Spence","LAT",84,"INT"],
+    ["Carlos Augusto","LAT",82,"INT"],
+    ["Davide Bartesaghi","LAT",79,"MIL"],
+    ["Álex Jiménez","LAT",80,"FIO"],
+    ["Lorenzo Bernasconi","LAT",81,"ATA"],
+    ["Yan Couto","LAT",80,"COM"],
+    ["Dodô","LAT",80,"FIO"],
+    ["Andrea Cambiaso","LAT",80,"JUV"],
+    ["Nahuel Molina","LAT",80,"ROM"],
+    ["Raoul Bellanova","LAT",80,"ATA"],
+    ["Mathías Olivera","LAT",80,"NAP"],
+    ["Zeki Çelik","LAT",79,"JUV"],
+    ["Kaiki","LAT",79,"COM"],
+    ["Álex Valle","LAT",77,"COM"],
+    ["Pervis Estupiñán","LAT",78,"MIL"],
+    ["Emanuele Lulli","LAT",73,"ROM"],
+    ["João Mário","LAT",76,"FIO"],
+    ["Juan Cabal","LAT",75,"JUV"],
+    ["Romano Floriani Mussolini","LAT",73,"LAZ"],
+    ["Ivan Smolcic","LAT",71,"COM"],
+    ["Davide Zappacosta","LAT",73,"ATA"],
+    ["Leonardo Spinazzola","LAT",72,"NAP"],
+    ["Luca Pellegrini","LAT",70,"LAZ"],
+    ["Alfonso Pedraza","LAT",69,"LAZ"],
+    ["Manuel Lazzari","LAT",69,"LAZ"],
+    ["Mohamed Fares","LAT",60,"LAZ"],
+    ["Nico Paz","MEI",88,"COM"],
+    ["Manu Koné","MEI",88,"ROM"],
+    ["Martin Baturina","MEI",87,"COM"],
+    ["Nicolò Barella","MEI",86,"INT"],
+    ["Petar Sučić","MEI",86,"INT"],
+    ["Diego Moreira","MEI",84,"MIL"],
+    ["Scott McTominay","MEI",85,"NAP"],
+    ["Éderson","MEI",82,"ATA"],
+    ["Rodrigo Mora","MEI",82,"ROM"],
+    ["Curtis Jones","MEI",84,"INT"],
+    ["Máximo Perrone","MEI",84,"COM"],
+    ["Charles De Ketelaere","MEI",84,"ATA"],
+    ["Khéphren Thuram","MEI",84,"JUV"],
+    ["Aleksandar Stanković","MEI",82,"INT"],
+    ["Andy Diouf","MEI",84,"INT"],
+    ["Weston McKennie","MEI",84,"JUV"],
+    ["Pape Matar Sarr","MEI",84,"JUV"],
+    ["Niccolò Pisilli","MEI",82,"ROM"],
+    ["Lucas Da Cunha","MEI",86,"COM"],
+    ["Christ Inao Oulaï","MEI",80,"FIO"],
+    ["Arthur Atta","MEI",82,"FIO"],
+    ["Kenneth Taylor","MEI",82,"LAZ"],
+    ["Ismaël Koné","MEI",84,"SAS"],
+    ["Manuel Locatelli","MEI",84,"JUV"],
+    ["Nicolò Rovella","MEI",82,"LAZ"],
+    ["Samuele Ricci","MEI",82,"COM"],
+    ["Ardon Jashari","MEI",82,"MIL"],
+    ["Davide Frattesi","MEI",82,"LAZ"],
+    ["Luis Henrique","MEI",81,"INT"],
+    ["Alphadjo Cisse","MEI",78,"MIL"],
+    ["Nicola Zalewski","MEI",81,"ATA"],
+    ["Billy Gilmour","MEI",81,"NAP"],
+    ["Cher Ndour","MEI",80,"FIO"],
+    ["Antonio Vergara","MEI",83,"NAP"],
+    ["Mandela Keita","MEI",83,"PAR"],
+    ["Douglas Luiz","MEI",81,"JUV"],
+    ["Adrien Rabiot","MEI",82,"MIL"],
+    ["Yunus Musah","MEI",81,"MIL"],
+    ["Lazar Samardžić","MEI",80,"ATA"],
+    ["Nicolò Fagioli","MEI",80,"FIO"],
+    ["Frank Anguissa","MEI",81,"NAP"],
+    ["Teun Koopmeiners","MEI",79,"JUV"],
+    ["Eljif Elmas","MEI",79,"ATA"],
+    ["Gianluca Gaetano","MEI",78,"ATA"],
+    ["Franck Kessié","MEI",78,"ATA"],
+    ["Adrian Lahdo","MEI",74,"COM"],
+    ["Mattia Liberali","MEI",74,"COM"],
+    ["Christian Comotto","MEI",74,"MIL"],
+    ["Lautaro Martínez","ATA",90,"INT"],
+    ["Kenan Yıldız","ATA",87,"JUV"],
+    ["Rasmus Højlund","ATA",88,"NAP"],
+    ["Donyell Malen","ATA",87,"ROM"],
+    ["Marcus Thuram","ATA",86,"INT"],
+    ["Pio Esposito","ATA",85,"INT"],
+    ["Nick Woltemade","ATA",86,"JUV"],
+    ["Gonçalo Ramos","ATA",86,"MIL"],
+    ["Franco Mastantuono","ATA",83,"FIO"],
+    ["Assane Diao","ATA",83,"COM"],
+    ["Christian Pulisic","ATA",84,"MIL"],
+    ["Matías Soulé","ATA",84,"ROM"],
+    ["Ange-Yoan Bonny","ATA",84,"INT"],
+    ["Jonathan Rowe","ATA",84,"ATA"],
+    ["Santiago Castro","ATA",82,"ROM"],
+    ["Kerim Alajbegović","ATA",86,"JUV"],
+    ["Moise Kean","ATA",86,"COM"],
+    ["Francisco Conceição","ATA",84,"JUV"],
+    ["Randal Kolo Muani","ATA",84,"JUV"],
+    ["Omari Hutchinson","ATA",84,"MIL"],
+    ["Nikola Krstović","ATA",84,"ATA"],
+    ["Jesús Rodríguez","ATA",86,"COM"],
+    ["Alisson Santos","ATA",85,"NAP"],
+    ["Anastasios Douvikas","ATA",82,"COM"],
+    ["Gianluca Scamacca","ATA",82,"ATA"],
+    ["Pedro Gonçalves","ATA",82,"FIO"],
+    ["Giacomo Raspadori","ATA",82,"ATA"],
+    ["Mateo Pellegrino","ATA",82,"FIO"],
+    ["Nico González","ATA",84,"JUV"],
+    ["Noa Lang","ATA",81,"NAP"],
+    ["Lorenzo Lucca","ATA",81,"NAP"],
+    ["Jayden Addai","ATA",83,"COM"],
+    ["Samuel Chukwueze","ATA",83,"MIL"],
+    ["Armand Laurienté","ATA",83,"SAS"],
+    ["Jeff Ekhator","ATA",78,"JUV"],
+    ["David Neres","ATA",81,"NAP"],
+    ["Beto","ATA",81,"FIO"],
+    ["Kamaldeen Sulemana","ATA",80,"ATA"],
+    ["Wilfried Gnonto","ATA",80,"FIO"],
+    ["Francesco Camarda","ATA",77,"MIL"],
+    ["Alieu Njie","ATA",78,"FIO"],
+    ["Gustav Isaksen","ATA",80,"LAZ"],
+    ["Andrea Pinamonti","ATA",80,"LAZ"],
+    ["Giovane","ATA",78,"NAP"],
+    ["Albert Gudmundsson","ATA",78,"LAZ"],
+    ["Edon Zhegrova","ATA",77,"JUV"],
+    ["Jérémie Boga","ATA",76,"JUV"],
+    ["Tijjani Noslin","ATA",76,"LAZ"]
   ]
 });
 
 window.LIGAS = window.LIGAS || [];
 window.LIGAS.push({
-  id: 'de', nome: 'Bundesliga', pais: 'Alemanha', bandeira: '🇩🇪',
-  clubes: [
-    ['BAY','Bayern','#dc052d'], ['BVB','Dortmund','#e8c500'], ['LEV','Leverkusen','#e32221'],
-    ['RBL','RB Leipzig','#dd0741'], ['SGE','Eintracht','#c8102e'], ['VFB','Stuttgart','#e32219'],
-    ['SCF','Freiburg','#d8232a'], ['TSG','Hoffenheim','#1961b5'], ['WOB','Wolfsburg','#65b32e'],
-    ['MAI','Mainz','#c3141e'], ['BMG','Gladbach','#00a651'], ['SVW','Werder','#1d9053'],
-    ['FCA','Augsburg','#ba3733'], ['FCU','Union Berlin','#eb1923'], ['STP','St. Pauli','#8b5a2b'],
-    ['HDH','Heidenheim','#2b6cb0'], ['KOE','Köln','#e4002b'], ['HSV','Hamburg','#0a5ca8']
-  ],
+  id: 'de', nome: "Bundesliga", pais: "Alemanha", bandeira: '',
+  clubes: [["BAY","Bayern","#dc052d"],["BVB","Dortmund","#fde100"],["LEV","Leverkusen","#e32221"],["RBL","RB Leipzig","#dd0741"],["VFB","Stuttgart","#e32219"],["SGE","Eintracht Frankfurt","#d22b2b"],["TSG","Hoffenheim","#1961b5"],["SCF","Freiburg","#d4202c"],["AUG","Augsburg","#ba3733"],["MAI","Mainz","#c3141e"],["KOE","Köln","#d4202c"],["HSV","Hamburgo","#0a5ea8"],["BMG","Gladbach","#0a8a43"],["SVW","Werder","#1d9053"],["FCU","Union Berlin","#eb1923"],["S04","Schalke","#004d9d"],["ELV","Elversberg","#222222"],["SCP","Paderborn","#1f63b5"]],
   jogadores: [
-    // GOL (18)
-    ['Neuer','GOL',82,'BAY'], ['Kobel','GOL',82,'BVB'], ['Flekken','GOL',75,'LEV'],
-    ['Gulácsi','GOL',77,'RBL'], ['Trapp','GOL',76,'SGE'], ['Nübel','GOL',79,'VFB'],
-    ['Atubolu','GOL',76,'SCF'], ['Baumann','GOL',75,'TSG'], ['Casteels','GOL',75,'WOB'],
-    ['Zentner','GOL',73,'MAI'], ['Nicolas','GOL',73,'BMG'], ['Zetterer','GOL',71,'SVW'],
-    ['Dahmen','GOL',73,'FCA'], ['Rønnow','GOL',72,'FCU'], ['Vasilj','GOL',72,'STP'],
-    ['Kevin Müller','GOL',70,'HDH'], ['Schwäbe','GOL',72,'KOE'], ['Heuer Fernandes','GOL',70,'HSV'],
-    // ZAG (30)
-    ['Kim Min-jae','ZAG',80,'BAY'], ['Upamecano','ZAG',82,'BAY'], ['Tah','ZAG',82,'BAY'],
-    ['Schlotterbeck','ZAG',83,'BVB'], ['Anton','ZAG',78,'BVB'], ['Süle','ZAG',75,'BVB'],
-    ['Tapsoba','ZAG',79,'LEV'], ['Quansah','ZAG',76,'LEV'], ['Badé','ZAG',76,'LEV'],
-    ['Lukeba','ZAG',80,'RBL'], ['Orbán','ZAG',75,'RBL'],
-    ['Koch','ZAG',77,'SGE'], ['Theate','ZAG',75,'SGE'],
-    ['Chabot','ZAG',75,'VFB'],
-    ['Ginter','ZAG',74,'SCF'], ['Lienhart','ZAG',74,'SCF'],
-    ['Kabak','ZAG',75,'TSG'], ['Szalai','ZAG',74,'TSG'],
-    ['Koulierakis','ZAG',72,'WOB'], ['Leitsch','ZAG',72,'MAI'],
-    ['Elvedi','ZAG',75,'BMG'], ['Itakura','ZAG',74,'BMG'],
-    ['Friedl','ZAG',73,'SVW'], ['Pieper','ZAG',72,'SVW'],
-    ['Uduokhai','ZAG',71,'FCA'], ['Doekhi','ZAG',72,'FCU'], ['Wahl','ZAG',71,'STP'],
-    ['Mainka','ZAG',70,'HDH'], ['Hübers','ZAG',70,'KOE'], ['Schonlau','ZAG',70,'HSV'],
-    // LAT (24)
-    ['Davies','LAT',82,'BAY'], ['Laimer','LAT',79,'BAY'],
-    ['Ryerson','LAT',75,'BVB'], ['Bensebaini','LAT',75,'BVB'],
-    ['Grimaldo','LAT',84,'LEV'], ['Hofmann','LAT',75,'LEV'],
-    ['Raum','LAT',79,'RBL'], ['Geertruida','LAT',77,'RBL'], ['Baku','LAT',74,'RBL'],
-    ['Nathaniel Brown','LAT',74,'SGE'], ['Kristensen','LAT',71,'SGE'],
-    ['Mittelstädt','LAT',77,'VFB'], ['Vagnoman','LAT',72,'VFB'],
-    ['Günter','LAT',73,'SCF'], ['Kübler','LAT',72,'SCF'],
-    ['Mæhle','LAT',73,'WOB'], ['Widmer','LAT',72,'MAI'],
-    ['Scally','LAT',72,'BMG'], ['Netz','LAT',71,'BMG'],
-    ['Weiser','LAT',74,'SVW'], ['Agu','LAT',72,'SVW'],
-    ['Trimmel','LAT',70,'FCU'], ['Carstensen','LAT',68,'KOE'], ['Muheim','LAT',71,'HSV'],
-    // MEI (32)
-    ['Kimmich','MEI',86,'BAY'], ['Musiala','MEI',88,'BAY'], ['Pavlović','MEI',80,'BAY'],
-    ['Brandt','MEI',78,'BVB'], ['Nmecha','MEI',77,'BVB'],
-    ['Palacios','MEI',78,'LEV'], ['Aleix García','MEI',78,'LEV'], ['Andrich','MEI',76,'LEV'],
-    ['Seiwald','MEI',77,'RBL'], ['Baumgartner','MEI',76,'RBL'],
-    ['Larsson','MEI',75,'SGE'], ['Götze','MEI',76,'SGE'],
-    ['Stiller','MEI',79,'VFB'], ['El Khannouss','MEI',77,'VFB'], ['Karazor','MEI',74,'VFB'],
-    ['Grifo','MEI',76,'SCF'], ['Prömel','MEI',73,'TSG'], ['Arnold','MEI',74,'WOB'],
-    ['Amiri','MEI',73,'MAI'], ['Reitz','MEI',72,'BMG'],
-    ['Stage','MEI',73,'SVW'], ['Romano Schmid','MEI',73,'SVW'],
-    ['Rieder','MEI',72,'FCA'], ['Rexhbecaj','MEI',70,'FCA'],
-    ['Khedira','MEI',72,'FCU'], ['Irvine','MEI',71,'STP'], ['Fujita','MEI',69,'STP'],
-    ['Schöppner','MEI',68,'HDH'], ['Kainz','MEI',70,'KOE'], ['Hüseinbasić','MEI',69,'KOE'],
-    ['Fábio Vieira','MEI',72,'HSV'], ['Pherai','MEI',70,'HSV'],
-    // ATA (28)
-    ['Kane','ATA',91,'BAY'], ['Olise','ATA',87,'BAY'], ['Luis Díaz','ATA',85,'BAY'],
-    ['Guirassy','ATA',83,'BVB'], ['Beier','ATA',77,'BVB'],
-    ['Schick','ATA',80,'LEV'], ['Tella','ATA',73,'LEV'],
-    ['Nusa','ATA',75,'RBL'], ['Diomande','ATA',74,'RBL'],
-    ['Burkardt','ATA',78,'SGE'], ['Knauff','ATA',72,'SGE'],
-    ['Undav','ATA',79,'VFB'], ['Führich','ATA',76,'VFB'],
-    ['Matanović','ATA',72,'SCF'],
-    ['Kramarić','ATA',76,'TSG'], ['Skov','ATA',74,'TSG'],
-    ['Amoura','ATA',77,'WOB'], ['Cerny','ATA',74,'WOB'],
-    ['Nebel','ATA',72,'MAI'], ['Kleindienst','ATA',75,'BMG'], ['Ducksch','ATA',75,'SVW'],
-    ['Kömür','ATA',70,'FCA'], ['Ilić','ATA',69,'FCU'], ['Afolayan','ATA',68,'STP'],
-    ['Dinkçi','ATA',71,'HDH'], ['Ache','ATA',72,'KOE'], ['El Mala','ATA',70,'KOE'],
-    ['Glatzel','ATA',70,'HSV']
+    ["Gregor Kobel","GOL",88,"BVB"],
+    ["Jonas Urbig","GOL",87,"BAY"],
+    ["Noah Atubolu","GOL",87,"SGE"],
+    ["Neuer","GOL",82,"BAY"],
+    ["Nübel","GOL",79,"VFB"],
+    ["Gulácsi","GOL",77,"RBL"],
+    ["Trapp","GOL",76,"SGE"],
+    ["Atubolu","GOL",76,"SCF"],
+    ["Flekken","GOL",75,"LEV"],
+    ["Baumann","GOL",75,"TSG"],
+    ["Zentner","GOL",73,"MAI"],
+    ["Nicolas","GOL",73,"BMG"],
+    ["Dahmen","GOL",73,"AUG"],
+    ["Rønnow","GOL",72,"FCU"],
+    ["Schwäbe","GOL",72,"KOE"],
+    ["Zetterer","GOL",71,"SVW"],
+    ["Heuer Fernandes","GOL",70,"HSV"],
+    ["Dayot Upamecano","ZAG",90,"BAY"],
+    ["Nico Schlotterbeck","ZAG",88,"BVB"],
+    ["Jarell Quansah","ZAG",84,"LEV"],
+    ["Castello Lukeba","ZAG",84,"RBL"],
+    ["Finn Jeltsch","ZAG",85,"VFB"],
+    ["Edmond Tapsoba","ZAG",85,"LEV"],
+    ["Joane Gadou","ZAG",86,"BVB"],
+    ["Maxime Estève","ZAG",86,"RBL"],
+    ["Jonathan Tah","ZAG",86,"BAY"],
+    ["Noahkai Banks","ZAG",85,"AUG"],
+    ["Albian Hajdari","ZAG",85,"TSG"],
+    ["Chrislain Matsima","ZAG",85,"AUG"],
+    ["Ramon Hendriks","ZAG",85,"VFB"],
+    ["Facundo Medina","ZAG",85,"LEV"],
+    ["Nnamdi Collins","ZAG",84,"SGE"],
+    ["Loïc Badé","ZAG",84,"LEV"],
+    ["Min-jae Kim","ZAG",84,"BAY"],
+    ["Kacper Potulski","ZAG",84,"MAI"],
+    ["Hiroki Ito","ZAG",84,"BAY"],
+    ["Waldemar Anton","ZAG",84,"BVB"],
+    ["Leopold Querfeld","ZAG",83,"FCU"],
+    ["Tah","ZAG",82,"BAY"],
+    ["Kim Min-jae","ZAG",80,"BAY"],
+    ["Koch","ZAG",77,"SGE"],
+    ["Süle","ZAG",75,"BVB"],
+    ["Orbán","ZAG",75,"RBL"],
+    ["Theate","ZAG",75,"SGE"],
+    ["Chabot","ZAG",75,"VFB"],
+    ["Nathaniel Brown","LAT",83,"BAY"],
+    ["Alphonso Davies","LAT",83,"BAY"],
+    ["Josip Stanisic","LAT",84,"BAY"],
+    ["Konrad Laimer","LAT",86,"BAY"],
+    ["Guéla Doué","LAT",86,"LEV"],
+    ["Miguel Gutiérrez","LAT",85,"LEV"],
+    ["David Raum","LAT",84,"RBL"],
+    ["Julian Ryerson","LAT",84,"BVB"],
+    ["Daniel Svensson","LAT",84,"BVB"],
+    ["Philipp Treu","LAT",83,"SCF"],
+    ["Maximilian Mittelstädt","LAT",83,"VFB"],
+    ["Grimaldo","LAT",84,"LEV"],
+    ["Geertruida","LAT",77,"RBL"],
+    ["Bensebaini","LAT",75,"BVB"],
+    ["Hofmann","LAT",75,"LEV"],
+    ["Baku","LAT",74,"RBL"],
+    ["Weiser","LAT",74,"SVW"],
+    ["Günter","LAT",73,"SCF"],
+    ["Vagnoman","LAT",72,"VFB"],
+    ["Kübler","LAT",72,"SCF"],
+    ["Widmer","LAT",72,"MAI"],
+    ["Scally","LAT",72,"BMG"],
+    ["Agu","LAT",72,"SVW"],
+    ["Kristensen","LAT",71,"SGE"],
+    ["Netz","LAT",71,"BMG"],
+    ["Muheim","LAT",71,"HSV"],
+    ["Trimmel","LAT",70,"FCU"],
+    ["Carstensen","LAT",68,"KOE"],
+    ["Aleksandar Pavlovic","MEI",88,"BAY"],
+    ["Jamal Musiala","MEI",89,"BAY"],
+    ["Felix Nmecha","MEI",88,"BVB"],
+    ["Lennart Karl","MEI",85,"BAY"],
+    ["Ismael Saibari","MEI",87,"BAY"],
+    ["Ibrahim Maza","MEI",83,"LEV"],
+    ["Can Uzun","MEI",83,"SGE"],
+    ["Tom Bischof","MEI",83,"BAY"],
+    ["Angelo Stiller","MEI",83,"VFB"],
+    ["Jobe Bellingham","MEI",84,"BVB"],
+    ["Kaishu Sano","MEI",84,"MAI"],
+    ["Christoph Baumgartner","MEI",84,"RBL"],
+    ["Konstantinos Karetsas","MEI",84,"BVB"],
+    ["Ethan Nwaneri","MEI",84,"BVB"],
+    ["Bilal El Khannouss","MEI",84,"VFB"],
+    ["Joshua Kimmich","MEI",84,"BAY"],
+    ["Leon Avdullahu","MEI",86,"TSG"],
+    ["Malik Tillman","MEI",86,"LEV"],
+    ["Neil El Aynaoui","MEI",86,"RBL"],
+    ["Brajan Gruda","MEI",85,"RBL"],
+    ["Nathan De Cat","MEI",85,"TSG"],
+    ["Nicolas Seiwald","MEI",84,"RBL"],
+    ["Joey Veerman","MEI",84,"BVB"],
+    ["Assan Ouédraogo","MEI",84,"RBL"],
+    ["Ezechiel Banzuzi","MEI",84,"RBL"],
+    ["Giannis Konstantelias","MEI",84,"BVB"],
+    ["Kennet Eichhorn","MEI",83,"LEV"],
+    ["Equi Fernández","MEI",83,"LEV"],
+    ["Rocco Reitz","MEI",83,"RBL"],
+    ["Wouter Burger","MEI",83,"TSG"],
+    ["Aleix García","MEI",83,"LEV"],
+    ["Paul Nebel","MEI",83,"MAI"],
+    ["Raphael Onyedika","MEI",82,"SGE"],
+    ["Nadiem Amiri","MEI",82,"MAI"],
+    ["Brandt","MEI",78,"BVB"],
+    ["Palacios","MEI",78,"LEV"],
+    ["Andrich","MEI",76,"LEV"],
+    ["Götze","MEI",76,"SGE"],
+    ["Grifo","MEI",76,"SCF"],
+    ["Larsson","MEI",75,"SGE"],
+    ["Karazor","MEI",74,"VFB"],
+    ["Prömel","MEI",73,"TSG"],
+    ["Stage","MEI",73,"SVW"],
+    ["Romano Schmid","MEI",73,"SVW"],
+    ["Reitz","MEI",72,"BMG"],
+    ["Rieder","MEI",72,"AUG"],
+    ["Khedira","MEI",72,"FCU"],
+    ["Fábio Vieira","MEI",72,"HSV"],
+    ["Michael Olise","ATA",94,"BAY"],
+    ["Luis Díaz","ATA",88,"BAY"],
+    ["Harry Kane","ATA",89,"BAY"],
+    ["Said El Mala","ATA",83,"KOE"],
+    ["Antonio Nusa","ATA",83,"RBL"],
+    ["Christian Kofane","ATA",84,"LEV"],
+    ["Jamie Leweling","ATA",84,"VFB"],
+    ["Maximilian Beier","ATA",84,"BVB"],
+    ["Serhou Guirassy","ATA",86,"BVB"],
+    ["Afonso Moreira","ATA",86,"LEV"],
+    ["Igor Matanovic","ATA",86,"SCF"],
+    ["Fisnik Asllani","ATA",86,"TSG"],
+    ["Rômulo","ATA",86,"RBL"],
+    ["Jonathan Burkardt","ATA",86,"SGE"],
+    ["Yuito Suzuki","ATA",85,"SCF"],
+    ["Dzenan Pejcinovic","ATA",84,"VFB"],
+    ["Moussa Diaby","ATA",84,"LEV"],
+    ["Christopher Nkunku","ATA",84,"RBL"],
+    ["Fábio Silva","ATA",84,"BVB"],
+    ["Ermedin Demirovic","ATA",84,"VFB"],
+    ["Deniz Undav","ATA",84,"VFB"],
+    ["Samuele Inácio","ATA",83,"BVB"],
+    ["Eliesse Ben Seghir","ATA",83,"LEV"],
+    ["Johan Bakayoko","ATA",83,"RBL"],
+    ["Derry Scherhant","ATA",83,"SCF"],
+    ["Mikey Moore","ATA",83,"KOE"],
+    ["Younes Ebnoutalib","ATA",83,"SGE"],
+    ["Patrik Schick","ATA",83,"LEV"],
+    ["Serge Gnabry","ATA",83,"BAY"],
+    ["Tim Lemperle","ATA",82,"TSG"],
+    ["Ritsu Doan","ATA",82,"SGE"],
+    ["Führich","ATA",76,"VFB"],
+    ["Kramarić","ATA",76,"TSG"],
+    ["Kleindienst","ATA",75,"BMG"],
+    ["Ducksch","ATA",75,"SVW"],
+    ["Diomande","ATA",74,"RBL"],
+    ["Skov","ATA",74,"TSG"],
+    ["Tella","ATA",73,"LEV"],
+    ["Knauff","ATA",72,"SGE"],
+    ["Ache","ATA",72,"KOE"],
+    ["Kömür","ATA",70,"AUG"],
+    ["Glatzel","ATA",70,"HSV"],
+    ["Ilić","ATA",69,"FCU"]
   ]
 });
 
 window.LIGAS = window.LIGAS || [];
 window.LIGAS.push({
-  id: 'fr', nome: 'Ligue 1', pais: 'França', bandeira: '🇫🇷',
-  clubes: [
-    ['PSG','PSG','#1a4b9b'], ['OLM','Marseille','#2faee0'], ['MON','Monaco','#e11b22'],
-    ['LIL','Lille','#d4102a'], ['OLY','Lyon','#1b3f94'], ['NIC','Nice','#a6192e'],
-    ['LEN','Lens','#f2c200'], ['REN','Rennes','#e30613'], ['STR','Strasbourg','#0071c5'],
-    ['TOU','Toulouse','#7a3b9e'], ['NAN','Nantes','#1d9a4b'], ['BRE','Brest','#d8232a'],
-    ['AUX','Auxerre','#1779c9'], ['ANG','Angers','#4b4b4b'], ['HAV','Le Havre','#5ba4e5'],
-    ['LOR','Lorient','#f47b20'], ['PFC','Paris FC','#2a5bd7'], ['MET','Metz','#8b1538']
-  ],
+  id: 'fr', nome: "Ligue 1", pais: "França", bandeira: '',
+  clubes: [["PSG","PSG","#004170"],["ASM","Monaco","#e30613"],["STR","Strasbourg","#0a6ebd"],["OLY","Lyon","#1e3f8f"],["REN","Rennes","#d4202c"],["LIL","Lille","#cf0a2c"],["RCL","Lens","#e5b200"],["PFC","Paris FC","#1a3a7a"],["OLM","Marseille","#2faee0"],["NIC","Nice","#d4202c"],["TOU","Toulouse","#7a3f9d"],["LOR","Lorient","#f58220"],["AUX","Auxerre","#1a63b5"],["BRE","Brest","#e30613"],["ANG","Angers","#333333"],["HAV","Le Havre","#4a9bd8"],["TRO","Troyes","#1a5fb4"],["LEM","Le Mans","#f2b705"]],
   jogadores: [
-    // GOL (18)
-    ['Chevalier','GOL',78,'PSG'], ['Safonov','GOL',74,'PSG'], ['Rulli','GOL',77,'OLM'],
-    ['Köhn','GOL',72,'MON'], ['Özer','GOL',74,'LIL'], ['Perri','GOL',73,'OLY'],
-    ['Bułka','GOL',74,'NIC'], ['Risser','GOL',74,'LEN'], ['Samba','GOL',74,'REN'],
-    ['Penders','GOL',72,'STR'], ['Restes','GOL',74,'TOU'], ['Anthony Lopes','GOL',71,'NAN'],
-    ['Bizot','GOL',73,'BRE'], ['Léon','GOL',70,'AUX'], ['Bernardoni','GOL',68,'ANG'],
-    ['Gorgelin','GOL',68,'HAV'], ['Mvogo','GOL',70,'LOR'], ['Fischer','GOL',67,'MET'],
-    // ZAG (30)
-    ['Marquinhos','ZAG',83,'PSG'], ['Pacho','ZAG',80,'PSG'], ['Zabarnyi','ZAG',75,'PSG'], ['Beraldo','ZAG',74,'PSG'],
-    ['Balerdi','ZAG',76,'OLM'], ['Medina','ZAG',76,'OLM'],
-    ['Kehrer','ZAG',74,'MON'], ['Salisu','ZAG',74,'MON'],
-    ['Diakité','ZAG',74,'LIL'], ['Mandi','ZAG',73,'LIL'], ['Ngoy','ZAG',71,'LIL'],
-    ['Niakhaté','ZAG',74,'OLY'], ['Ćaleta-Car','ZAG',73,'OLY'],
-    ['Dante','ZAG',68,'NIC'], ['Ndayishimiye','ZAG',72,'NIC'],
-    ['Gradit','ZAG',74,'LEN'], ['Malang Sarr','ZAG',71,'LEN'],
-    ['Jacquet','ZAG',76,'REN'], ['Wooh','ZAG',71,'REN'],
-    ['Doukouré','ZAG',72,'STR'], ['Mamadou Sarr','ZAG',72,'STR'],
-    ['Cresswell','ZAG',72,'TOU'], ['McKenzie','ZAG',72,'TOU'],
-    ['Awaziem','ZAG',69,'NAN'], ['Chardonnet','ZAG',70,'BRE'], ['Jubal','ZAG',70,'AUX'],
-    ['Lefort','ZAG',69,'ANG'], ['Sangante','ZAG',68,'HAV'], ['Talbi','ZAG',70,'LOR'],
-    ['Mbow','ZAG',68,'PFC'],
-    // LAT (24)
-    ['Hakimi','LAT',85,'PSG'], ['Nuno Mendes','LAT',85,'PSG'], ['Lucas Hernandez','LAT',77,'PSG'],
-    ['Merlin','LAT',75,'OLM'], ['Murillo','LAT',74,'OLM'],
-    ['Vanderson','LAT',76,'MON'], ['Caio Henrique','LAT',76,'MON'], ['Jakobs','LAT',74,'MON'],
-    ['Gudmundsson','LAT',74,'LIL'], ['Tiago Santos','LAT',73,'LIL'], ['Meunier','LAT',72,'LIL'],
-    ['Clinton Mata','LAT',72,'OLY'], ['Abner','LAT',71,'OLY'],
-    ['Clauss','LAT',73,'NIC'], ['Bard','LAT',72,'NIC'],
-    ['Frankowski','LAT',72,'LEN'], ['Assignon','LAT',71,'REN'], ['Guéla Doué','LAT',72,'STR'],
-    ['Suazo','LAT',71,'TOU'], ['Centonze','LAT',71,'NAN'], ['Lala','LAT',70,'BRE'],
-    ['Mensah','LAT',69,'AUX'], ['Négo','LAT',68,'HAV'], ['Udol','LAT',66,'MET'],
-    // MEI (32)
-    ['Vitinha','MEI',86,'PSG'], ['João Neves','MEI',83,'PSG'], ['Fabián Ruiz','MEI',82,'PSG'], ['Zaïre-Emery','MEI',79,'PSG'],
-    ['Højbjerg','MEI',77,'OLM'], ['O’Riley','MEI',76,'OLM'], ['Kondogbia','MEI',73,'OLM'],
-    ['Akliouche','MEI',78,'MON'], ['Lamine Camara','MEI',75,'MON'], ['Zakaria','MEI',76,'MON'], ['Golovin','MEI',75,'MON'],
-    ['André','MEI',74,'LIL'], ['Bouaddi','MEI',73,'LIL'],
-    ['Tessmann','MEI',74,'OLY'], ['Mangala','MEI',74,'OLY'], ['Šulc','MEI',76,'OLY'], ['Tolisso','MEI',72,'OLY'],
-    ['Boudaoui','MEI',72,'NIC'], ['Sanson','MEI',72,'NIC'],
-    ['Andy Diouf','MEI',74,'LEN'], ['Sangaré','MEI',74,'LEN'],
-    ['Mahdi Camara','MEI',74,'REN'], ['Rongier','MEI',73,'REN'],
-    ['Diarra','MEI',74,'STR'], ['Cásseres','MEI',72,'TOU'], ['Lepenant','MEI',69,'NAN'],
-    ['Lees-Melou','MEI',72,'BRE'], ['Abdelli','MEI',72,'ANG'], ['Abergel','MEI',68,'LOR'],
-    ['Kebbal','MEI',70,'PFC'], ['Munetsi','MEI',70,'PFC'], ['Hein','MEI',67,'MET'],
-    // ATA (28)
-    ['Dembélé','ATA',88,'PSG'], ['Kvaratskhelia','ATA',85,'PSG'], ['Désiré Doué','ATA',83,'PSG'], ['Barcola','ATA',81,'PSG'],
-    ['Greenwood','ATA',82,'OLM'], ['Gouiri','ATA',77,'OLM'], ['Paixão','ATA',76,'OLM'],
-    ['Balogun','ATA',78,'MON'], ['Ben Seghir','ATA',76,'MON'],
-    ['Igamane','ATA',72,'LIL'], ['Giroud','ATA',71,'LIL'],
-    ['Fofana','ATA',75,'OLY'], ['Lacazette','ATA',73,'OLY'],
-    ['Diop','ATA',73,'NIC'],
-    ['Thauvin','ATA',76,'LEN'], ['Saïd','ATA',72,'LEN'],
-    ['Blas','ATA',74,'REN'], ['Al-Tamari','ATA',73,'REN'],
-    ['Emegha','ATA',73,'STR'], ['Magri','ATA',71,'TOU'], ['Abline','ATA',71,'NAN'],
-    ['Del Castillo','ATA',70,'BRE'], ['Sinayoko','ATA',70,'AUX'], ['Chérif','ATA',69,'ANG'],
-    ['Soumaré','ATA',68,'HAV'], ['Pagis','ATA',68,'LOR'], ['Ikoné','ATA',69,'PFC'],
-    ['Papa Amadou Diallo','ATA',66,'MET']
+    ["Robin Risser","GOL",85,"RCL"],
+    ["Matvey Safonov","GOL",85,"PSG"],
+    ["Lucas Chevalier","GOL",88,"PSG"],
+    ["Guillaume Restes","GOL",87,"TOU"],
+    ["Filip Jørgensen","GOL",86,"STR"],
+    ["Berke Özer","GOL",84,"LIL"],
+    ["Rulli","GOL",77,"OLM"],
+    ["Bułka","GOL",74,"NIC"],
+    ["Samba","GOL",74,"REN"],
+    ["Perri","GOL",73,"OLY"],
+    ["Bizot","GOL",73,"BRE"],
+    ["Köhn","GOL",72,"ASM"],
+    ["Penders","GOL",72,"STR"],
+    ["Léon","GOL",70,"AUX"],
+    ["Mvogo","GOL",70,"LOR"],
+    ["Bernardoni","GOL",68,"ANG"],
+    ["Gorgelin","GOL",68,"HAV"],
+    ["Willian Pacho","ZAG",90,"PSG"],
+    ["Ilya Zabarnyi","ZAG",83,"PSG"],
+    ["Ismaëlo Ganiou","ZAG",82,"RCL"],
+    ["Karim Coulibaly","ZAG",84,"STR"],
+    ["Marquinhos","ZAG",84,"PSG"],
+    ["Samson Baidoo","ZAG",83,"RCL"],
+    ["Nathan Ngoy","ZAG",83,"LIL"],
+    ["Charlie Cresswell","ZAG",83,"REN"],
+    ["Lucas Beraldo","ZAG",85,"PSG"],
+    ["Jean-Clair Todibo","ZAG",85,"RCL"],
+    ["Abdelhamid Ait Boudlal","ZAG",84,"REN"],
+    ["Diego Coppola","ZAG",84,"PFC"],
+    ["Ismaël Doukouré","ZAG",84,"STR"],
+    ["Lucas Høgsberg","ZAG",84,"STR"],
+    ["Raphaël Le Guen","ZAG",83,"BRE"],
+    ["Christian Mawissa","ZAG",83,"ASM"],
+    ["Alexsandro","ZAG",83,"LIL"],
+    ["Nayef Aguerd","ZAG",83,"OLM"],
+    ["Moussa Niakhaté","ZAG",83,"OLY"],
+    ["Sadibou Sané","ZAG",81,"ASM"],
+    ["Anthony Rouault","ZAG",81,"REN"],
+    ["Balerdi","ZAG",76,"OLM"],
+    ["Medina","ZAG",76,"OLM"],
+    ["Jacquet","ZAG",76,"REN"],
+    ["Kehrer","ZAG",74,"ASM"],
+    ["Salisu","ZAG",74,"ASM"],
+    ["Diakité","ZAG",74,"LIL"],
+    ["Gradit","ZAG",74,"RCL"],
+    ["Nuno Mendes","LAT",89,"PSG"],
+    ["Achraf Hakimi","LAT",89,"PSG"],
+    ["Timothy Weah","LAT",83,"OLM"],
+    ["Vanderson","LAT",83,"ASM"],
+    ["Lucas Hernández","LAT",83,"PSG"],
+    ["Zachary Athekame","LAT",82,"OLY"],
+    ["Arsène Kouassi","LAT",82,"LOR"],
+    ["Quentin Merlin","LAT",82,"REN"],
+    ["Jordan Teze","LAT",82,"ASM"],
+    ["Caio Henrique","LAT",76,"ASM"],
+    ["Merlin","LAT",75,"OLM"],
+    ["Murillo","LAT",74,"OLM"],
+    ["Jakobs","LAT",74,"ASM"],
+    ["Gudmundsson","LAT",74,"LIL"],
+    ["Tiago Santos","LAT",73,"LIL"],
+    ["Clauss","LAT",73,"NIC"],
+    ["Meunier","LAT",72,"LIL"],
+    ["Clinton Mata","LAT",72,"OLY"],
+    ["Bard","LAT",72,"NIC"],
+    ["Frankowski","LAT",72,"RCL"],
+    ["Guéla Doué","LAT",72,"STR"],
+    ["Abner","LAT",71,"OLY"],
+    ["Assignon","LAT",71,"REN"],
+    ["Suazo","LAT",71,"TOU"],
+    ["Lala","LAT",70,"BRE"],
+    ["Mensah","LAT",69,"AUX"],
+    ["Négo","LAT",68,"HAV"],
+    ["João Neves","MEI",91,"PSG"],
+    ["Vitinha","MEI",92,"PSG"],
+    ["Warren Zaïre-Emery","MEI",86,"PSG"],
+    ["Lamine Camara","MEI",84,"ASM"],
+    ["Senny Mayulu","MEI",82,"PSG"],
+    ["Hákon Arnar Haraldsson","MEI",81,"LIL"],
+    ["Tyler Morton","MEI",81,"OLY"],
+    ["Fabián Ruiz","MEI",81,"PSG"],
+    ["Denis Zakaria","MEI",82,"ASM"],
+    ["Samir El Mourabet","MEI",84,"STR"],
+    ["Rudy Matondo","MEI",83,"PFC"],
+    ["Patrick Zabi","MEI",83,"PFC"],
+    ["Arthur Avom","MEI",83,"LOR"],
+    ["Kévin Danois","MEI",83,"AUX"],
+    ["Mamadou Coulibaly","MEI",83,"ASM"],
+    ["Pablo Pagis","MEI",83,"PFC"],
+    ["Pavel Sulc","MEI",83,"OLY"],
+    ["Aleksandr Golovin","MEI",83,"ASM"],
+    ["Alexis Vossah","MEI",82,"TOU"],
+    ["Dro Fernández","MEI",82,"PSG"],
+    ["Khalis Merah","MEI",82,"OLY"],
+    ["Noah Nartey","MEI",82,"OLY"],
+    ["Dário Essugo","MEI",82,"STR"],
+    ["Ngal'ayel Mukau","MEI",82,"LIL"],
+    ["Mads Bidstrup","MEI",82,"OLY"],
+    ["Sebastian Szymański","MEI",82,"REN"],
+    ["Pierre-Emile Højbjerg","MEI",82,"OLM"],
+    ["Cristian Cásseres Jr.","MEI",80,"TOU"],
+    ["Hicham Boudaoui","MEI",80,"NIC"],
+    ["Mahdi Camara","MEI",80,"REN"],
+    ["Akliouche","MEI",78,"ASM"],
+    ["O’Riley","MEI",76,"OLM"],
+    ["André","MEI",74,"LIL"],
+    ["Tessmann","MEI",74,"OLY"],
+    ["Mangala","MEI",74,"OLY"],
+    ["Andy Diouf","MEI",74,"RCL"],
+    ["Sangaré","MEI",74,"RCL"],
+    ["Diarra","MEI",74,"STR"],
+    ["Kondogbia","MEI",73,"OLM"],
+    ["Bouaddi","MEI",73,"LIL"],
+    ["Rongier","MEI",73,"REN"],
+    ["Tolisso","MEI",72,"OLY"],
+    ["Sanson","MEI",72,"NIC"],
+    ["Lees-Melou","MEI",72,"BRE"],
+    ["Abdelli","MEI",72,"ANG"],
+    ["Munetsi","MEI",70,"PFC"],
+    ["Abergel","MEI",68,"LOR"],
+    ["Khvicha Kvaratskhelia","ATA",92,"PSG"],
+    ["Désiré Doué","ATA",90,"PSG"],
+    ["Ousmane Dembélé","ATA",90,"PSG"],
+    ["Ferran Torres","ATA",84,"PSG"],
+    ["Maghnes Akliouche","ATA",83,"PSG"],
+    ["Folarin Balogun","ATA",83,"ASM"],
+    ["Estéban Lepaul","ATA",83,"REN"],
+    ["Mika Godts","ATA",82,"PSG"],
+    ["Joaquín Panichelli","ATA",81,"STR"],
+    ["Igor Paixão","ATA",81,"OLM"],
+    ["Amine Gouiri","ATA",81,"OLM"],
+    ["Dilane Bakwa","ATA",83,"LIL"],
+    ["Matthis Abline","ATA",82,"ASM"],
+    ["Loïs Openda","ATA",82,"OLY"],
+    ["Martial Godo","ATA",84,"STR"],
+    ["Mathys Detourbet","ATA",83,"ASM"],
+    ["Gessime Yassine","ATA",83,"STR"],
+    ["Mohamed Amoura","ATA",83,"NIC"],
+    ["Ayase Ueda","ATA",83,"LIL"],
+    ["Eliezer Mayenda","ATA",83,"REN"],
+    ["Elye Wahi","ATA",83,"NIC"],
+    ["Hamza Igamane","ATA",83,"LIL"],
+    ["Conrad Harder","ATA",82,"STR"],
+    ["Paris Brunner","ATA",82,"ASM"],
+    ["Franjo Ivanović","ATA",82,"RCL"],
+    ["Mika Biereth","ATA",82,"ASM"],
+    ["Ansu Fati","ATA",82,"ASM"],
+    ["Sebastian Nanasi","ATA",82,"STR"],
+    ["Sofiane Diop","ATA",82,"NIC"],
+    ["Lassine Sinayoko","ATA",82,"PFC"],
+    ["Ethan Mbappé","ATA",80,"LIL"],
+    ["Ernest Nuamah","ATA",80,"OLY"],
+    ["Keito Nakamura","ATA",80,"OLY"],
+    ["Ilan Kebbal","ATA",80,"PFC"],
+    ["Greenwood","ATA",82,"OLM"],
+    ["Barcola","ATA",81,"PSG"],
+    ["Ben Seghir","ATA",76,"ASM"],
+    ["Thauvin","ATA",76,"RCL"],
+    ["Fofana","ATA",75,"OLY"],
+    ["Blas","ATA",74,"REN"],
+    ["Lacazette","ATA",73,"OLY"],
+    ["Al-Tamari","ATA",73,"REN"],
+    ["Emegha","ATA",73,"STR"],
+    ["Saïd","ATA",72,"RCL"],
+    ["Giroud","ATA",71,"LIL"],
+    ["Magri","ATA",71,"TOU"],
+    ["Del Castillo","ATA",70,"BRE"],
+    ["Sinayoko","ATA",70,"AUX"]
   ]
 });
 
 window.LIGAS = window.LIGAS || [];
 window.LIGAS.push({
-  id: 'pt', nome: 'Primeira Liga', pais: 'Portugal', bandeira: '🇵🇹',
-  clubes: [
-    ['BEN','Benfica','#e30613'],
-    ['POR','Porto','#1f5fbf'],
-    ['SCP','Sporting CP','#00a650'],
-    ['SCB','Braga','#d71920'],
-    ['VSC','Vitória SC','#8a8a8a'],
-    ['FAM','Famalicão','#2a5db0'],
-    ['MOR','Moreirense','#0b8a46'],
-    ['EST','Estoril','#f2c500'],
-    ['GIL','Gil Vicente','#d62828'],
-    ['CPI','Casa Pia','#6b6b6b'],
-    ['ARO','Arouca','#e8b800'],
-    ['RAV','Rio Ave','#1c9c4a'],
-    ['SCL','Santa Clara','#c8102e'],
-    ['NAC','Nacional','#7a7a7a'],
-    ['EAM','Estrela da Amadora','#b22222'],
-    ['TON','Tondela','#2f9e44'],
-    ['ALV','Alverca','#e0392b'],
-    ['AVS','AVS','#2a9d8f']
-  ],
+  id: 'pt', nome: "Primeira Liga", pais: "Portugal", bandeira: '',
+  clubes: [["POR","Porto","#003c82"],["BEN","Benfica","#e30613"],["SPO","Sporting","#00794a"],["BRA","Braga","#d4202c"],["FAM","Famalicão","#1a3a8f"],["VSC","Vitória SC","#6b6b6b"],["ALV","Alverca","#d4202c"],["EST","Estrela da Amadora","#0a8a43"],["ETL","Estoril","#f2c200"],["RAV","Rio Ave","#0a8a43"],["ARO","Arouca","#f2c200"],["CPA","Casa Pia","#444444"],["MOR","Moreirense","#0a6b3a"],["GIL","Gil Vicente","#c8102e"],["SCL","Santa Clara","#b81d24"],["NAC","Nacional","#333333"],["AVI","Académico de Viseu","#444444"],["MAR","Marítimo","#0a6b3a"]],
   jogadores: [
-    // GOL
-    ['Rui Silva','GOL',80,'SCP'],
-    ['Trubin','GOL',80,'BEN'],
-    ['Diogo Costa','GOL',84,'POR'],
-    ['Hornicek','GOL',74,'SCB'],
-    ['Bruno Varela','GOL',73,'VSC'],
-    ['Zlobin','GOL',72,'FAM'],
-    ['Michael Veloso','GOL',69,'MOR'],
-    ['Joel Robles','GOL',70,'EST'],
-    ['Andrew','GOL',73,'GIL'],
-    ['Ricardo Batista','GOL',70,'CPI'],
-    ['Arruabarrena','GOL',70,'ARO'],
-    ['Jhonatan Luiz','GOL',71,'RAV'],
-    ['Gabriel Batista','GOL',72,'SCL'],
-    ['Daniel Figueira','GOL',69,'NAC'],
-    ['Kewin','GOL',69,'EAM'],
-    ['Cláudio Ramos','GOL',71,'TON'],
-    ['Ricardo Velho','GOL',70,'ALV'],
-    ['Bruno Brígido','GOL',69,'AVS'],
-    // ZAG
-    ['Gonçalo Inácio','ZAG',82,'SCP'],
-    ['Zeno Debast','ZAG',78,'SCP'],
-    ['Ousmane Diomande','ZAG',78,'SCP'],
-    ['St. Juste','ZAG',74,'SCP'],
-    ['Eduardo Quaresma','ZAG',76,'SCP'],
-    ['Otamendi','ZAG',77,'BEN'],
-    ['António Silva','ZAG',80,'BEN'],
-    ['Tomás Araújo','ZAG',76,'BEN'],
-    ['Lucas Veríssimo','ZAG',75,'BEN'],
-    ['Kiwior','ZAG',78,'POR'],
-    ['Nehuén Pérez','ZAG',77,'POR'],
-    ['Bednarek','ZAG',75,'POR'],
-    ['David Carmo','ZAG',75,'POR'],
-    ['Niakaté','ZAG',75,'SCB'],
-    ['Lagerbielke','ZAG',74,'SCB'],
-    ['Paulo Oliveira','ZAG',73,'SCB'],
-    ['Diogo Leite','ZAG',74,'SCB'],
-    ['Villanueva','ZAG',71,'VSC'],
-    ['Justin de Haas','ZAG',72,'FAM'],
-    ['Riccieli','ZAG',71,'FAM'],
-    ['Frederico Venâncio','ZAG',70,'MOR'],
-    ['Bernardo Vital','ZAG',69,'EST'],
-    ['Fernando Varela','ZAG',70,'CPI'],
-    ['Dantas','ZAG',69,'ARO'],
-    ['Aderllan Santos','ZAG',70,'RAV'],
-    ['Léo Realpe','ZAG',70,'NAC'],
-    ['Batubinsika','ZAG',70,'EAM'],
-    ['Fábio Cardoso','ZAG',70,'TON'],
-    ['Rúben Semedo','ZAG',70,'ALV'],
-    ['Luís Neto','ZAG',69,'AVS'],
-    // LAT
-    ['Maxi Araújo','LAT',79,'SCP'],
-    ['Matheus Reis','LAT',75,'SCP'],
-    ['Quenda','LAT',78,'SCP'],
-    ['Fresneda','LAT',75,'SCP'],
-    ['Nuno Santos','LAT',74,'SCP'],
-    ['Dedić','LAT',76,'BEN'],
-    ['Samuel Dahl','LAT',74,'BEN'],
-    ['Alexander Bah','LAT',74,'BEN'],
-    ['Alberto Costa','LAT',77,'POR'],
-    ['Francisco Moura','LAT',75,'POR'],
-    ['Martim Fernandes','LAT',74,'POR'],
-    ['João Mário','LAT',74,'POR'],
-    ['Víctor Gómez','LAT',75,'SCB'],
-    ['Sidny Cabral','LAT',72,'BEN'],
-    ['Zaidu','LAT',74,'POR'],
-    ['Ricardo Esgaio','LAT',71,'SCP'],
-    ['Maga','LAT',72,'VSC'],
-    ['Pedro Amaral','LAT',71,'MOR'],
-    ['Gonçalo Costa','LAT',70,'EST'],
-    ['Zé Carlos','LAT',70,'GIL'],
-    ['Serginho','LAT',70,'SCL'],
-    ['Tomás Tavares','LAT',71,'TON'],
-    ['Rúben Vinagre','LAT',71,'ALV'],
-    ['Ricardo Mangas','LAT',70,'AVS'],
-    // MEI
-    ['Hjulmand','MEI',82,'SCP'],
-    ['Pedro Gonçalves','MEI',83,'SCP'],
-    ['Daniel Bragança','MEI',77,'SCP'],
-    ['Morita','MEI',76,'SCP'],
-    ['Kökçü','MEI',80,'BEN'],
-    ['Aursnes','MEI',78,'BEN'],
-    ['Richard Ríos','MEI',76,'BEN'],
-    ['Florentino','MEI',77,'BEN'],
-    ['Leandro Barreiro','MEI',74,'BEN'],
-    ['Alan Varela','MEI',79,'POR'],
-    ['Froholdt','MEI',75,'POR'],
-    ['Gabri Veiga','MEI',76,'POR'],
-    ['Fábio Vieira','MEI',77,'POR'],
-    ['Rodrigo Mora','MEI',76,'POR'],
-    ['Zalazar','MEI',76,'SCB'],
-    ['Grillitsch','MEI',74,'SCB'],
-    ['João Moutinho','MEI',72,'SCB'],
-    ['Vítor Carvalho','MEI',73,'SCB'],
-    ['Tiago Silva','MEI',74,'VSC'],
-    ['Gustavo Sá','MEI',74,'FAM'],
-    ['Alan Schons','MEI',72,'MOR'],
-    ['Xeka','MEI',73,'EST'],
-    ['Fujimoto','MEI',72,'GIL'],
-    ['Holsgrove','MEI',71,'CPI'],
-    ['Alan Ruiz','MEI',71,'ARO'],
-    ['Guga','MEI',70,'RAV'],
-    ['Vinícius Lopes','MEI',71,'SCL'],
-    ['Witiness Quembo','MEI',70,'NAC'],
-    ['Tiago Dantas','MEI',72,'EAM'],
-    ['João Carvalho','MEI',71,'ALV'],
-    ['André Franco','MEI',70,'AVS'],
-    ['Tomás Händel','MEI',73,'VSC'],
-    // ATA
-    ['Trincão','ATA',80,'SCP'],
-    ['Luis Suárez','ATA',79,'SCP'],
-    ['Geny Catamo','ATA',75,'SCP'],
-    ['Ioannidis','ATA',74,'SCP'],
-    ['Di María','ATA',78,'BEN'],
-    ['Pavlidis','ATA',80,'BEN'],
-    ['Aktürkoğlu','ATA',78,'BEN'],
-    ['Schjelderup','ATA',76,'BEN'],
-    ['Samu','ATA',80,'POR'],
-    ['Pepê','ATA',78,'POR'],
-    ['Borja Sainz','ATA',75,'POR'],
-    ['Gonçalo Borges','ATA',74,'POR'],
-    ['Ricardo Horta','ATA',77,'SCB'],
-    ['Gabri Martínez','ATA',75,'SCB'],
-    ['Fran Navarro','ATA',73,'SCB'],
-    ['Nélson Oliveira','ATA',72,'VSC'],
-    ['Rodrigo Pinho','ATA',71,'FAM'],
-    ['Fábio Abreu','ATA',71,'MOR'],
-    ['Alejandro Marqués','ATA',71,'EST'],
-    ['Pablo Felipe','ATA',72,'GIL'],
-    ['Chiquinho','ATA',72,'CPI'],
-    ['Weverson','ATA',70,'ARO'],
-    ['Costinha','ATA',71,'RAV'],
-    ['Gabriel Silva','ATA',72,'SCL'],
-    ['Rafael Camacho','ATA',71,'NAC'],
-    ['Kévin Zohi','ATA',70,'EAM'],
-    ['Pedro Bondo','ATA',71,'TON'],
-    ['Diogo Gonçalves','ATA',70,'ALV']
+    ["Diogo Costa","GOL",89,"POR"],
+    ["Anatoliy Trubin","GOL",84,"BEN"],
+    ["Samuel Soares","GOL",83,"BEN"],
+    ["Bernardo","GOL",79,"BRA"],
+    ["Cezary Miszta","GOL",79,"RAV"],
+    ["Rui Silva","GOL",79,"SPO"],
+    ["Hornicek","GOL",74,"BRA"],
+    ["Bruno Varela","GOL",73,"VSC"],
+    ["Andrew","GOL",73,"GIL"],
+    ["Zlobin","GOL",72,"FAM"],
+    ["Gabriel Batista","GOL",72,"SCL"],
+    ["Jhonatan Luiz","GOL",71,"RAV"],
+    ["Joel Robles","GOL",70,"ETL"],
+    ["Ricardo Batista","GOL",70,"CPA"],
+    ["Arruabarrena","GOL",70,"ARO"],
+    ["Ricardo Velho","GOL",70,"ALV"],
+    ["Michael Veloso","GOL",69,"MOR"],
+    ["Daniel Figueira","GOL",69,"NAC"],
+    ["Kewin","GOL",69,"EST"],
+    ["Jakub Kiwior","ZAG",86,"POR"],
+    ["Tomás Araújo","ZAG",85,"BEN"],
+    ["Gonçalo Inácio","ZAG",85,"SPO"],
+    ["Zeno Debast","ZAG",80,"SPO"],
+    ["Ibrahima Ba","ZAG",81,"SPO"],
+    ["Alessandro Circati","ZAG",82,"BEN"],
+    ["Eduardo Quaresma","ZAG",81,"SPO"],
+    ["Jan Bednarek","ZAG",81,"POR"],
+    ["Nehuén Pérez","ZAG",80,"POR"],
+    ["Gustaf Lagerbielke","ZAG",80,"BRA"],
+    ["Bright Arrey-Mbi","ZAG",80,"BRA"],
+    ["Bastien Meupiyou","ZAG",78,"ALV"],
+    ["Andreas Ntoi","ZAG",76,"RAV"],
+    ["Léo Realpe","ZAG",76,"FAM"],
+    ["Sikou Niakaté","ZAG",76,"BRA"],
+    ["António Silva","ZAG",80,"BEN"],
+    ["Ousmane Diomande","ZAG",78,"SPO"],
+    ["Otamendi","ZAG",77,"BEN"],
+    ["Lucas Veríssimo","ZAG",75,"BEN"],
+    ["David Carmo","ZAG",75,"POR"],
+    ["St. Juste","ZAG",74,"SPO"],
+    ["Diogo Leite","ZAG",74,"BRA"],
+    ["Paulo Oliveira","ZAG",73,"BRA"],
+    ["Justin de Haas","ZAG",72,"FAM"],
+    ["Villanueva","ZAG",71,"VSC"],
+    ["Riccieli","ZAG",71,"FAM"],
+    ["Frederico Venâncio","ZAG",70,"MOR"],
+    ["Fernando Varela","ZAG",70,"CPA"],
+    ["Maxi Araújo","LAT",85,"SPO"],
+    ["Iván Fresneda","LAT",80,"SPO"],
+    ["Alberto Costa","LAT",81,"POR"],
+    ["Souffian El Karouani","LAT",82,"BEN"],
+    ["Samuel Dahl","LAT",81,"BEN"],
+    ["Souza","LAT",80,"POR"],
+    ["Martim Fernandes","LAT",80,"POR"],
+    ["Daniel Banjaqui","LAT",79,"BEN"],
+    ["Víctor Gómez","LAT",79,"BRA"],
+    ["Alexander Bah","LAT",79,"BEN"],
+    ["Francisco Moura","LAT",77,"POR"],
+    ["Diogo Travassos","LAT",76,"BRA"],
+    ["Georgios Vagiannidis","LAT",76,"SPO"],
+    ["Chissumba","LAT",75,"ALV"],
+    ["Rodrigo Pinheiro","LAT",75,"FAM"],
+    ["Quenda","LAT",78,"SPO"],
+    ["Dedić","LAT",76,"BEN"],
+    ["Matheus Reis","LAT",75,"SPO"],
+    ["Nuno Santos","LAT",74,"SPO"],
+    ["João Mário","LAT",74,"POR"],
+    ["Zaidu","LAT",74,"POR"],
+    ["Sidny Cabral","LAT",72,"BEN"],
+    ["Maga","LAT",72,"VSC"],
+    ["Ricardo Esgaio","LAT",71,"SPO"],
+    ["Pedro Amaral","LAT",71,"MOR"],
+    ["Rúben Vinagre","LAT",71,"ALV"],
+    ["Gonçalo Costa","LAT",70,"ETL"],
+    ["Zé Carlos","LAT",70,"GIL"],
+    ["Victor Froholdt","MEI",83,"POR"],
+    ["Gabri Veiga","MEI",84,"POR"],
+    ["Rodrigo Zalazar","MEI",81,"SPO"],
+    ["Alan Varela","MEI",80,"POR"],
+    ["Georgiy Sudakov","MEI",79,"BEN"],
+    ["Sergi Altimira","MEI",79,"SPO"],
+    ["Issa Doumbia","MEI",80,"SPO"],
+    ["Leandro Barreiro","MEI",80,"BEN"],
+    ["João Simões","MEI",82,"SPO"],
+    ["Claudio Echeverri","MEI",82,"BEN"],
+    ["Fredrik Aursnes","MEI",82,"BEN"],
+    ["João Palhinha","MEI",82,"BEN"],
+    ["Enzo Barrenechea","MEI",81,"BEN"],
+    ["Mathias de Amorim","MEI",80,"FAM"],
+    ["Tommy Marqués","MEI",79,"BRA"],
+    ["Demir Ege Tıknaz","MEI",79,"BRA"],
+    ["Mario Dorgeles","MEI",79,"BRA"],
+    ["Pablo Rosario","MEI",79,"POR"],
+    ["Gorby","MEI",79,"BRA"],
+    ["Ricardo Horta","MEI",79,"BRA"],
+    ["Seko Fofana","MEI",78,"POR"],
+    ["Silas Andersen","MEI",77,"SPO"],
+    ["In-beom Hwang","MEI",77,"POR"],
+    ["Taichi Fukui","MEI",76,"ARO"],
+    ["Manu Silva","MEI",76,"BEN"],
+    ["Eddy Doué","MEI",75,"EST"],
+    ["Diego Rodrigues","MEI",75,"BRA"],
+    ["Gonçalo Nogueira","MEI",75,"VSC"],
+    ["Alan","MEI",75,"VSC"],
+    ["Jordan Holsgrove","MEI",75,"ETL"],
+    ["João Carvalho","MEI",75,"ETL"],
+    ["Pedro Gonçalves","MEI",83,"SPO"],
+    ["Hjulmand","MEI",82,"SPO"],
+    ["Kökçü","MEI",80,"BEN"],
+    ["Daniel Bragança","MEI",77,"SPO"],
+    ["Florentino","MEI",77,"BEN"],
+    ["Fábio Vieira","MEI",77,"POR"],
+    ["Morita","MEI",76,"SPO"],
+    ["Richard Ríos","MEI",76,"BEN"],
+    ["Rodrigo Mora","MEI",76,"POR"],
+    ["Zalazar","MEI",76,"BRA"],
+    ["Grillitsch","MEI",74,"BRA"],
+    ["Tiago Silva","MEI",74,"VSC"],
+    ["Gustavo Sá","MEI",74,"FAM"],
+    ["Vítor Carvalho","MEI",73,"BRA"],
+    ["Xeka","MEI",73,"ETL"],
+    ["Tomás Händel","MEI",73,"VSC"],
+    ["João Moutinho","MEI",72,"BRA"],
+    ["Gianluca Prestianni","ATA",82,"BEN"],
+    ["Andreas Schjelderup","ATA",84,"BEN"],
+    ["Samu Aghehowa","ATA",84,"POR"],
+    ["Geny Catamo","ATA",84,"SPO"],
+    ["Vangelis Pavlidis","ATA",84,"BEN"],
+    ["William Gomes","ATA",81,"POR"],
+    ["Luis Suárez","ATA",81,"SPO"],
+    ["Oskar Pietuszewski","ATA",79,"POR"],
+    ["Borja Sainz","ATA",80,"POR"],
+    ["Santiago Gimenez","ATA",81,"POR"],
+    ["Jakub Kamiński","ATA",80,"BEN"],
+    ["Pepê","ATA",80,"POR"],
+    ["Gabriel Mec","ATA",81,"POR"],
+    ["Fotis Ioannidis","ATA",81,"SPO"],
+    ["Flávio Gonçalves","ATA",82,"SPO"],
+    ["Nestory Irankunda","ATA",82,"SPO"],
+    ["Jhon Durán","ATA",82,"BEN"],
+    ["Pau Víctor","ATA",82,"BRA"],
+    ["Dodi Lukébakio","ATA",82,"BEN"],
+    ["Luís Guilherme","ATA",80,"SPO"],
+    ["Yanis Begraoui","ATA",80,"ETL"],
+    ["Oumar Camara","ATA",78,"VSC"],
+    ["Jovan Milosevic","ATA",77,"BRA"],
+    ["Jeremy Arévalo","ATA",77,"EST"],
+    ["Gabri Martínez","ATA",77,"BRA"],
+    ["Gabriel Silva","ATA",77,"BRA"],
+    ["Matheus França","ATA",76,"ALV"],
+    ["Sorriso","ATA",76,"FAM"],
+    ["Anísio Cabral","ATA",75,"BEN"],
+    ["Georgios Koutsias","ATA",75,"FAM"],
+    ["Figueiredo","ATA",75,"ALV"],
+    ["Chiquinho","ATA",75,"ALV"],
+    ["André Silva","ATA",75,"POR"],
+    ["Trincão","ATA",80,"SPO"],
+    ["Di María","ATA",78,"BEN"],
+    ["Aktürkoğlu","ATA",78,"BEN"],
+    ["Gonçalo Borges","ATA",74,"POR"],
+    ["Fran Navarro","ATA",73,"BRA"],
+    ["Nélson Oliveira","ATA",72,"VSC"],
+    ["Pablo Felipe","ATA",72,"GIL"],
+    ["Rodrigo Pinho","ATA",71,"FAM"],
+    ["Fábio Abreu","ATA",71,"MOR"],
+    ["Alejandro Marqués","ATA",71,"ETL"],
+    ["Costinha","ATA",71,"RAV"],
+    ["Rafael Camacho","ATA",71,"NAC"],
+    ["Weverson","ATA",70,"ARO"],
+    ["Kévin Zohi","ATA",70,"EST"],
+    ["Diogo Gonçalves","ATA",70,"ALV"]
   ]
 });
 
 window.LIGAS = window.LIGAS || [];
 window.LIGAS.push({
-  id: 'nl', nome: 'Eredivisie', pais: 'Holanda', bandeira: '🇳🇱',
-  clubes: [
-    ['AJX','Ajax','#d2122e'],
-    ['PSV','PSV','#e63b2e'],
-    ['FEY','Feyenoord','#b81d24'],
-    ['AZA','AZ','#c8102e'],
-    ['TWE','Twente','#c62828'],
-    ['UTR','Utrecht','#d9202a'],
-    ['GAE','Go Ahead Eagles','#e6c200'],
-    ['SPA','Sparta','#b3262f'],
-    ['NEC','NEC','#1b7f43'],
-    ['HEE','Heerenveen','#1b4fa3'],
-    ['FOR','Fortuna Sittard','#6fb52c'],
-    ['PEC','PEC Zwolle','#3aa0e0'],
-    ['HER','Heracles','#7a7a7a'],
-    ['GRO','Groningen','#4caf50'],
-    ['NAC','NAC Breda','#f2c80f'],
-    ['EXC','Excelsior','#a71e22'],
-    ['TEL','Telstar','#bdbdbd'],
-    ['VOL','Volendam','#ff7f11']
-  ],
+  id: 'nl', nome: "Eredivisie", pais: "Holanda", bandeira: '',
+  clubes: [["PSV","PSV","#e30613"],["FEY","Feyenoord","#d4202c"],["AJA","Ajax","#d2122e"],["AZA","AZ","#d4202c"],["TWE","Twente","#d4202c"],["UTR","Utrecht","#d4202c"],["NEC","NEC","#0a8a43"],["HEE","Heerenveen","#1a5fb4"],["GRO","Groningen","#0a8a43"],["SPA","Sparta","#d4202c"],["PEC","PEC Zwolle","#1a5fb4"],["GAE","Go Ahead Eagles","#e5b200"],["WII","Willem II","#d4202c"],["EXC","Excelsior","#d4202c"],["ADO","ADO Den Haag","#0a8a43"],["FOR","Fortuna Sittard","#f2c200"],["CAM","Cambuur","#f2c200"],["TEL","Telstar","#555555"]],
   jogadores: [
-    // Goleiros
-    ['Pasveer','GOL',72,'AJX'],
-    ['Kovar','GOL',74,'PSV'],
-    ['Benítez','GOL',77,'PSV'],
-    ['Wellenreuther','GOL',72,'FEY'],
-    ['Owusu-Oduro','GOL',73,'AZA'],
-    ['Unnerstall','GOL',73,'TWE'],
-    ['Barkas','GOL',74,'UTR'],
-    ['De Busser','GOL',71,'GAE'],
-    ['Olij','GOL',71,'SPA'],
-    ['Noppert','GOL',72,'HEE'],
-    ['Branderhorst','GOL',69,'FOR'],
-    ['Van der Hart','GOL',70,'PEC'],
-    ['Jansink','GOL',69,'HER'],
-    ['Zoet','GOL',69,'GRO'],
-    ['Bielica','GOL',68,'NAC'],
-    ['Van Gassel','GOL',68,'EXC'],
-    ['Marsman','GOL',68,'TEL'],
-    ['Van der Haar','GOL',66,'VOL'],
-    // Zagueiros
-    ['Sutalo','ZAG',74,'AJX'],
-    ['Baas','ZAG',72,'AJX'],
-    ['Gasiorowski','ZAG',71,'PSV'],
-    ['Flamingo','ZAG',72,'PSV'],
-    ['Obispo','ZAG',72,'PSV'],
-    ['Trauner','ZAG',73,'FEY'],
-    ['Mitchell','ZAG',70,'FEY'],
-    ['Watanabe','ZAG',72,'FEY'],
-    ['Dekker','ZAG',72,'AZA'],
-    ['Penetra','ZAG',69,'AZA'],
-    ['Hilgers','ZAG',73,'TWE'],
-    ['Bruns','ZAG',70,'TWE'],
-    ['Nijstad','ZAG',69,'TWE'],
-    ['Van der Hoorn','ZAG',72,'UTR'],
-    ['Viergever','ZAG',70,'UTR'],
-    ['Kramer','ZAG',69,'GAE'],
-    ['Nauber','ZAG',70,'GAE'],
-    ['Vriends','ZAG',69,'SPA'],
-    ['Eerdhuijzen','ZAG',69,'SPA'],
-    ['Nuytinck','ZAG',72,'NEC'],
-    ['Sandler','ZAG',70,'NEC'],
-    ['Van Beek','ZAG',70,'HEE'],
-    ['Willemsen','ZAG',68,'HEE'],
-    ['Rosier','ZAG',68,'FOR'],
-    ['Anselmo','ZAG',68,'PEC'],
-    ['Rente','ZAG',68,'GRO'],
-    ['Blokzijl','ZAG',67,'GRO'],
-    ['Odenthal','ZAG',66,'NAC'],
-    ['Widell','ZAG',69,'EXC'],
-    ['El Yaakoubi','ZAG',67,'EXC'],
-    // Laterais e alas
-    ['Dest','LAT',74,'PSV'],
-    ['Perisic','LAT',73,'PSV'],
-    ['Teze','LAT',74,'PSV'],
-    ['Mauro Júnior','LAT',70,'PSV'],
-    ['Hugo Bueno','LAT',72,'FEY'],
-    ['Smal','LAT',71,'FEY'],
-    ['Lotomba','LAT',69,'FEY'],
-    ['Read','LAT',69,'FEY'],
-    ['Gaaei','LAT',70,'AJX'],
-    ['Rosa','LAT',69,'AJX'],
-    ['Wijndal','LAT',68,'AJX'],
-    ['Kasius','LAT',70,'AZA'],
-    ['Van Rooij','LAT',70,'TWE'],
-    ['Pleguezuelo','LAT',68,'TWE'],
-    ['El Karouani','LAT',70,'UTR'],
-    ['Ter Avest','LAT',69,'UTR'],
-    ['Horemans','LAT',68,'UTR'],
-    ['Dean James','LAT',71,'GAE'],
-    ['Köhn','LAT',70,'GAE'],
-    ['Sambo','LAT',70,'SPA'],
-    ['Verdonk','LAT',71,'NEC'],
-    ['Van Polen','LAT',68,'PEC'],
-    ['Hardeveld','LAT',67,'HER'],
-    ['Lartey Sanniez','LAT',66,'NAC'],
-    // Meio-campistas
-    ['Schouten','MEI',77,'PSV'],
-    ['Saibari','MEI',80,'PSV'],
-    ['Joey Veerman','MEI',77,'PSV'],
-    ['Timber','MEI',79,'FEY'],
-    ['Hwang In-beom','MEI',75,'FEY'],
-    ['Milambo','MEI',74,'FEY'],
-    ['Stengs','MEI',73,'FEY'],
-    ['Kenneth Taylor','MEI',74,'AJX'],
-    ['Klaassen','MEI',71,'AJX'],
-    ['Mokio','MEI',70,'AJX'],
-    ['Mijnans','MEI',75,'AZA'],
-    ['Kees Smit','MEI',72,'AZA'],
-    ['Goes','MEI',73,'AZA'],
-    ['Regeer','MEI',72,'TWE'],
-    ['Pröpper','MEI',71,'TWE'],
-    ['Victor Jensen','MEI',73,'UTR'],
-    ['Zechiël','MEI',72,'UTR'],
-    ['Bozdogan','MEI',72,'UTR'],
-    ['Willumsson','MEI',72,'GAE'],
-    ['Tielemans','MEI',70,'GAE'],
-    ['Metinho','MEI',72,'SPA'],
-    ['Kitolano','MEI',70,'SPA'],
-    ['Proper','MEI',72,'NEC'],
-    ['Brayann Pereira','MEI',71,'NEC'],
-    ['Van Amersfoort','MEI',70,'HEE'],
-    ['Thom Haye','MEI',72,'HEE'],
-    ['Namli','MEI',71,'PEC'],
-    ['Vloet','MEI',68,'HER'],
-    ['Resink','MEI',70,'GRO'],
-    ['Hartjes','MEI',68,'EXC'],
-    ['Mühren','MEI',68,'VOL'],
-    ['Van Helden','MEI',68,'TEL'],
-    // Atacantes
-    ['Bakayoko','ATA',79,'PSV'],
-    ['Pepi','ATA',73,'PSV'],
-    ['Bajraktarevic','ATA',74,'PSV'],
-    ['Hadj Moussa','ATA',75,'FEY'],
-    ['Ueda','ATA',74,'FEY'],
-    ['Sauer','ATA',73,'FEY'],
-    ['Godts','ATA',77,'AJX'],
-    ['Traoré','ATA',72,'AJX'],
-    ['Parrott','ATA',77,'AZA'],
-    ['Sadiq','ATA',71,'AZA'],
-    ['Rots','ATA',72,'TWE'],
-    ['Lammers','ATA',72,'TWE'],
-    ['Haller','ATA',76,'UTR'],
-    ['Cathline','ATA',72,'UTR'],
-    ['Antman','ATA',73,'GAE'],
-    ['Lauritsen','ATA',72,'SPA'],
-    ['Ogawa','ATA',72,'NEC'],
-    ['Tavsan','ATA',73,'NEC'],
-    ['Benita','ATA',70,'FOR'],
-    ['Duijvestijn','ATA',69,'FOR'],
-    ['Peterson','ATA',71,'PEC'],
-    ['Hansson','ATA',71,'HER'],
-    ['Van Bergen','ATA',70,'GRO'],
-    ['Kemper','ATA',68,'NAC'],
-    ['Azarkan','ATA',70,'EXC'],
-    ['Henk Veerman','ATA',70,'VOL'],
-    ['Haen','ATA',68,'TEL'],
-    ['Sierhuis','ATA',68,'TEL']
+    ["Matěj Kovář","GOL",82,"PSV"],
+    ["Tjark Ernst","GOL",80,"FEY"],
+    ["Gonzalo Crettaz","GOL",79,"NEC"],
+    ["Jari De Busser","GOL",79,"AZA"],
+    ["Benítez","GOL",77,"PSV"],
+    ["Barkas","GOL",74,"UTR"],
+    ["Owusu-Oduro","GOL",73,"AZA"],
+    ["Unnerstall","GOL",73,"TWE"],
+    ["Pasveer","GOL",72,"AJA"],
+    ["Wellenreuther","GOL",72,"FEY"],
+    ["Noppert","GOL",72,"HEE"],
+    ["De Busser","GOL",71,"GAE"],
+    ["Olij","GOL",71,"SPA"],
+    ["Van der Hart","GOL",70,"PEC"],
+    ["Branderhorst","GOL",69,"FOR"],
+    ["Zoet","GOL",69,"GRO"],
+    ["Van Gassel","GOL",68,"EXC"],
+    ["Marsman","GOL",68,"TEL"],
+    ["Lutsharel Geertruida","ZAG",79,"PSV"],
+    ["Ruud Nijstad","ZAG",79,"TWE"],
+    ["Youri Baas","ZAG",78,"AJA"],
+    ["Wouter Goes","ZAG",78,"AZA"],
+    ["Mika Mármol","ZAG",78,"FEY"],
+    ["Yarek Gąsiorowski","ZAG",80,"PSV"],
+    ["Ryan Flamingo","ZAG",80,"PSV"],
+    ["Aaron Bouwman","ZAG",79,"AJA"],
+    ["Tsuyoshi Watanabe","ZAG",79,"FEY"],
+    ["Thilo Kehrer","ZAG",79,"AJA"],
+    ["Dies Janse","ZAG",78,"AJA"],
+    ["Deveron Fonville","ZAG",77,"NEC"],
+    ["Stav Lemkin","ZAG",77,"TWE"],
+    ["Ahmetcan Kaplan","ZAG",77,"NEC"],
+    ["Armando Obispo","ZAG",77,"PSV"],
+    ["Thijs Kraaijeveld","ZAG",76,"FEY"],
+    ["Marvin Young","ZAG",76,"SPA"],
+    ["Maas Willemsen","ZAG",76,"HEE"],
+    ["Sutalo","ZAG",74,"AJA"],
+    ["Trauner","ZAG",73,"FEY"],
+    ["Hilgers","ZAG",73,"TWE"],
+    ["Dekker","ZAG",72,"AZA"],
+    ["Van der Hoorn","ZAG",72,"UTR"],
+    ["Nuytinck","ZAG",72,"NEC"],
+    ["Mitchell","ZAG",70,"FEY"],
+    ["Bruns","ZAG",70,"TWE"],
+    ["Viergever","ZAG",70,"UTR"],
+    ["Nauber","ZAG",70,"GAE"],
+    ["Givairo Read","LAT",81,"FEY"],
+    ["Sergiño Dest","LAT",82,"PSV"],
+    ["Mauro Júnior","LAT",78,"PSV"],
+    ["Jordan Bos","LAT",79,"FEY"],
+    ["Elijah Dijkstra","LAT",79,"AZA"],
+    ["Bart van Rooij","LAT",79,"TWE"],
+    ["Caio Henrique","LAT",79,"AJA"],
+    ["Mateo Chávez","LAT",78,"AZA"],
+    ["Kiliann Sildillia","LAT",77,"PSV"],
+    ["Denso Kasius","LAT",76,"AZA"],
+    ["Mees de Wit","LAT",76,"AZA"],
+    ["Gijs Smal","LAT",76,"FEY"],
+    ["Lushendry Martes","LAT",75,"SPA"],
+    ["Oliver Braude","LAT",75,"HEE"],
+    ["Anton Gaaei","LAT",75,"AJA"],
+    ["Javi López","LAT",75,"FEY"],
+    ["Lucas Rosa","LAT",75,"AJA"],
+    ["Teze","LAT",74,"PSV"],
+    ["Perisic","LAT",73,"PSV"],
+    ["Hugo Bueno","LAT",72,"FEY"],
+    ["Dean James","LAT",71,"GAE"],
+    ["Verdonk","LAT",71,"NEC"],
+    ["El Karouani","LAT",70,"UTR"],
+    ["Köhn","LAT",70,"GAE"],
+    ["Sambo","LAT",70,"SPA"],
+    ["Lotomba","LAT",69,"FEY"],
+    ["Ter Avest","LAT",69,"UTR"],
+    ["Wijndal","LAT",68,"AJA"],
+    ["Kees Smit","MEI",79,"AZA"],
+    ["Paul Wanner","MEI",79,"PSV"],
+    ["Gjivai Zechiël","MEI",78,"FEY"],
+    ["Kodai Sano","MEI",78,"PSV"],
+    ["Oussama Targhalline","MEI",77,"FEY"],
+    ["Jerdy Schouten","MEI",77,"PSV"],
+    ["Jorthy Mokio","MEI",77,"AJA"],
+    ["Peer Koopmeiners","MEI",77,"AZA"],
+    ["Sven Mijnans","MEI",77,"PSV"],
+    ["Guus Til","MEI",77,"PSV"],
+    ["Oscar Gloukh","MEI",79,"AJA"],
+    ["Noah Fernandez","MEI",79,"PSV"],
+    ["Julian Brandt","MEI",79,"AJA"],
+    ["Sem Steijn","MEI",80,"FEY"],
+    ["Yves Bissouma","MEI",79,"AJA"],
+    ["Abdellah Ouazane","MEI",78,"AJA"],
+    ["Alonzo Engwanda","MEI",78,"UTR"],
+    ["Sofyan Amrabat","MEI",78,"AJA"],
+    ["Thom van Bergen","MEI",77,"GRO"],
+    ["Marcus Linday","MEI",77,"HEE"],
+    ["Stije Resink","MEI",77,"AZA"],
+    ["Jakub Moder","MEI",77,"FEY"],
+    ["Charles Vanhoutte","MEI",77,"FEY"],
+    ["Younes Taha","MEI",77,"TWE"],
+    ["Ramiz Zerrouki","MEI",77,"TWE"],
+    ["Noé Lebreton","MEI",76,"NEC"],
+    ["Daouda Weidmann","MEI",76,"TWE"],
+    ["Rayane Bounida","MEI",75,"AJA"],
+    ["Valdemar Byskov","MEI",75,"AZA"],
+    ["Dave Kwakman","MEI",75,"AZA"],
+    ["Ringo Meerveld","MEI",75,"HEE"],
+    ["Darko Nejašmić","MEI",75,"NEC"],
+    ["Saibari","MEI",80,"PSV"],
+    ["Timber","MEI",79,"FEY"],
+    ["Joey Veerman","MEI",77,"PSV"],
+    ["Hwang In-beom","MEI",75,"FEY"],
+    ["Mijnans","MEI",75,"AZA"],
+    ["Milambo","MEI",74,"FEY"],
+    ["Kenneth Taylor","MEI",74,"AJA"],
+    ["Stengs","MEI",73,"FEY"],
+    ["Victor Jensen","MEI",73,"UTR"],
+    ["Regeer","MEI",72,"TWE"],
+    ["Zechiël","MEI",72,"UTR"],
+    ["Bozdogan","MEI",72,"UTR"],
+    ["Willumsson","MEI",72,"GAE"],
+    ["Metinho","MEI",72,"SPA"],
+    ["Proper","MEI",72,"NEC"],
+    ["Thom Haye","MEI",72,"HEE"],
+    ["Ricardo Pepi","ATA",84,"PSV"],
+    ["Anis Hadj Moussa","ATA",83,"FEY"],
+    ["Luciano Valente","ATA",82,"FEY"],
+    ["Simon Adingra","ATA",82,"AJA"],
+    ["Tolu Arokodare","ATA",82,"AJA"],
+    ["Ruben van Bommel","ATA",78,"PSV"],
+    ["Marcos Leonardo","ATA",77,"AJA"],
+    ["Sondre Ørjasæter","ATA",77,"TWE"],
+    ["Viktor Tsygankov","ATA",77,"AJA"],
+    ["Mexx Meerdink","ATA",79,"AZA"],
+    ["Dennis Man","ATA",79,"PSV"],
+    ["Artem Stepanov","ATA",79,"UTR"],
+    ["Esmir Bajraktarevic","ATA",79,"PSV"],
+    ["Nacho Ferri","ATA",79,"FEY"],
+    ["Jacob Trenskow","ATA",78,"HEE"],
+    ["Sami Ouaissa","ATA",78,"PSV"],
+    ["Ro-Zangelo Daal","ATA",78,"AZA"],
+    ["Reiss Nelson","ATA",78,"FEY"],
+    ["Kasper Dolberg","ATA",77,"AJA"],
+    ["Jacob Ondrejka","ATA",76,"GRO"],
+    ["Chido Obi","ATA",75,"WII"],
+    ["Andrej Kostić","ATA",75,"SPA"],
+    ["Shaqueel van Persie","ATA",75,"FEY"],
+    ["Filip Thorvaldsen","ATA",75,"TWE"],
+    ["Marius Broholm","ATA",75,"UTR"],
+    ["David Werff","ATA",75,"GRO"],
+    ["Ángel Alarcón","ATA",75,"UTR"],
+    ["Weslley Patati","ATA",75,"AZA"],
+    ["Calvin Stengs","ATA",75,"AZA"],
+    ["Bakayoko","ATA",79,"PSV"],
+    ["Godts","ATA",77,"AJA"],
+    ["Parrott","ATA",77,"AZA"],
+    ["Haller","ATA",76,"UTR"],
+    ["Ueda","ATA",74,"FEY"],
+    ["Sauer","ATA",73,"FEY"],
+    ["Antman","ATA",73,"GAE"],
+    ["Tavsan","ATA",73,"NEC"],
+    ["Traoré","ATA",72,"AJA"],
+    ["Rots","ATA",72,"TWE"],
+    ["Lammers","ATA",72,"TWE"],
+    ["Cathline","ATA",72,"UTR"],
+    ["Lauritsen","ATA",72,"SPA"],
+    ["Ogawa","ATA",72,"NEC"],
+    ["Sadiq","ATA",71,"AZA"],
+    ["Peterson","ATA",71,"PEC"],
+    ["Benita","ATA",70,"FOR"],
+    ["Azarkan","ATA",70,"EXC"],
+    ["Duijvestijn","ATA",69,"FOR"]
   ]
 });
 
 window.LIGAS = window.LIGAS || [];
 window.LIGAS.push({
-  id: 'ar', nome: 'Liga Profesional', pais: 'Argentina', bandeira: '🇦🇷',
-  clubes: [
-    ['RIV','River Plate','#d71920'], ['BOC','Boca Juniors','#0a3c8c'], ['RAC','Racing','#6cc4ee'], ['IND','Independiente','#d4001a'],
-    ['SLO','San Lorenzo','#003a70'], ['EST','Estudiantes','#c40000'], ['VEL','Vélez','#1b5aa8'], ['TAL','Talleres','#143d8f'],
-    ['LAN','Lanús','#8b1f3e'], ['BAN','Banfield','#2e7d32'], ['ARG','Argentinos Juniors','#b5121b'], ['ROC','Rosario Central','#e0b400'],
-    ['NEW','Newell’s','#a80f17'], ['DEF','Defensa y Justicia','#c9b100'], ['HUR','Huracán','#c7c7c7'], ['GOD','Godoy Cruz','#0d3b8c'],
-    ['BEL','Belgrano','#4aa3df'], ['TIG','Tigre','#1a3a8a'], ['PLA','Platense','#7a4a21'], ['CCO','Central Córdoba','#222222'],
-    ['INS','Instituto','#d4001a'], ['GIM','Gimnasia LP','#1e3a8a'], ['SAR','Sarmiento','#2e8b57'], ['ATU','Atlético Tucumán','#5aa7e0'],
-    ['BAR','Barracas Central','#b00020'], ['UNI','Unión','#c8102e'], ['IRI','Independiente Rivadavia','#0033a0'], ['ALD','Aldosivi','#e0b800'],
-    ['RIE','Riestra','#333333'], ['SMS','San Martín SJ','#1a1a1a']
-  ],
+  id: 'ar', nome: "Liga Profesional", pais: "Argentina", bandeira: '',
+  clubes: [["RIV","River Plate","#d4202c"],["BOC","Boca Juniors","#0b3a82"],["VEL","Vélez","#1a5fb4"],["TAL","Talleres","#1a3a8f"],["SLO","San Lorenzo","#1a3a8f"],["RAC","Racing Club","#6cb7e8"],["LAN","Lanús","#8a1538"],["TIG","Tigre","#1a3a8f"],["EDL","Estudiantes","#d4202c"],["NOB","Newell's","#c8102e"],["DYJ","Defensa y Justicia","#d4b800"],["HUR","Huracán","#d4202c"],["ARG","Argentinos Juniors","#d4202c"],["ROS","Rosario Central","#1a3a8f"],["BAN","Banfield","#0a8a43"],["ATU","Atlético Tucumán","#6cb7e8"],["PLA","Platense","#6b4b2a"],["BEL","Belgrano","#6cb7e8"],["GYE","Gimnasia LP","#1a3a8f"],["CCO","Central Córdoba","#333333"],["IND","Independiente","#d4202c"],["GOD","Godoy Cruz","#1a3a8f"],["IRI","Independiente Rivadavia","#1a3a8f"],["INS","Instituto","#d4202c"],["BAC","Barracas Central","#d4202c"],["UNI","Unión","#d4202c"],["SAR","Sarmiento","#0a8a43"],["RIE","Riestra","#333333"]],
   jogadores: [
-    // Goleiros
-    ['Armani','GOL',79,'RIV'], ['Marchesín','GOL',76,'BOC'], ['Gabriel Arias','GOL',76,'RAC'], ['Rodrigo Rey','GOL',74,'IND'],
-    ['Orlando Gill','GOL',73,'SLO'], ['Muslera','GOL',77,'EST'], ['Lucas Hoyos','GOL',71,'VEL'], ['Guido Herrera','GOL',72,'TAL'],
-    ['Nahuel Losada','GOL',71,'LAN'], ['Cambeses','GOL',70,'BAN'], ['Federico Vera','GOL',69,'ARG'], ['Ledesma','GOL',73,'ROC'],
-    ['Keylor Navas','GOL',76,'NEW'], ['Galíndez','GOL',71,'HUR'], ['Petroli','GOL',69,'GOD'], ['Gonzalo Marinelli','GOL',70,'TIG'],
-    ['Mansilla','GOL',70,'UNI'], ['Insfrán','GOL',68,'GIM'],
-    // Zagueiros
-    ['Paulo Díaz','ZAG',77,'RIV'], ['Martínez Quarta','ZAG',78,'RIV'], ['Lautaro Rivero','ZAG',74,'RIV'], ['Pellegrino','ZAG',76,'BOC'],
-    ['Ayrton Costa','ZAG',73,'BOC'], ['Di Lollo','ZAG',73,'BOC'], ['Di Césare','ZAG',72,'RAC'], ['García Basso','ZAG',72,'RAC'],
-    ['Lomónaco','ZAG',72,'IND'], ['Gattoni','ZAG',71,'SLO'], ['Mancuso','ZAG',73,'EST'], ['González Pirez','ZAG',72,'EST'],
-    ['Valentín Gómez','ZAG',74,'VEL'], ['Izquierdoz','ZAG',72,'LAN'], ['Sández','ZAG',71,'ROC'], ['Mallo','ZAG',71,'ROC'],
-    ['Coronel','ZAG',69,'BAN'], ['Dómina','ZAG',69,'NEW'], ['Amor','ZAG',69,'DEF'], ['Mosevich','ZAG',69,'GOD'],
-    ['Novillo','ZAG',70,'BEL'], ['Piovi','ZAG',67,'CCO'], ['Morales','ZAG',68,'GIM'], ['Mammana','ZAG',67,'SAR'],
-    ['Garcés','ZAG',68,'ATU'], ['Nehuén Paz','ZAG',67,'BAR'], ['Calderón','ZAG',69,'UNI'], ['Valentini','ZAG',68,'ALD'],
-    ['Fattori','ZAG',66,'RIE'], ['Forlín','ZAG',66,'SMS'],
-    // Laterais e alas
-    ['Gonzalo Montiel','LAT',77,'RIV'], ['Marcos Acuña','LAT',78,'RIV'], ['Weigandt','LAT',74,'BOC'], ['Lautaro Blanco','LAT',73,'BOC'],
-    ['Advíncula','LAT',72,'BOC'], ['Facundo Mura','LAT',73,'RAC'], ['Gabriel Rojas','LAT',73,'RAC'], ['Fabricio Bustos','LAT',74,'IND'],
-    ['Tripichio','LAT',70,'SLO'], ['Elías Gómez','LAT',71,'VEL'], ['Monzón','LAT',71,'VEL'], ['Blas Riveros','LAT',71,'TAL'],
-    ['Kevin Mac Allister','LAT',71,'ARG'], ['Cannavo','LAT',69,'DEF'], ['Buffarini','LAT',70,'BEL'], ['Insúa','LAT',69,'BEL'],
-    ['Arzamendia','LAT',69,'TIG'], ['Julio Soler','LAT',67,'CCO'], ['Matías Catalán','LAT',68,'SAR'], ['Barinaga','LAT',68,'ATU'],
-    ['Blondel','LAT',68,'BAR'], ['Chicco','LAT',67,'ALD'], ['Di Plácido','LAT',67,'RIE'], ['Tomás Cardona','LAT',66,'SMS'],
-    // Meias e volantes
-    ['Nacho Fernández','MEI',77,'RIV'], ['Juanfer Quintero','MEI',77,'RIV'], ['Paredes','MEI',79,'BOC'], ['Ander Herrera','MEI',75,'BOC'],
-    ['Zenón','MEI',74,'BOC'], ['Santiago Sosa','MEI',75,'RAC'], ['Nardoni','MEI',74,'RAC'], ['Felipe Loyola','MEI',74,'IND'],
-    ['Marcone','MEI',72,'IND'], ['Muniain','MEI',73,'SLO'], ['Ascacíbar','MEI',75,'EST'], ['Gabriel Neves','MEI',73,'EST'],
-    ['Claudio Aquino','MEI',73,'VEL'], ['Portilla','MEI',71,'TAL'], ['Villagra','MEI',74,'TAL'], ['Marcelino Moreno','MEI',73,'LAN'],
-    ['Malcorra','MEI',72,'ROC'], ['Lescano','MEI',70,'ARG'], ['Goitea','MEI',71,'NEW'], ['Maestro Puch','MEI',71,'HUR'],
-    ['Franco Vázquez','MEI',70,'BEL'], ['Bullaude','MEI',69,'TIG'], ['Baldassarra','MEI',69,'PLA'], ['Kalinski','MEI',68,'CCO'],
-    ['Requena','MEI',68,'INS'], ['Gaibor','MEI',69,'GIM'], ['Lucas Esquivel','MEI',67,'SAR'], ['Franco Ibarra','MEI',67,'BAR'],
-    ['Estigarribia','MEI',70,'UNI'], ['Giaccone','MEI',69,'IRI'], ['Sforza','MEI',66,'RIE'], ['Menossi','MEI',66,'SMS'],
-    // Atacantes e pontas
-    ['Colidio','ATA',76,'RIV'], ['Driussi','ATA',78,'RIV'], ['Merentiel','ATA',77,'BOC'], ['Cavani','ATA',76,'BOC'],
-    ['Adrián Martínez','ATA',77,'RAC'], ['Ávalos','ATA',72,'IND'], ['Alan Velasco','ATA',74,'IND'], ['Cerutti','ATA',72,'SLO'],
-    ['Alario','ATA',74,'EST'], ['Cetré','ATA',73,'EST'], ['Janson','ATA',73,'VEL'], ['Girotti','ATA',74,'TAL'],
-    ['Rodrigo Castillo','ATA',73,'LAN'], ['Di María','ATA',80,'ROC'], ['Alan Marinelli','ATA',72,'ROC'], ['Auzmendi','ATA',70,'BAN'],
-    ['Urzi','ATA',70,'BAN'], ['Togni','ATA',69,'DEF'], ['Vombergar','ATA',71,'HUR'], ['Badaloni','ATA',69,'GOD'],
-    ['Ronaldo Martínez','ATA',71,'PLA'], ['Mierez','ATA',70,'PLA'], ['Mammini','ATA',70,'INS'], ['Brochero','ATA',69,'INS'],
-    ['Leandro Díaz','ATA',68,'ATU'], ['Sebastián Villa','ATA',76,'IRI'], ['Alex Arce','ATA',72,'IRI'], ['Ruiz Rodríguez','ATA',67,'ALD']
+    ["Santiago Beltrán","GOL",80,"RIV"],
+    ["Facundo Cambeses","GOL",77,"RAC"],
+    ["Felipe Zenobio","GOL",77,"TIG"],
+    ["Juan Pablo Cozzani","GOL",77,"PLA"],
+    ["Thiago Cardozo","GOL",77,"BEL"],
+    ["Nicolás Bolcato","GOL",76,"IRI"],
+    ["Nahuel Losada","GOL",76,"LAN"],
+    ["Armani","GOL",79,"RIV"],
+    ["Muslera","GOL",77,"EDL"],
+    ["Marchesín","GOL",76,"BOC"],
+    ["Gabriel Arias","GOL",76,"RAC"],
+    ["Keylor Navas","GOL",76,"NOB"],
+    ["Rodrigo Rey","GOL",74,"IND"],
+    ["Orlando Gill","GOL",73,"SLO"],
+    ["Ledesma","GOL",73,"ROS"],
+    ["Guido Herrera","GOL",72,"TAL"],
+    ["Lucas Hoyos","GOL",71,"VEL"],
+    ["Galíndez","GOL",71,"HUR"],
+    ["Cambeses","GOL",70,"BAN"],
+    ["Gonzalo Marinelli","GOL",70,"TIG"],
+    ["Mansilla","GOL",70,"UNI"],
+    ["Federico Vera","GOL",69,"ARG"],
+    ["Petroli","GOL",69,"GOD"],
+    ["Insfrán","GOL",68,"GYE"],
+    ["Ignacio Ovando","ZAG",75,"ROS"],
+    ["Tomás Palacios","ZAG",77,"EDL"],
+    ["Lautaro Di Lollo","ZAG",73,"BOC"],
+    ["Lautaro Rivero","ZAG",72,"RIV"],
+    ["Sheyko Studer","ZAG",72,"IRI"],
+    ["Francisco Álvarez","ZAG",73,"ARG"],
+    ["Facundo Herrera","ZAG",74,"BOC"],
+    ["Thiago Silvero","ZAG",74,"VEL"],
+    ["Marco Di Césare","ZAG",74,"RAC"],
+    ["Ayrton Costa","ZAG",74,"BOC"],
+    ["Santiago Fernández","ZAG",76,"TAL"],
+    ["Lucas Martínez Quarta","ZAG",75,"RIV"],
+    ["Tobías Ramírez","ZAG",74,"RIV"],
+    ["Marco Pellegrino","ZAG",74,"BOC"],
+    ["Gastón Ávila","ZAG",74,"ROS"],
+    ["Gastón Hernández","ZAG",74,"SLO"],
+    ["Kevin Jappert","ZAG",74,"BAC"],
+    ["Juan Carlos Portillo","ZAG",74,"RIV"],
+    ["Paulo Díaz","ZAG",77,"RIV"],
+    ["Valentín Gómez","ZAG",74,"VEL"],
+    ["Mancuso","ZAG",73,"EDL"],
+    ["García Basso","ZAG",72,"RAC"],
+    ["Lomónaco","ZAG",72,"IND"],
+    ["González Pirez","ZAG",72,"EDL"],
+    ["Izquierdoz","ZAG",72,"LAN"],
+    ["Gattoni","ZAG",71,"SLO"],
+    ["Sández","ZAG",71,"ROS"],
+    ["Mallo","ZAG",71,"ROS"],
+    ["Francisco Ortega","LAT",72,"RIV"],
+    ["Gonzalo Montiel","LAT",75,"RIV"],
+    ["Simón Escobar","LAT",74,"VEL"],
+    ["Lautaro Blanco","LAT",74,"BOC"],
+    ["Leandro Lozano","LAT",74,"BOC"],
+    ["Dylan Gorosito","LAT",73,"BOC"],
+    ["Lautaro Vargas","LAT",73,"UNI"],
+    ["Ezequiel Cannavo","LAT",72,"RAC"],
+    ["Joaquín García","LAT",72,"VEL"],
+    ["Sasha Marcich","LAT",72,"LAN"],
+    ["Marcos Acuña","LAT",78,"RIV"],
+    ["Weigandt","LAT",74,"BOC"],
+    ["Fabricio Bustos","LAT",74,"IND"],
+    ["Facundo Mura","LAT",73,"RAC"],
+    ["Gabriel Rojas","LAT",73,"RAC"],
+    ["Advíncula","LAT",72,"BOC"],
+    ["Elías Gómez","LAT",71,"VEL"],
+    ["Monzón","LAT",71,"VEL"],
+    ["Blas Riveros","LAT",71,"TAL"],
+    ["Kevin Mac Allister","LAT",71,"ARG"],
+    ["Tripichio","LAT",70,"SLO"],
+    ["Buffarini","LAT",70,"BEL"],
+    ["Cannavo","LAT",69,"DYJ"],
+    ["Insúa","LAT",69,"BEL"],
+    ["Arzamendia","LAT",69,"TIG"],
+    ["Matías Catalán","LAT",68,"SAR"],
+    ["Barinaga","LAT",68,"ATU"],
+    ["Blondel","LAT",68,"BAC"],
+    ["Thiago Almada","MEI",81,"RIV"],
+    ["Tomás Aranda","MEI",75,"BOC"],
+    ["Tobías Andrada","MEI",74,"RIV"],
+    ["Milton Delgado","MEI",76,"BOC"],
+    ["Valentín Carboni","MEI",72,"RAC"],
+    ["Aníbal Moreno","MEI",72,"RIV"],
+    ["Nicolás Barros Schelotto","MEI",71,"GYE"],
+    ["Alex Luna","MEI",71,"INS"],
+    ["Franco Ibarra","MEI",71,"ROS"],
+    ["Mauro Arambarri","MEI",71,"RIV"],
+    ["Leonel Pérez","MEI",72,"RAC"],
+    ["Matías Galarza","MEI",72,"TAL"],
+    ["Santiago Ascacíbar","MEI",72,"BOC"],
+    ["Matías Fernández","MEI",73,"IRI"],
+    ["Hernán López Muñoz","MEI",73,"ARG"],
+    ["Leandro Paredes","MEI",73,"BOC"],
+    ["Vicente Pizarro","MEI",75,"ROS"],
+    ["Fausto Vera","MEI",75,"RIV"],
+    ["Agustín Medina","MEI",74,"LAN"],
+    ["Luca Regiardo","MEI",74,"NOB"],
+    ["Santiago Sosa","MEI",74,"DYJ"],
+    ["Baltasar Rodríguez","MEI",74,"EDL"],
+    ["Matko Miljevic","MEI",74,"RAC"],
+    ["Tomás Galván","MEI",74,"RIV"],
+    ["Marcelino Moreno","MEI",74,"LAN"],
+    ["Gastón Lodico","MEI",74,"RAC"],
+    ["Facundo Guch","MEI",73,"NOB"],
+    ["Miguel Monsalve","MEI",73,"EDL"],
+    ["Matías Zaracho","MEI",73,"RAC"],
+    ["Franco Cristaldo","MEI",73,"TAL"],
+    ["Aarón Molinas","MEI",73,"DYJ"],
+    ["Jabes Saralegui","MEI",72,"TIG"],
+    ["César Pérez","MEI",72,"DYJ"],
+    ["Adrián Sánchez","MEI",72,"BEL"],
+    ["Tomás Belmonte","MEI",72,"BOC"],
+    ["Nacho Fernández","MEI",77,"RIV"],
+    ["Juanfer Quintero","MEI",77,"RIV"],
+    ["Ander Herrera","MEI",75,"BOC"],
+    ["Ascacíbar","MEI",75,"EDL"],
+    ["Zenón","MEI",74,"BOC"],
+    ["Nardoni","MEI",74,"RAC"],
+    ["Felipe Loyola","MEI",74,"IND"],
+    ["Villagra","MEI",74,"TAL"],
+    ["Muniain","MEI",73,"SLO"],
+    ["Gabriel Neves","MEI",73,"EDL"],
+    ["Claudio Aquino","MEI",73,"VEL"],
+    ["Marcone","MEI",72,"IND"],
+    ["Malcorra","MEI",72,"ROS"],
+    ["Leonel Flores","ATA",73,"BOC"],
+    ["Lucas Beltrán","ATA",76,"RIV"],
+    ["Ángel Correa","ATA",77,"RIV"],
+    ["Sebastián Villa","ATA",71,"BOC"],
+    ["Jáminton Campaz","ATA",72,"ROS"],
+    ["Matías Abaldo","ATA",73,"IND"],
+    ["Alexis Cuello","ATA",73,"SLO"],
+    ["Tiago Palacios","ATA",75,"EDL"],
+    ["Miguel Merentiel","ATA",75,"BOC"],
+    ["Sebastián Driussi","ATA",75,"RIV"],
+    ["Santiago López","ATA",74,"TIG"],
+    ["Ignacio Russo","ATA",74,"TIG"],
+    ["Santiago Montiel","ATA",74,"IND"],
+    ["Tomás Badaloni","ATA",74,"ROS"],
+    ["Maximiliano Salas","ATA",74,"IRI"],
+    ["Ronaldo Martínez","ATA",74,"VEL"],
+    ["Julián Fernández","ATA",74,"ROS"],
+    ["Rodrigo Auzmendi","ATA",74,"SLO"],
+    ["Giovanni Cantizano","ATA",73,"ROS"],
+    ["Ian Subiabre","ATA",73,"TIG"],
+    ["Tiziano Perrotta","ATA",73,"DYJ"],
+    ["Fabricio Pérez","ATA",73,"EDL"],
+    ["Fabrizio Sartori","ATA",73,"IRI"],
+    ["Adam Bareiro","ATA",73,"BOC"],
+    ["Rafael Santos Borré","ATA",73,"RIV"],
+    ["Álex Arce","ATA",73,"IRI"],
+    ["Joaquín Tobio Burgos","ATA",73,"EDL"],
+    ["Yoshan Valois","ATA",72,"LAN"],
+    ["Junior Marabel","ATA",72,"SAR"],
+    ["Nicolás Fernández","ATA",72,"BEL"],
+    ["Di María","ATA",80,"ROS"],
+    ["Adrián Martínez","ATA",77,"RAC"],
+    ["Colidio","ATA",76,"RIV"],
+    ["Cavani","ATA",76,"BOC"],
+    ["Alan Velasco","ATA",74,"IND"],
+    ["Alario","ATA",74,"EDL"],
+    ["Girotti","ATA",74,"TAL"],
+    ["Cetré","ATA",73,"EDL"],
+    ["Janson","ATA",73,"VEL"],
+    ["Rodrigo Castillo","ATA",73,"LAN"],
+    ["Ávalos","ATA",72,"IND"],
+    ["Cerutti","ATA",72,"SLO"],
+    ["Alan Marinelli","ATA",72,"ROS"],
+    ["Vombergar","ATA",71,"HUR"],
+    ["Auzmendi","ATA",70,"BAN"],
+    ["Urzi","ATA",70,"BAN"],
+    ["Mierez","ATA",70,"PLA"],
+    ["Mammini","ATA",70,"INS"]
   ]
 });
 
 window.LIGAS = window.LIGAS || [];
 window.LIGAS.push({
-  id: 'tr', nome: 'Süper Lig', pais: 'Turquia', bandeira: '🇹🇷',
-  clubes: [
-    ['GAL','Galatasaray','#f9a602'], ['FEN','Fenerbahçe','#00205b'], ['BJK','Beşiktaş','#222222'], ['TRA','Trabzonspor','#8a1538'],
-    ['BAS','Başakşehir','#f26522'], ['SAM','Samsunspor','#e30613'], ['GOZ','Göztepe','#f2c500'], ['KON','Konyaspor','#1a7a3a'],
-    ['KAS','Kasımpaşa','#1e3a8a'], ['RIZ','Çaykur Rizespor','#00793f'], ['ANT','Antalyaspor','#e2001a'], ['ALA','Alanyaspor','#f68b1f'],
-    ['EYU','Eyüpspor','#7b2d8e'], ['GAZ','Gaziantep FK','#b30b0b'], ['KAY','Kayserispor','#c8102e'], ['KOC','Kocaelispor','#007a3d'],
-    ['GEN','Gençlerbirliği','#d71920'], ['KAR','Fatih Karagümrük','#d40000']
-  ],
+  id: 'tr', nome: "Süper Lig", pais: "Turquia", bandeira: '',
+  clubes: [["GAL","Galatasaray","#f2a900"],["BJK","Beşiktaş","#222222"],["FEN","Fenerbahçe","#1a3a8f"],["TRA","Trabzonspor","#7a1e3d"],["IBF","Başakşehir","#e5701b"],["GOZ","Göztepe","#d4b800"],["COR","Çorum","#d4202c"],["SAM","Samsunspor","#d4202c"],["RIZ","Rizespor","#0a8a43"],["KAS","Kasımpaşa","#1a3a8f"],["ALA","Alanyaspor","#e5701b"],["KON","Konyaspor","#0a8a43"],["AMD","Amed","#d4202c"],["GAZ","Gaziantep","#d4202c"],["GEN","Gençlerbirliği","#d4202c"],["KOC","Kocaelispor","#0a8a43"],["ERZ","Erzurumspor","#1a5fb4"],["EYU","Eyüpspor","#6a1e8a"]],
   jogadores: [
-    // GOL (18)
-    ['Günay Güvenç','GOL',72,'GAL'], ['Batuhan Şen','GOL',68,'GAL'], ['Ederson','GOL',80,'FEN'], ['Ersin Destanoğlu','GOL',72,'BJK'],
-    ['Mert Günok','GOL',72,'BJK'], ['Uğurcan Çakır','GOL',77,'TRA'], ['Şengezer','GOL',70,'BAS'], ['Okan Kocuk','GOL',71,'SAM'],
-    ['Mateusz Lis','GOL',72,'GOZ'], ['Deniz Ertaş','GOL',68,'KON'], ['Gianniotis','GOL',71,'KAS'], ['Gökhan Akkan','GOL',68,'RIZ'],
-    ['Ertuğrul Taşkıran','GOL',68,'ALA'], ['Jankat Yılmaz','GOL',66,'EYU'], ['Zafer Görgen','GOL',68,'GAZ'], ['Bilal Bayazit','GOL',68,'KAY'],
-    ['Ali Şaşal Vural','GOL',66,'GEN'], ['Ahmet Eyüp Türkaslan','GOL',66,'KAR'],
-    // ZAG (30)
-    ['Bardakcı','ZAG',76,'GAL'], ['Davinson Sánchez','ZAG',74,'GAL'], ['Kaan Ayhan','ZAG',72,'GAL'], ['Nelsson','ZAG',73,'GAL'],
-    ['Metehan Baltacı','ZAG',70,'GAL'], ['Škriniar','ZAG',79,'FEN'], ['Söyüncü','ZAG',73,'FEN'], ['Becão','ZAG',74,'FEN'],
-    ['Oosterwolde','ZAG',73,'FEN'], ['Gabriel Paulista','ZAG',71,'BJK'], ['Uduokhai','ZAG',72,'BJK'], ['Tiago Djaló','ZAG',72,'BJK'],
-    ['Denswil','ZAG',72,'TRA'], ['Batagov','ZAG',71,'TRA'], ['Jerome Opoku','ZAG',69,'BAS'], ['Van Drongelen','ZAG',71,'SAM'],
-    ['Allan Godói','ZAG',70,'GOZ'], ['Bazoer','ZAG',70,'KON'], ['Omeruo','ZAG',69,'KAS'], ['Samet Akaydin','ZAG',70,'RIZ'],
-    ['Bünyamin Balat','ZAG',66,'ANT'], ['Fidan Aliti','ZAG',70,'ALA'], ['Ahmetcan Kaplan','ZAG',68,'EYU'], ['Djilobodji','ZAG',66,'GAZ'],
-    ['Majid Hosseini','ZAG',70,'KAY'], ['Gökhan Sazdağı','ZAG',67,'KAY'], ['Atakan Müjde','ZAG',65,'KOC'], ['Ahmet Çalık','ZAG',66,'GEN'],
-    ['Kazımcan Karataş','ZAG',67,'KAR'], ['Arda Okan Kurtulan','ZAG',66,'KAR'],
-    // LAT (24)
-    ['Singo','LAT',77,'GAL'], ['Eren Elmalı','LAT',74,'GAL'], ['Jakobs','LAT',74,'GAL'], ['Frankowski','LAT',71,'GAL'],
-    ['Nélson Semedo','LAT',73,'FEN'], ['Mert Müldür','LAT',71,'FEN'], ['Archie Brown','LAT',72,'FEN'], ['Kostić','LAT',75,'FEN'],
-    ['Rıdvan Yılmaz','LAT',72,'BJK'], ['Jonas Svensson','LAT',70,'BJK'], ['Pedro Malheiro','LAT',72,'TRA'], ['Mitchell Dijks','LAT',68,'TRA'],
-    ['Onur Bulut','LAT',69,'BAS'], ['Logi Tómasson','LAT',70,'SAM'], ['İsmail Köybaşı','LAT',68,'GOZ'], ['Adil Demirbağ','LAT',69,'KON'],
-    ['Soner Dikmen','LAT',68,'ANT'], ['Zeki Yavru','LAT',67,'GAZ'], ['Lionel Carole','LAT',67,'KAY'], ['Hamza Akman','LAT',66,'KOC'],
-    ['Ömer Faruk Beyaz','LAT',66,'KOC'], ['Sinan Gümüş','LAT',66,'GEN'], ['Mustafa Yumlu','LAT',65,'GEN'], ['N’Sakala','LAT',67,'KAR'],
-    // MEI (32)
-    ['Gündoğan','MEI',79,'GAL'], ['Torreira','MEI',77,'GAL'], ['Lemina','MEI',73,'GAL'], ['Berkan Kutlu','MEI',72,'GAL'],
-    ['Sallai','MEI',74,'GAL'], ['Yunus Akgün','MEI',75,'GAL'], ['Fred','MEI',74,'FEN'], ['Guendouzi','MEI',77,'FEN'],
-    ['Szymański','MEI',79,'FEN'], ['İsmail Yüksek','MEI',72,'FEN'], ['İrfan Can Kahveci','MEI',75,'FEN'], ['Edson Álvarez','MEI',77,'FEN'],
-    ['Mert Hakan Yandaş','MEI',70,'FEN'], ['Orkun Kökçü','MEI',79,'BJK'], ['Ndidi','MEI',76,'BJK'], ['Gedson Fernandes','MEI',72,'BJK'],
-    ['Cher Ndour','MEI',72,'BJK'], ['Ozan Tufan','MEI',71,'TRA'], ['Oulai','MEI',70,'TRA'], ['Salih Malkoçoğlu','MEI',69,'TRA'],
-    ['Deniz Türüç','MEI',70,'BAS'], ['Ntcham','MEI',71,'SAM'], ['Juan Silva','MEI',71,'GOZ'], ['Jevtović','MEI',70,'KON'],
-    ['Ben Ouanes','MEI',68,'KAS'], ['Taylan Antalyalı','MEI',72,'RIZ'], ['Van de Streek','MEI',70,'ANT'], ['Efecan Karaca','MEI',70,'ALA'],
-    ['Hajradinović','MEI',69,'EYU'], ['Maxim','MEI',70,'GAZ'], ['Bernard Mensah','MEI',69,'KAY'], ['Salih Uçan','MEI',67,'KOC'],
-    // ATA (28)
-    ['Osimhen','ATA',84,'GAL'], ['Sané','ATA',80,'GAL'], ['Noa Lang','ATA',77,'GAL'], ['Barış Alper Yılmaz','ATA',77,'GAL'],
-    ['Talisca','ATA',80,'FEN'], ['En-Nesyri','ATA',78,'FEN'], ['Jhon Durán','ATA',76,'FEN'], ['Asensio','ATA',77,'FEN'],
-    ['Rafa Silva','ATA',77,'BJK'], ['Tammy Abraham','ATA',76,'BJK'], ['Václav Černý','ATA',73,'BJK'], ['Semih Kılıçsoy','ATA',72,'BJK'],
-    ['El Bilal Touré','ATA',73,'BJK'], ['Oh Hyeon-gyu','ATA',70,'BJK'], ['Onuachu','ATA',75,'TRA'], ['Sikan','ATA',72,'TRA'],
-    ['Muhammed Cham','ATA',71,'TRA'], ['Felipe Augusto','ATA',70,'TRA'], ['Piątek','ATA',73,'BAS'], ['Carlo Holse','ATA',73,'SAM'],
-    ['Janderson','ATA',72,'GOZ'], ['Ćalušić','ATA',70,'KON'], ['Fousseni Diabaté','ATA',70,'KAS'], ['Yann Karamoh','ATA',70,'RIZ'],
-    ['Doğukan Sinik','ATA',70,'ANT'], ['Hwang Ui-jo','ATA',72,'ALA'], ['Umut Nayir','ATA',69,'EYU'], ['Aylton Boa Morte','ATA',70,'KAY']
+    ["Uğurcan Çakır","GOL",83,"GAL"],
+    ["Alexander Nübel","GOL",83,"BJK"],
+    ["André Onana","GOL",82,"TRA"],
+    ["Ederson","GOL",82,"FEN"],
+    ["Yahia Fofana","GOL",80,"RIZ"],
+    ["Günay Güvenç","GOL",72,"GAL"],
+    ["Ersin Destanoğlu","GOL",72,"BJK"],
+    ["Mert Günok","GOL",72,"BJK"],
+    ["Mateusz Lis","GOL",72,"GOZ"],
+    ["Okan Kocuk","GOL",71,"SAM"],
+    ["Gianniotis","GOL",71,"KAS"],
+    ["Şengezer","GOL",70,"IBF"],
+    ["Batuhan Şen","GOL",68,"GAL"],
+    ["Deniz Ertaş","GOL",68,"KON"],
+    ["Gökhan Akkan","GOL",68,"RIZ"],
+    ["Ertuğrul Taşkıran","GOL",68,"ALA"],
+    ["Zafer Görgen","GOL",68,"GAZ"],
+    ["Jankat Yılmaz","GOL",66,"EYU"],
+    ["Ali Şaşal Vural","GOL",66,"GEN"],
+    ["El Chadaille Bitshiabu","ZAG",79,"GAL"],
+    ["Chibuike Nwaiwu","ZAG",79,"TRA"],
+    ["Jayden Oosterwolde","ZAG",80,"FEN"],
+    ["Davinson Sánchez","ZAG",81,"GAL"],
+    ["Emmanuel Agbadou","ZAG",80,"BJK"],
+    ["Kojo Oppong","ZAG",80,"FEN"],
+    ["Arseniy Batagov","ZAG",80,"TRA"],
+    ["Nathan Aké","ZAG",80,"FEN"],
+    ["Emirhan Topçu","ZAG",80,"BJK"],
+    ["Ümit Akdağ","ZAG",79,"BJK"],
+    ["Alexandre Penetra","ZAG",79,"COR"],
+    ["Tiago Djaló","ZAG",79,"BJK"],
+    ["Milan Škriniar","ZAG",79,"FEN"],
+    ["Jerome Opoku","ZAG",78,"IBF"],
+    ["Strahinja Erakovic","ZAG",77,"SAM"],
+    ["Abdülkerim Bardakcı","ZAG",77,"GAL"],
+    ["Yasin Özcan","ZAG",76,"BJK"],
+    ["Malcom Bokele","ZAG",76,"GOZ"],
+    ["Adem Arous","ZAG",75,"KAS"],
+    ["Becão","ZAG",74,"FEN"],
+    ["Nelsson","ZAG",73,"GAL"],
+    ["Söyüncü","ZAG",73,"FEN"],
+    ["Kaan Ayhan","ZAG",72,"GAL"],
+    ["Uduokhai","ZAG",72,"BJK"],
+    ["Denswil","ZAG",72,"TRA"],
+    ["Gabriel Paulista","ZAG",71,"BJK"],
+    ["Van Drongelen","ZAG",71,"SAM"],
+    ["Metehan Baltacı","ZAG",70,"GAL"],
+    ["Wilfried Singo","LAT",78,"GAL"],
+    ["Archie Brown","LAT",78,"FEN"],
+    ["Kassoum Ouattara","LAT",79,"BJK"],
+    ["Wagner Pina","LAT",79,"TRA"],
+    ["Roland Sallai","LAT",79,"GAL"],
+    ["Sidny Lopes Cabral","LAT",79,"TRA"],
+    ["Ismail Jakobs","LAT",78,"GAL"],
+    ["Rıdvan Yılmaz","LAT",77,"BJK"],
+    ["Mert Müldür","LAT",77,"FEN"],
+    ["Amir Murillo","LAT",77,"BJK"],
+    ["Taylan Bulut","LAT",75,"BJK"],
+    ["Levent Mercan","LAT",75,"FEN"],
+    ["Eren Elmalı","LAT",75,"GAL"],
+    ["Joe Mendes","LAT",74,"SAM"],
+    ["Logi Tómasson","LAT",74,"SAM"],
+    ["Kostić","LAT",75,"FEN"],
+    ["Nélson Semedo","LAT",73,"FEN"],
+    ["Pedro Malheiro","LAT",72,"TRA"],
+    ["Frankowski","LAT",71,"GAL"],
+    ["Jonas Svensson","LAT",70,"BJK"],
+    ["Onur Bulut","LAT",69,"IBF"],
+    ["Adil Demirbağ","LAT",69,"KON"],
+    ["Mitchell Dijks","LAT",68,"TRA"],
+    ["İsmail Köybaşı","LAT",68,"GOZ"],
+    ["Zeki Yavru","LAT",67,"GAZ"],
+    ["Hamza Akman","LAT",66,"KOC"],
+    ["Ömer Faruk Beyaz","LAT",66,"KOC"],
+    ["Sinan Gümüş","LAT",66,"GEN"],
+    ["Aleksey Batrakov","MEI",82,"GAL"],
+    ["Orkun Kökçü","MEI",83,"BJK"],
+    ["Gabriel Sara","MEI",83,"GAL"],
+    ["Mattéo Guendouzi","MEI",83,"FEN"],
+    ["Lesley Ugochukwu","MEI",79,"GAL"],
+    ["Fabio Miretti","MEI",80,"BJK"],
+    ["İsmail Yüksek","MEI",80,"FEN"],
+    ["Junior Olaitan","MEI",79,"BJK"],
+    ["Marco Asensio","MEI",79,"FEN"],
+    ["Ernest Muci","MEI",80,"TRA"],
+    ["Lucas Torreira","MEI",79,"GAL"],
+    ["Arda Okan Kurtulan","MEI",78,"GOZ"],
+    ["Fabinho","MEI",78,"TRA"],
+    ["Ermin Mahmić","MEI",77,"COR"],
+    ["Kacper Kozlowski","MEI",77,"GAZ"],
+    ["Mohamed Diomandé","MEI",77,"COR"],
+    ["Tim Jabol-Folcarelli","MEI",77,"TRA"],
+    ["Renato Nhaga","MEI",76,"GAL"],
+    ["Maestro","MEI",76,"ALA"],
+    ["Salih Özcan","MEI",76,"BJK"],
+    ["Wilfred Ndidi","MEI",76,"BJK"],
+    ["Rafael Luís","MEI",75,"GEN"],
+    ["Novatus Miroshi","MEI",75,"GOZ"],
+    ["Batista Mendy","MEI",75,"TRA"],
+    ["Drissa Camara","MEI",74,"GAZ"],
+    ["Gündoğan","MEI",79,"GAL"],
+    ["Szymański","MEI",79,"FEN"],
+    ["Edson Álvarez","MEI",77,"FEN"],
+    ["İrfan Can Kahveci","MEI",75,"FEN"],
+    ["Fred","MEI",74,"FEN"],
+    ["Lemina","MEI",73,"GAL"],
+    ["Berkan Kutlu","MEI",72,"GAL"],
+    ["Gedson Fernandes","MEI",72,"BJK"],
+    ["Cher Ndour","MEI",72,"BJK"],
+    ["Taylan Antalyalı","MEI",72,"RIZ"],
+    ["Ozan Tufan","MEI",71,"TRA"],
+    ["Ntcham","MEI",71,"SAM"],
+    ["Mert Hakan Yandaş","MEI",70,"FEN"],
+    ["Oulai","MEI",70,"TRA"],
+    ["Deniz Türüç","MEI",70,"IBF"],
+    ["Jevtović","MEI",70,"KON"],
+    ["Efecan Karaca","MEI",70,"ALA"],
+    ["Maxim","MEI",70,"GAZ"],
+    ["Salih Malkoçoğlu","MEI",69,"TRA"],
+    ["Hajradinović","MEI",69,"EYU"],
+    ["Ben Ouanes","MEI",68,"KAS"],
+    ["Salih Uçan","MEI",67,"KOC"],
+    ["Victor Osimhen","ATA",88,"GAL"],
+    ["Mason Greenwood","ATA",85,"FEN"],
+    ["Rafael Leão","ATA",85,"GAL"],
+    ["Dušan Vlahović","ATA",84,"BJK"],
+    ["Barış Alper Yılmaz","ATA",84,"GAL"],
+    ["Franculino","ATA",79,"TRA"],
+    ["Ernest Poku","ATA",79,"BJK"],
+    ["Dorgeles Nene","ATA",78,"FEN"],
+    ["Yunus Akgün","ATA",78,"GAL"],
+    ["Kerem Aktürkoğlu","ATA",78,"FEN"],
+    ["Leandro Trossard","ATA",78,"BJK"],
+    ["Mohamed Salah","ATA",79,"TRA"],
+    ["Aral Şimşir","ATA",80,"TRA"],
+    ["Hyeon-gyu Oh","ATA",80,"BJK"],
+    ["Leroy Sané","ATA",80,"GAL"],
+    ["Noah Saviolo","ATA",79,"TRA"],
+    ["Juan","ATA",79,"GOZ"],
+    ["Deniz Gül","ATA",79,"GAL"],
+    ["Oğuz Aydın","ATA",79,"FEN"],
+    ["Semih Kılıçsoy","ATA",78,"BJK"],
+    ["Bertuğ Yıldırım","ATA",78,"IBF"],
+    ["İlhan Fakılı","ATA",77,"BJK"],
+    ["Abbosbek Fayzullaev","ATA",77,"IBF"],
+    ["Gift Orban","ATA",77,"AMD"],
+    ["Adrian Benedyczak","ATA",77,"KAS"],
+    ["Vaclav Cerny","ATA",77,"BJK"],
+    ["Eldor Shomurodov","ATA",77,"IBF"],
+    ["Vedat Muriqi","ATA",77,"FEN"],
+    ["Janderson","ATA",76,"GOZ"],
+    ["Jesús Ramírez","ATA",76,"COR"],
+    ["Paul Onuachu","ATA",76,"TRA"],
+    ["Romelu Lukaku","ATA",76,"FEN"],
+    ["Mustafa Hekimoğlu","ATA",75,"BJK"],
+    ["Jesurun Rak-Sakyi","ATA",75,"KAS"],
+    ["Andreas Skov Olsen","ATA",75,"IBF"],
+    ["Mohamed Bayo","ATA",75,"SAM"],
+    ["Talisca","ATA",80,"FEN"],
+    ["En-Nesyri","ATA",78,"FEN"],
+    ["Noa Lang","ATA",77,"GAL"],
+    ["Rafa Silva","ATA",77,"BJK"],
+    ["Jhon Durán","ATA",76,"FEN"],
+    ["Tammy Abraham","ATA",76,"BJK"],
+    ["El Bilal Touré","ATA",73,"BJK"],
+    ["Piątek","ATA",73,"IBF"],
+    ["Carlo Holse","ATA",73,"SAM"],
+    ["Sikan","ATA",72,"TRA"],
+    ["Hwang Ui-jo","ATA",72,"ALA"],
+    ["Muhammed Cham","ATA",71,"TRA"]
   ]
 });
 
@@ -1313,15 +2128,21 @@ window.LIGAS.push({
 'use strict';
 
 /* ===== constantes ===== */
-var BUDGET=100, SLOTS=['GOL','ZAG','LAT','MEI','ATA','RES','RES'];
+var BUDGET=100;
+var SLOTS=['GOL','ZAG','LAT','MEI','MEI','ATA','ATA','RES']; /* 7 titulares + 1 reserva */
+var NS=SLOTS.length, RESI=7;
+var NEED={GOL:1,ZAG:1,LAT:1,MEI:2,ATA:2};
 var POSN={GOL:'Goleiro',ZAG:'Zagueiro',LAT:'Lateral',MEI:'Meio-campista',ATA:'Atacante',RES:'Reserva'};
 var ORDER=['br','en','es','it','de','fr','pt','nl','ar','tr'];
+var NOPT=[4,8,12,16,20], MOPT=[1,2,3,4,5];
 var BOTS=[
  ['Seu Raimundo',1.00],['Dona Lúcia',0.92],['Zeca Bola',1.15],['Professor Pardal',0.88],['Tia Neuza',1.05],
  ['Juninho Lance',1.22],['Mestre Gil',0.95],['Vovô Chico',0.82],['Nanda Craque',1.10],['Biro',1.00],
- ['Capitão Léo',1.18],['Tata Bola',0.90],['Dudu Torcida',1.08],['Cida Apito',0.96],['Marcão Zagueiro',1.02]
+ ['Capitão Léo',1.18],['Tata Bola',0.90],['Dudu Torcida',1.08],['Cida Apito',0.96],['Marcão Zagueiro',1.02],
+ ['Tio Zeca',0.94],['Dona Marta',1.12],['Seu Jorge',0.86],['Mestre Bira',1.04],['Bia Chuteira',0.98]
 ];
 var STYLES=[['Retranca','defesa +2, ataque −2',-1],['Equilibrado','sem ajustes',0],['Ofensivo','ataque +2, defesa −2',1]];
+var XY=[[50,88],[30,66],[70,66],[30,42],[70,42],[30,16],[70,16]];
 
 /* ===== utilidades ===== */
 function $(s,r){return (r||document).querySelector(s)}
@@ -1333,7 +2154,7 @@ function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
 var store={get:function(k){try{return localStorage.getItem(k)}catch(e){return null}},set:function(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
 function lum(hex){var h=String(hex).replace('#','');if(h.length===3)h=h.split('').map(function(c){return c+c}).join('');var r=parseInt(h.substr(0,2),16)/255,g=parseInt(h.substr(2,2),16)/255,b=parseInt(h.substr(4,2),16)/255;return .2126*r+.7152*g+.0722*b}
 function poisson(l){var L=Math.exp(-l),k=0,p=1;do{k++;p*=Math.random()}while(p>L);return k-1}
-var toastT;function toast(m){var t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(function(){t.classList.remove('on')},2200)}
+var toastT;function toast(m){var t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(function(){t.classList.remove('on')},2400)}
 
 /* ===== som ===== */
 var actx=null;
@@ -1373,7 +2194,7 @@ function flag(id,w){
   return '<svg class="flag" width="'+w+'" height="'+h+'" viewBox="0 0 30 20" aria-hidden="true">'+b+'</svg>';
 }
 function badge(c,size){
-  size=size||28;var fg=lum(c.cor)>.55?'#101010':'#ffffff';
+  size=size||28;c=c||{sigla:'—',cor:'#456'};var fg=lum(c.cor)>.55?'#101010':'#ffffff';
   return '<svg class="badge" width="'+size+'" height="'+Math.round(size*1.12)+'" viewBox="0 0 32 36" aria-hidden="true"><path d="M16 1.5 3 5.5v12c0 8 6 14 13 17 7-3 13-9 13-17v-12z" fill="'+c.cor+'" stroke="rgba(128,128,128,.7)" stroke-width="1.3"/><text x="16" y="21.5" text-anchor="middle" font-family="Barlow Condensed,Arial Narrow,sans-serif" font-weight="800" font-size="11.5" fill="'+fg+'">'+esc(c.sigla)+'</text></svg>';
 }
 function initials(n){var p=String(n).replace(/[^\p{L}\s]/gu,'').trim().split(/\s+/);return ((p[0]||'?')[0]+(p.length>1?p[p.length-1][0]:(p[0]||'?')[1]||'')).toUpperCase()}
@@ -1385,42 +2206,65 @@ function logo(){return '<svg width="30" height="30" viewBox="0 0 32 32" aria-hid
 
 /* ===== estado ===== */
 var S={phase:'home',tab:'auction',sound:store.get('ldb-sound')!=='0',paused:false,
-  sel:{league:'br',club:null,name:store.get('ldb-name')||''},league:null,clubs:{},players:[],coaches:[],order:[],idx:0,cur:null,sales:[],
-  scale:1,view:0,season:1,sn:null,hist:[],total:{},trade:{mine:null,coach:null,theirs:null,cash:0},trades:[],selSlot:null,viewRound:0,auto:false};
+  sel:{league:'br',club:null,name:store.get('ldb-name')||'',n:+store.get('ldb-n')||16,m:+store.get('ldb-m')||3},
+  N:16,M:3,league:null,clubs:{},players:[],coaches:[],order:[],idx:0,cur:null,sales:[],
+  scale:1,view:0,season:1,sn:null,hist:[],total:{},trade:{mine:null,coach:null,theirs:null,cash:0},trades:[],selSlot:null,viewRound:0,
+  ext:{mode:'compra',slot:null,lg:'all',pos:'all',pid:null},extLog:[]};
+if(NOPT.indexOf(S.sel.n)<0)S.sel.n=16;
+if(MOPT.indexOf(S.sel.m)<0)S.sel.m=3;
 
 function league(id){return (window.LIGAS||[]).filter(function(l){return l.id===id})[0]}
 function clubOf(sig){return S.clubs[sig]}
 function player(id){return S.players[id]}
 function coach(id){return S.coaches[id]}
-function cname(c){return c.bot?c.name:c.name}
 function emptyCount(c){var n=0;c.slots.forEach(function(s){if(s==null)n++});return n}
 function maxBid(c){var e=emptyCount(c);return e?c.balance-(e-1):0}
 function openSlot(c,pos){
-  for(var i=0;i<7;i++)if(SLOTS[i]===pos&&c.slots[i]==null)return i;
-  for(var j=5;j<7;j++)if(c.slots[j]==null)return j;
+  var i;
+  for(i=0;i<NS;i++)if(SLOTS[i]===pos&&c.slots[i]==null)return i;
+  for(i=0;i<NS;i++)if(SLOTS[i]==='RES'&&c.slots[i]==null)return i;
   return -1;
 }
 function canBid(c,p){return emptyCount(c)>0&&openSlot(c,p.pos)>=0}
 function worthOf(p){return 1+Math.pow(Math.max(1,p.r-59),2.4)*S.scale}
+function emptySlots(){var a=[];for(var i=0;i<NS;i++)a.push(null);return a}
 
 /* ===== iniciar ===== */
 function startGame(){
   var lg=league(S.sel.league);if(!lg){toast('Liga indisponível');return}
-  S.league=lg;S.clubs={};lg.clubes.forEach(function(c){S.clubs[c[0]]={sigla:c[0],nome:c[1],cor:c[2]}});
-  S.players=lg.jogadores.map(function(j,i){return {id:i,n:j[0],pos:j[1],r:j[2],r0:j[2],c:j[3],price:0,owner:null}});
-  var name=($('#coachName').value||'').trim()||'Você';store.set('ldb-name',name);
+  var N=S.sel.n,M=S.sel.m;S.N=N;S.M=M;
+  S.league=lg;S.clubs={};S.players=[];
+  lg.clubes.forEach(function(c){S.clubs[c[0]]={sigla:c[0],nome:c[1],cor:c[2]}});
+  /* pool de leilão da liga escolhida, proporcional ao número de técnicos */
+  var by={GOL:[],ZAG:[],LAT:[],MEI:[],ATA:[]};
+  lg.jogadores.forEach(function(j){if(by[j[1]])by[j[1]].push(j)});
+  var pool=[];
+  Object.keys(NEED).forEach(function(pos){
+    var q=N*NEED[pos]+Math.round(N*.2)+3;
+    by[pos].sort(function(a,b){return b[2]-a[2]}).slice(0,q).forEach(function(j){pool.push(j)});
+  });
+  if(pool.length<N*NS+2){toast('Esta liga não tem jogadores suficientes para '+N+' técnicos');return}
+  pool.forEach(function(j){S.players.push({id:S.players.length,n:j[0],pos:j[1],r:j[2],r0:j[2],c:j[3],lg:lg.id,price:0,owner:null,ext:false})});
+  var homeIds=S.players.map(function(p){return p.id});
+  /* jogadores das outras ligas ficam no mercado exterior */
+  (window.LIGAS||[]).forEach(function(o){
+    if(o.id===lg.id)return;
+    o.clubes.forEach(function(c){S.clubs[o.id+':'+c[0]]={sigla:c[0],nome:c[1],cor:c[2]}});
+    o.jogadores.forEach(function(j){S.players.push({id:S.players.length,n:j[0],pos:j[1],r:j[2],r0:j[2],c:o.id+':'+j[3],lg:o.id,price:0,owner:null,ext:true})});
+  });
+  var name=($('#coachName').value||'').trim()||'Você';store.set('ldb-name',name);store.set('ldb-n',N);store.set('ldb-m',M);
   var mine=$('#clubSel').value;
-  var sigs=Object.keys(S.clubs).filter(function(s){return s!==mine});sigs=shuffle(sigs);
-  S.coaches=[{id:0,name:name,bot:false,club:mine,balance:BUDGET,slots:[null,null,null,null,null,null,null],passed:false,style:0}];
+  var sigs=shuffle(Object.keys(S.clubs).filter(function(s){return s!==mine&&s.indexOf(':')<0}));
+  S.coaches=[{id:0,name:name,bot:false,club:mine,balance:BUDGET,slots:emptySlots(),passed:false,style:0}];
   var nb=shuffle(BOTS);
-  for(var i=0;i<15;i++)S.coaches.push({id:i+1,name:nb[i][0],bot:true,agg:nb[i][1],margin:rnd(1.04,1.18),club:sigs[i%sigs.length],balance:BUDGET,slots:[null,null,null,null,null,null,null],passed:false,style:rint(-1,1),lim:0,at:0});
-  /* escala de valor: distribui o dinheiro total entre os 112 melhores */
-  var notas=S.players.map(function(p){return p.r}).sort(function(a,b){return b-a}).slice(0,112);
+  for(var i=0;i<N-1;i++)S.coaches.push({id:i+1,name:nb[i][0],bot:true,agg:nb[i][1],margin:rnd(1.04,1.18),club:sigs[i%sigs.length],balance:BUDGET,slots:emptySlots(),passed:false,style:rint(-1,1),lim:0,at:0});
+  var notas=homeIds.map(function(id){return player(id).r}).sort(function(a,b){return b-a}).slice(0,N*NS);
   var sum=notas.reduce(function(s,r){return s+Math.pow(Math.max(1,r-59),2.4)},0);
-  S.scale=(16*BUDGET*1.2-112)/sum;
-  S.order=shuffle(S.players.map(function(p){return p.id}));S.idx=-1;S.sales=[];S.season=1;S.sn=null;S.hist=[];S.total={};
+  S.scale=(N*BUDGET*1.2-N*NS)/sum;
+  S.order=shuffle(homeIds);S.idx=-1;S.sales=[];S.season=1;S.sn=null;S.hist=[];S.total={};
   S.coaches.forEach(function(c){S.total[c.id]={pts:0,titles:0}});
-  S.trade={mine:null,coach:null,theirs:null,cash:0};S.trades=[];S.selSlot=null;S.view=0;S.paused=false;S.viewRound=0;S.auto=false;
+  S.trade={mine:null,coach:null,theirs:null,cash:0};S.trades=[];S.selSlot=null;S.view=0;S.paused=false;S.viewRound=0;
+  S.ext={mode:'compra',slot:null,lg:'all',pos:'all',pid:null};S.extLog=[];
   S.phase='auction';S.tab='auction';nextItem();render();
 }
 
@@ -1439,7 +2283,7 @@ function nextItem(){
     if(need<0){c.passed=true;c.lim=0;return}
     var spec=SLOTS[need]===p.pos;
     var lim=Math.floor(worthOf(p)*c.agg*(spec?1:.5)*rnd(.82,1.18));
-    if(emptyCount(c)>2)lim=Math.min(lim,Math.floor(c.balance*.58));
+    if(emptyCount(c)>2)lim=Math.min(lim,Math.floor(c.balance*.55));
     c.lim=Math.max(0,lim);if(c.lim<1)c.passed=true;
     c.at=rnd(.7,2.6);
   });
@@ -1494,14 +2338,16 @@ function resolveItem(){
 }
 function endAuction(){
   S.coaches.forEach(function(c){
-    for(var i=0;i<7;i++){
+    for(var i=0;i<NS;i++){
       if(c.slots[i]!=null)continue;
       var pos=SLOTS[i];
-      if(pos==='RES'){var has={};c.slots.forEach(function(s){if(s!=null)has[player(s).pos]=1});var opts=['ZAG','LAT','MEI','ATA'].filter(function(x){return !has[x]});pos=(opts.length?opts:['ZAG','LAT','MEI','ATA'])[rint(0,(opts.length||4)-1)]}
-      var f={id:S.players.length,n:'Garoto da base',pos:pos,r:rint(57,62),r0:0,c:c.club,price:0,owner:c.id,filler:true};f.r0=f.r;
+      if(pos==='RES')pos=['ZAG','LAT','MEI','ATA'][rint(0,3)];
+      var f={id:S.players.length,n:'Garoto da base',pos:pos,r:rint(57,62),r0:0,c:c.club,lg:S.league.id,price:0,owner:c.id,filler:true,ext:false};f.r0=f.r;
       S.players.push(f);c.slots[i]=f.id;
     }
   });
+  /* quem não foi vendido vai para o mercado livre */
+  S.players.forEach(function(p){if(p.owner==null&&!p.filler)p.ext=true});
   S.coaches.forEach(function(c){if(c.bot)autoLineup(c)});
   S.cur=null;S.phase='market';S.tab='market';
   S.trade={mine:null,coach:null,theirs:null,cash:0};
@@ -1511,24 +2357,26 @@ function endAuction(){
 
 /* ===== escalação ===== */
 function autoLineup(c){
-  var all=c.slots.map(player),used={},ns=[null,null,null,null,null,null,null];
-  for(var i=0;i<5;i++){
+  var all=c.slots.map(function(id){return player(id)}),used={},ns=emptySlots();
+  for(var i=0;i<RESI;i++){
     var best=null;all.forEach(function(p){if(p.pos===SLOTS[i]&&!used[p.id]&&(!best||p.r>best.r))best=p});
+    if(!best)all.forEach(function(p){if(!used[p.id]&&(!best||p.r>best.r))best=p});
     if(best){ns[i]=best.id;used[best.id]=1}
   }
   var rest=all.filter(function(p){return !used[p.id]}).sort(function(a,b){return b.r-a.r});
-  ns[5]=rest[0]?rest[0].id:null;ns[6]=rest[1]?rest[1].id:null;
+  ns[RESI]=rest[0]?rest[0].id:null;
   c.slots=ns;
 }
-function slotsCompat(c,a,b){ /* trocar jogadores entre os slots a e b do mesmo técnico */
+function slotsCompat(c,a,b){
   var pa=player(c.slots[a]),pb=player(c.slots[b]);
   var okA=SLOTS[b]==='RES'||SLOTS[b]===pa.pos, okB=SLOTS[a]==='RES'||SLOTS[a]===pb.pos;
   return okA&&okB;
 }
 function teamR(c){
-  var P=function(i){return player(c.slots[i]).r},res=(P(5)+P(6))/2;
-  var att=.42*P(4)+.30*P(3)+.18*P(2)+.05*P(1)+.05*res;
-  var def=.34*P(0)+.34*P(1)+.17*P(2)+.10*P(3)+.05*res;
+  var P=function(i){return player(c.slots[i]).r};
+  var a=(P(5)+P(6))/2,m=(P(3)+P(4))/2,res=P(7);
+  var att=.44*a+.30*m+.15*P(2)+.06*P(1)+.05*res;
+  var def=.30*P(0)+.28*P(1)+.17*P(2)+.20*m+.05*res;
   att+=2*c.style;def-=2*c.style;
   return {att:att,def:def,ovr:(att+def)/2};
 }
@@ -1551,15 +2399,15 @@ function fixtures(ids){
 function startSeason(){
   var ids=S.coaches.map(function(c){return c.id}),tab={};
   ids.forEach(function(i){tab[i]={j:0,v:0,e:0,d:0,gp:0,gc:0,pts:0}});
-  S.sn={round:0,fx:fixtures(shuffle(ids)),tab:tab,res:[],scorers:{},done:false,champ:null,running:false};
+  S.sn={round:0,fx:fixtures(shuffle(ids)),tab:tab,res:[],scorers:{},done:false,champ:null,running:false,prize:{}};
   S.viewRound=0;
 }
 function pickScorers(c,g,sn){
   var out=[];if(!g)return out;
-  var w=c.slots.map(function(id,i){var p=player(id),base={GOL:0,ZAG:.07,LAT:.12,MEI:.28,ATA:.5}[p.pos]||0;return base*(i>=5?.3:1)*Math.pow(p.r/80,3)});
+  var w=c.slots.map(function(id,i){var p=player(id),base={GOL:0,ZAG:.07,LAT:.12,MEI:.28,ATA:.5}[p.pos]||0;return base*(i===RESI?.3:1)*Math.pow(p.r/80,3)});
   var tot=w.reduce(function(a,b){return a+b},0);
   for(var k=0;k<g;k++){
-    var x=Math.random()*tot,j=0;while(j<6&&x>w[j]){x-=w[j];j++}
+    var x=Math.random()*tot,j=0;while(j<NS-1&&x>w[j]){x-=w[j];j++}
     var p=player(c.slots[j]);out.push(p.n);sn.scorers[p.id]=(sn.scorers[p.id]||0)+1;
   }
   return out;
@@ -1584,11 +2432,43 @@ function sortedTable(sn){
     return b.t.pts-a.t.pts||(b.t.gp-b.t.gc)-(a.t.gp-a.t.gc)||b.t.gp-a.t.gp||a.id-b.id});
 }
 function finishSeason(){
-  var sn=S.sn,tb=sortedTable(sn);sn.done=true;sn.champ=tb[0].id;
-  tb.forEach(function(r){S.total[r.id].pts+=r.t.pts});S.total[tb[0].id].titles++;
+  var sn=S.sn,tb=sortedTable(sn),N=S.N;sn.done=true;sn.champ=tb[0].id;
+  tb.forEach(function(r,i){
+    S.total[r.id].pts+=r.t.pts;
+    var prize=Math.round(10+40*(N-1-i)/(N-1));
+    sn.prize[r.id]=prize;coach(r.id).balance+=prize;
+  });
+  S.total[tb[0].id].titles++;
   var top=Object.keys(sn.scorers).sort(function(a,b){return sn.scorers[b]-sn.scorers[a]})[0];
-  S.hist.push({season:S.season,champ:sn.champ,userPos:tb.map(function(r){return r.id}).indexOf(0)+1,userPts:sn.tab[0].pts,top:top!=null?{id:+top,g:sn.scorers[top]}:null});
+  S.hist.push({season:S.season,champ:sn.champ,userPos:tb.map(function(r){return r.id}).indexOf(0)+1,userPts:sn.tab[0].pts,prize:sn.prize[0],top:top!=null?{id:+top,g:sn.scorers[top]}:null});
   if(sn.champ===0)sndWin();
+}
+
+/* ===== mercado exterior ===== */
+function extPrice(p){var f=S.league&&p.lg===S.league.id?1.05:1.5;return Math.max(1,Math.round(worthOf(p)*f))}
+function sellCredit(p,mode){return p.filler?0:Math.round(worthOf(p)*(mode==='troca'?.85:.5))}
+function releasePlayer(p){
+  p.owner=null;
+  if(p.filler){p.gone=true;p.ext=false}else p.ext=true;
+}
+function botBuy(c){
+  var market=S.players.filter(function(p){return p.ext&&p.owner==null&&!p.gone});
+  var order=[];for(var i=0;i<NS;i++)order.push(i);
+  order.sort(function(a,b){return player(c.slots[a]).r-player(c.slots[b]).r});
+  for(var k=0;k<order.length;k++){
+    var i=order[k],old=player(c.slots[i]),credit=sellCredit(old,'compra'),best=null;
+    for(var j=0;j<market.length;j++){
+      var p=market[j];
+      if(!(SLOTS[i]==='RES'||SLOTS[i]===p.pos))continue;
+      if(p.r<old.r+3)continue;
+      if(extPrice(p)-credit>c.balance)continue;
+      if(!best||p.r>best.r)best=p;
+    }
+    if(best){
+      c.balance-=extPrice(best)-credit;releasePlayer(old);
+      best.owner=c.id;best.ext=false;c.slots[i]=best.id;return;
+    }
+  }
 }
 function nextSeason(){
   S.season++;
@@ -1596,8 +2476,9 @@ function nextSeason(){
     var d=(p.r>86?-.6:p.r<68?.6:0)+rnd(-2.6,2.6);
     p.r=clamp(Math.round(p.r+d),52,96);
   });
-  S.coaches.forEach(function(c){if(c.bot){c.style=rint(-1,1);autoLineup(c)}});
-  startSeason();S.tab='market';render();toast('Temporada '+S.season+': as notas mudaram. Reveja trocas e escalação.');
+  S.coaches.forEach(function(c){if(c.bot){c.style=rint(-1,1);botBuy(c);autoLineup(c)}});
+  startSeason();S.tab='ext';S.ext.slot=null;S.ext.pid=null;S.selSlot=null;
+  render();toast('Temporada '+S.season+': as notas mudaram e o mercado exterior abriu.');
 }
 
 /* ===== render ===== */
@@ -1608,43 +2489,60 @@ function render(){
   else if(S.tab==='auction')renderAuction();
   else if(S.tab==='market')renderMarket();
   else if(S.tab==='lineup')renderLineup();
+  else if(S.tab==='ext')renderExt();
   else renderChamp();
 }
+function tabLocked(t){
+  if(S.phase==='auction'&&t!=='auction')return 'Disponível após o leilão';
+  if(t==='ext'&&S.season<2)return 'Abre na 2ª temporada';
+  return '';
+}
 function renderTop(){
-  var tabs=[['auction','Leilão'],['market','Trocas'],['lineup','Escalação'],['champ','Campeonato']];
+  var tabs=[['auction','Leilão'],['market','Trocas'],['lineup','Escalação'],['ext','Exterior'],['champ','Campeonato']];
   var h='<div class="brand">'+logo()+'<span>Leilão da Bola</span></div>';
   if(S.phase!=='home'){
-    h+='<nav class="tabs" aria-label="Fases do jogo">'+tabs.map(function(t,i){
-      var locked=S.phase==='auction'&&t[0]!=='auction';
-      return '<button class="tab'+(S.tab===t[0]?' on':'')+(locked?' locked':'')+'" data-act="tab" data-tab="'+t[0]+'" title="'+(locked?'Disponível após o leilão':'')+'">'+t[1]+'</button>';
+    h+='<nav class="tabs" aria-label="Fases do jogo">'+tabs.map(function(t){
+      var lk=tabLocked(t[0]);
+      return '<button class="tab'+(S.tab===t[0]?' on':'')+(lk?' locked':'')+'" data-act="tab" data-tab="'+t[0]+'" title="'+lk+'">'+t[1]+'</button>';
     }).join('')+'</nav>';
-    h+='<span class="chip-league">'+flag(S.league.id,22)+esc(S.league.nome)+'</span>';
+    h+='<span class="chip-league">'+flag(S.league.id,22)+esc(S.league.nome)+' · '+S.N+' técnicos</span>';
   }
   h+='<div class="actions"><button class="pill" data-act="sound">'+(S.sound?'Som ligado':'Som mudo')+'</button><button class="pill" data-act="theme">'+(effTheme()==='dark'?'Tema claro':'Tema escuro')+'</button>'+(S.phase!=='home'?'<button class="pill" data-act="restart">Recomeçar</button>':'')+'</div>';
   topEl.innerHTML=h;
 }
 function effTheme(){var d=document.documentElement.getAttribute('data-theme');if(d)return d;try{return window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'}catch(e){return 'dark'}}
 
+function supports(lg,N){
+  var c={GOL:0,ZAG:0,LAT:0,MEI:0,ATA:0},tot=0;
+  lg.jogadores.forEach(function(j){if(c[j[1]]!=null){c[j[1]]++;tot++}});
+  if(tot<N*NS+2)return false;
+  return Object.keys(NEED).every(function(p){return c[p]>=N*NEED[p]});
+}
+function segHtml(opts,cur,act,okFn){return '<div class="seg">'+opts.map(function(o){var ok=okFn?okFn(o):true;return '<button class="'+(o===cur?'on':'')+'" data-act="'+act+'" data-v="'+o+'"'+(ok?'':' disabled title="Esta liga não tem jogadores suficientes para isso"')+'>'+o+'</button>'}).join('')+'</div>'}
 function renderHome(){
   var lgs=ORDER.map(league).filter(Boolean);
   var cur=league(S.sel.league)||lgs[0];S.sel.league=cur?cur.id:'br';
   var clubs=cur?cur.clubes:[];
   if(!S.sel.club||!clubs.some(function(c){return c[0]===S.sel.club}))S.sel.club=clubs[0]?clubs[0][0]:null;
+  var okN=NOPT.filter(function(n){return cur&&supports(cur,n)});
+  if(okN.length&&okN.indexOf(S.sel.n)<0)S.sel.n=okN.filter(function(n){return n<=S.sel.n}).pop()||okN[0];
   view.innerHTML=
   '<section class="hero"><div>'+
-    '<p class="kicker">16 técnicos · 7 vagas · $100 · 3 temporadas</p>'+
+    '<p class="kicker">'+S.sel.n+' técnicos · 8 vagas · $100 · '+S.sel.m+' temporada'+(S.sel.m>1?'s':'')+'</p>'+
     '<h1>Leilão<br>da Bola</h1>'+
-    '<p class="lead">Escolha uma das 10 maiores ligas e dispute craques reais em lances relâmpago contra 15 técnicos. Quem hesita perde o jogador. Depois é trocar, escalar e disputar o campeonato.</p>'+
-    '<ul class="rules"><li><b>1 · Leilão</b><span>Cada jogador tem relógio de poucos segundos. Lance, ou passe.</span></li><li><b>2 · Trocas</b><span>Negocie com os bots, com dinheiro de sobra se precisar.</span></li><li><b>3 · Escalação</b><span>Ajuste os titulares e o estilo de jogo.</span></li><li><b>4 · Campeonato</b><span>30 rodadas por temporada, 3 temporadas.</span></li></ul>'+
+    '<p class="lead">Escolha uma das 10 maiores ligas e dispute craques reais em lances relâmpago contra outros técnicos. Quem hesita perde o jogador. Depois é trocar, escalar, contratar no exterior e disputar o campeonato.</p>'+
+    '<ul class="rules"><li><b>1 · Leilão</b><span>7 titulares e 1 reserva. Cada jogador tem relógio de poucos segundos.</span></li><li><b>2 · Trocas</b><span>Negocie com os técnicos, com dinheiro de sobra se precisar.</span></li><li><b>3 · Escalação</b><span>Ajuste os titulares e o estilo de jogo.</span></li><li><b>4 · Exterior</b><span>Da 2ª temporada em diante, compre ou troque com outras ligas.</span></li></ul>'+
   '</div><div class="setup card">'+
     '<label for="coachName">Seu nome de técnico<input id="coachName" maxlength="18" placeholder="Como você quer ser chamado" value="'+esc(S.sel.name)+'"></label>'+
     '<h2>Escolha a liga</h2><div class="leagues">'+lgs.map(function(l){
       return '<button class="lg'+(l.id===S.sel.league?' on':'')+'" data-act="league" data-id="'+l.id+'">'+flag(l.id,34)+'<div><b>'+esc(l.nome)+'</b><span>'+esc(l.pais)+' · 1ª divisão</span></div></button>';
     }).join('')+'</div>'+
+    '<div class="opt"><span>Técnicos na disputa</span>'+segHtml(NOPT,S.sel.n,'setn',function(n){return cur&&supports(cur,n)})+'</div>'+
+    '<div class="opt"><span>Temporadas</span>'+segHtml(MOPT,S.sel.m,'setm')+'</div>'+
     '<label for="clubSel">Seu escudo no jogo<select id="clubSel">'+clubs.map(function(c){return '<option value="'+c[0]+'"'+(c[0]===S.sel.club?' selected':'')+'>'+esc(c[1])+'</option>'}).join('')+'</select></label>'+
     '<button class="btn primary go" data-act="start">Começar o leilão</button>'+
   '</div></section>'+
-  '<p class="fine">Jogo de entretenimento sem vínculo com clubes, ligas ou jogadores. Elencos e notas são aproximados e servem só para a brincadeira.</p>';
+  '<p class="fine">Jogo de entretenimento sem vínculo com clubes, ligas ou jogadores. Elencos e notas são aproximados (as notas derivam do valor de mercado do Transfermarkt) e servem só para a brincadeira.</p>';
 }
 
 function dotsHtml(c){return '<div class="dots">'+c.slots.map(function(s){return '<i'+(s!=null?' class="f"':'')+'></i>'}).join('')+'</div>'}
@@ -1671,7 +2569,6 @@ function rosterHtml(){
 function renderAuction(){
   var cur=S.cur;if(!cur){return}
   var p=curPlayer(),u=S.coaches[0],cl=clubOf(p.c)||{nome:p.c,cor:'#456',sigla:p.c};
-  var leader=cur.leader!=null?coach(cur.leader):null;
   var mb=maxBid(u),bidding=cur.status==='bidding',iLead=cur.leader===0;
   var can=bidding&&canBid(u,p)&&!iLead;
   function bb(n){var np=cur.price+n;var dis=!can||np>mb;return '<button class="bid" data-act="bid" data-n="'+n+'"'+(dis?' disabled':'')+'><b>+'+n+'</b><small>$'+np+'</small></button>'}
@@ -1708,7 +2605,6 @@ function renderBidState(){
   var lbl=$('#bidlbl'),am=$('#amount');if(!lbl)return;
   if(cur.leader==null){lbl.textContent='Sem lances ainda';am.textContent='$0'}
   else{var c=coach(cur.leader);lbl.textContent='Lance de '+c.name+(c.bot?' (bot)':' (você)');am.textContent='$'+cur.price}
-  /* atualiza botões e lista de técnicos sem recriar o palco */
   var u=S.coaches[0],p=curPlayer(),mb=maxBid(u),iLead=cur.leader===0,bidding=cur.status==='bidding',can=bidding&&canBid(u,p)&&!iLead;
   var btns=$('#btns');if(!btns)return;
   Array.prototype.forEach.call(btns.querySelectorAll('[data-act="bid"]'),function(b){
@@ -1726,64 +2622,109 @@ function updateTimer(){
   r.style.stroke=v<=2?'var(--bad)':'var(--accent)';
 }
 
-/* trocas */
+/* trocas entre técnicos */
+function clubName(p){var c=clubOf(p.c);return c?c.nome:''}
 function tradeEval(){
   var t=S.trade;if(t.mine==null||t.coach==null||t.theirs==null)return null;
   var u=coach(0),b=coach(t.coach),pa=player(u.slots[t.mine]),pb=player(b.slots[t.theirs]);
   var okA=SLOTS[t.theirs]==='RES'||SLOTS[t.theirs]===pa.pos, okB=SLOTS[t.mine]==='RES'||SLOTS[t.mine]===pb.pos;
-  /* pa vai para o slot de pb (no time do bot); pb vai para o slot de pa */
   if(!okA||!okB)return {ok:false,why:'As posições não encaixam nos slots um do outro.'};
   var cash=clamp(t.cash,0,u.balance);
   var ratio=(worthOf(pa)+cash)/(worthOf(pb)*b.margin);
   return {ok:true,ratio:ratio,pa:pa,pb:pb,b:b,cash:cash};
 }
+function rowSlot(act,i,p,sel){
+  return '<button class="rowp'+(sel?' sel':'')+'" data-act="'+act+'" data-i="'+i+'"><span class="pos pos-'+SLOTS[i]+'"><i></i>'+SLOTS[i]+'</span><div><div class="nm">'+esc(p.n)+'</div><div class="sub2">'+p.pos+' · '+esc(clubName(p))+'</div></div><span class="r tn">'+p.r+'</span></button>';
+}
 function renderMarket(){
   var t=S.trade,u=coach(0),bots=S.coaches.slice(1);
-  if(t.coach==null)t.coach=bots[0].id;
+  if(t.coach==null||!coach(t.coach))t.coach=bots[0].id;
   var b=coach(t.coach);
-  function rowsMine(){return u.slots.map(function(id,i){var p=player(id);
-    return '<button class="rowp'+(t.mine===i?' sel':'')+'" data-act="tmine" data-i="'+i+'"><span class="pos pos-'+SLOTS[i]+'"><i></i>'+SLOTS[i]+'</span><div><div class="nm">'+esc(p.n)+'</div><div class="sub2">'+p.pos+' · '+esc((clubOf(p.c)||{nome:''}).nome)+'</div></div><span class="r tn">'+p.r+'</span></button>'}).join('')}
-  function rowsTheirs(){return b.slots.map(function(id,i){var p=player(id);
-    return '<button class="rowp'+(t.theirs===i?' sel':'')+'" data-act="ttheirs" data-i="'+i+'"><span class="pos pos-'+SLOTS[i]+'"><i></i>'+SLOTS[i]+'</span><div><div class="nm">'+esc(p.n)+'</div><div class="sub2">'+p.pos+' · '+esc((clubOf(p.c)||{nome:''}).nome)+'</div></div><span class="r tn">'+p.r+'</span></button>'}).join('')}
   view.innerHTML=
-  '<div class="market"><section class="card pan"><h2>Você oferece</h2><p class="sub">Saldo disponível: <b class="tn">$'+u.balance+'</b></p>'+rowsMine()+'</section>'+
-  '<section class="card pan"><h2>Você recebe</h2><select class="sel" id="tcoach" aria-label="Técnico">'+bots.map(function(c){return '<option value="'+c.id+'"'+(c.id===t.coach?' selected':'')+'>'+esc(c.name)+' · $'+c.balance+'</option>'}).join('')+'</select>'+rowsTheirs()+'</section>'+
+  '<div class="market"><section class="card pan"><h2>Você oferece</h2><p class="sub">Saldo disponível: <b class="tn">$'+u.balance+'</b></p>'+u.slots.map(function(id,i){return rowSlot('tmine',i,player(id),t.mine===i)}).join('')+'</section>'+
+  '<section class="card pan"><h2>Você recebe</h2><select class="sel" id="tcoach" aria-label="Técnico">'+bots.map(function(c){return '<option value="'+c.id+'"'+(c.id===t.coach?' selected':'')+'>'+esc(c.name)+' · $'+c.balance+'</option>'}).join('')+'</select>'+b.slots.map(function(id,i){return rowSlot('ttheirs',i,player(id),t.theirs===i)}).join('')+'</section>'+
   '<section class="card deal"><div class="row"><label for="cash" style="font-weight:600">Dinheiro por cima: <b class="tn" id="cashv">$'+clamp(t.cash,0,u.balance)+'</b></label><input id="cash" type="range" min="0" max="'+u.balance+'" step="1" value="'+clamp(t.cash,0,u.balance)+'"></div>'+
   '<div class="meter" aria-hidden="true"><i id="mt"></i></div><div class="row"><span id="tmsg" class="muted" style="flex:1;min-width:200px"></span><button class="btn primary" id="tgo" data-act="tgo">Propor troca</button></div>'+
   (S.trades.length?'<ul class="log">'+S.trades.slice(0,5).map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul>':'')+'</section></div>';
   updateTrade();
 }
 function updateTrade(){
-  var t=S.trade,e=tradeEval(),msg=$('#tmsg'),go=$('#tgo'),mt=$('#mt');if(!msg)return;
+  var e=tradeEval(),msg=$('#tmsg'),go=$('#tgo'),mt=$('#mt');if(!msg)return;
   if(!e){msg.textContent='Escolha um jogador seu e um do outro técnico.';go.disabled=true;mt.style.width='0';return}
   if(!e.ok){msg.textContent=e.why;go.disabled=true;mt.style.width='0';return}
   var r=e.ratio,txt=r>=1?'O técnico deve aceitar.':(r>=.85?'Está perto. Um pouco mais de dinheiro ajuda.':'Muito longe do que ele quer.');
-  msg.textContent=esc(e.pa.n)+' (nota '+e.pa.r+')'+(e.cash?' + $'+e.cash:'')+' por '+e.pb.n+' (nota '+e.pb.r+'). '+txt;
-  msg.textContent=msg.textContent.replace(/&amp;/g,'&');
+  msg.textContent=e.pa.n+' (nota '+e.pa.r+')'+(e.cash?' + $'+e.cash:'')+' por '+e.pb.n+' (nota '+e.pb.r+'). '+txt;
   mt.style.width=clamp(r*100,4,100)+'%';mt.style.background=r>=1?'var(--good)':(r>=.85?'var(--warn)':'var(--bad)');go.disabled=false;
 }
 function doTrade(){
   var e=tradeEval(),t=S.trade;if(!e||!e.ok)return;
   var u=coach(0),b=e.b;
   if(e.ratio<1){S.trades.unshift(esc(b.name)+' recusou a proposta por '+esc(e.pb.n)+'.');sndNo();toast(b.name+' recusou.');renderMarket();return}
-  var ia=t.mine,ib=t.theirs;
-  u.slots[ia]=e.pb.id;b.slots[ib]=e.pa.id;u.balance-=e.cash;b.balance+=e.cash;
+  u.slots[t.mine]=e.pb.id;b.slots[t.theirs]=e.pa.id;u.balance-=e.cash;b.balance+=e.cash;
   S.trades.unshift('Trocou '+esc(e.pa.n)+(e.cash?' + $'+e.cash:'')+' por '+esc(e.pb.n)+' com '+esc(b.name)+'.');
   t.mine=null;t.theirs=null;t.cash=0;sndWin();toast('Troca fechada!');renderMarket();
 }
 
+/* mercado exterior */
+function extList(){
+  var e=S.ext,l=S.players.filter(function(p){return p.ext&&p.owner==null&&!p.gone});
+  if(e.lg!=='all')l=l.filter(function(p){return p.lg===e.lg});
+  var sp=e.slot!=null?SLOTS[e.slot]:null;
+  if(sp&&sp!=='RES')l=l.filter(function(p){return p.pos===sp});
+  if(e.pos!=='all')l=l.filter(function(p){return p.pos===e.pos});
+  return l.sort(function(a,b){return b.r-a.r}).slice(0,40);
+}
+function extEval(){
+  var e=S.ext,u=coach(0);if(e.slot==null||e.pid==null)return null;
+  var mine=player(u.slots[e.slot]),fp=player(e.pid);
+  if(!(SLOTS[e.slot]==='RES'||SLOTS[e.slot]===fp.pos))return {ok:false,why:'Esse jogador não joga na posição escolhida.'};
+  if(e.mode==='troca'&&fp.r>mine.r+6)return {ok:false,why:'O clube só aceita trocar por jogadores até 6 pontos acima do seu.'};
+  var price=extPrice(fp),credit=sellCredit(mine,e.mode),cost=price-credit;
+  if(cost>u.balance)return {ok:false,why:'Saldo insuficiente: faltam $'+(cost-u.balance)+'.',mine:mine,fp:fp,price:price,credit:credit,cost:cost};
+  return {ok:true,mine:mine,fp:fp,price:price,credit:credit,cost:cost};
+}
+function renderExt(){
+  var e=S.ext,u=coach(0),ev=extEval(),list=extList();
+  var lgOpts='<option value="all">Todas as ligas</option>'+(window.LIGAS||[]).map(function(o){return '<option value="'+o.id+'"'+(e.lg===o.id?' selected':'')+'>'+esc(o.nome)+(o.id===S.league.id?' (sua liga, livres)':'')+'</option>'}).join('');
+  var posOpts=['all','GOL','ZAG','LAT','MEI','ATA'].map(function(x){return '<option value="'+x+'"'+(e.pos===x?' selected':'')+'>'+(x==='all'?'Todas as posições':POSN[x])+'</option>'}).join('');
+  var rows=list.map(function(p){
+    var cl=clubOf(p.c),sel=e.pid===p.id;
+    return '<button class="rowp x'+(sel?' sel':'')+'" data-act="xpick" data-id="'+p.id+'"><span class="pos pos-'+p.pos+'"><i></i>'+p.pos+'</span><div><div class="nm">'+esc(p.n)+'</div><div class="sub2 lgmini">'+flag(p.lg,16)+esc(cl?cl.nome:'')+'</div></div><span class="r tn">'+p.r+'</span><span class="price tn">$'+extPrice(p)+'</span></button>';
+  }).join('')||'<p class="muted">Nenhum jogador com esses filtros.</p>';
+  var sum='Escolha o jogador que sai e o jogador que chega.',go=true;
+  if(ev){
+    if(ev.ok){go=false;sum=e.mode==='troca'?
+      'Você entrega '+ev.mine.n+' (nota '+ev.mine.r+', crédito de $'+ev.credit+') e recebe '+ev.fp.n+' (nota '+ev.fp.r+', preço $'+ev.price+'). '+(ev.cost>=0?'Você paga $'+ev.cost+'.':'Você recebe $'+(-ev.cost)+'.'):
+      'Você dispensa '+ev.mine.n+' (nota '+ev.mine.r+', vale $'+ev.credit+') e contrata '+ev.fp.n+' (nota '+ev.fp.r+') por $'+ev.price+'. Custo líquido: $'+ev.cost+'.';
+    }else sum=ev.why;
+  }
+  view.innerHTML=
+  '<div class="card banner" style="margin-bottom:16px"><div><p class="kicker">Mercado exterior · temporada '+S.season+' de '+S.M+'</p><h2>Contrate de outras ligas</h2><p>Seu saldo é <b class="tn">$'+u.balance+'</b>. Você ganha prêmio no fim de cada temporada, conforme a posição.</p></div></div>'+
+  '<div class="extgrid"><section class="card pan"><h2>Quem sai</h2><p class="sub">Escolha o slot que vai receber o reforço.</p>'+
+    u.slots.map(function(id,i){return rowSlot('xslot',i,player(id),e.slot===i)}).join('')+'</section>'+
+  '<section class="card pan"><h2>Quem chega</h2><div class="filters"><select id="xlg" aria-label="Liga">'+lgOpts+'</select><select id="xpos" aria-label="Posição">'+posOpts+'</select></div><div class="scroll">'+rows+'</div></section>'+
+  '<section class="card deal" style="grid-column:1/-1"><div class="mode"><button class="'+(e.mode==='compra'?'on':'')+'" data-act="xmode" data-v="compra"><b>Comprar</b><small>Seu jogador é dispensado e vale 50% do valor.</small></button><button class="'+(e.mode==='troca'?'on':'')+'" data-act="xmode" data-v="troca"><b>Trocar</b><small>O clube paga 85% do valor do seu jogador, mas só aceita reforço até +6 de nota.</small></button></div>'+
+  '<div class="row"><span class="muted" style="flex:1;min-width:220px">'+esc(sum)+'</span><button class="btn primary" data-act="xgo"'+(go?' disabled':'')+'>Fechar negócio</button></div>'+
+  (S.extLog.length?'<ul class="log">'+S.extLog.slice(0,5).map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul>':'')+'</section></div>';
+}
+function doExt(){
+  var ev=extEval(),e=S.ext,u=coach(0);if(!ev||!ev.ok)return;
+  releasePlayer(ev.mine);ev.fp.owner=0;ev.fp.ext=false;u.slots[e.slot]=ev.fp.id;u.balance-=ev.cost;
+  S.extLog.unshift((e.mode==='troca'?'Troca: ':'Compra: ')+esc(ev.fp.n)+' chegou, '+esc(ev.mine.n)+' saiu.');
+  e.pid=null;sndWin();toast(ev.fp.n+' é seu!');renderExt();
+}
+
 /* escalação */
-var POSXY={GOL:[50,88],ZAG:[50,66],LAT:[22,50],MEI:[50,40],ATA:[50,14]};
 function renderLineup(){
   var u=coach(0),r=teamR(u),sl=S.selSlot;
-  var pitch='<div class="pitch"><div class="circle"></div>'+[0,1,2,3,4].map(function(i){
-    var p=player(u.slots[i]),xy=POSXY[SLOTS[i]];
+  var pitch='<div class="pitch"><div class="circle"></div>'+[0,1,2,3,4,5,6].map(function(i){
+    var p=player(u.slots[i]),xy=XY[i];
     return '<button class="pl pos-'+SLOTS[i]+(sl===i?' sel':'')+'" style="left:'+xy[0]+'%;top:'+xy[1]+'%" data-act="slot" data-i="'+i+'"><div class="pp">'+SLOTS[i]+'</div><div class="nm">'+esc(p.n)+'</div><b class="tn">'+p.r+'</b></button>'}).join('')+'</div>'+
-    '<div class="bench">'+[5,6].map(function(i){var p=player(u.slots[i]);
-      return '<button class="rowp'+(sl===i?' sel':'')+'" data-act="slot" data-i="'+i+'"><span class="pos pos-'+p.pos+'"><i></i>RES</span><div><div class="nm">'+esc(p.n)+'</div><div class="sub2">'+p.pos+' · reserva</div></div><span class="r tn">'+p.r+'</span></button>'}).join('')+'</div>';
+    '<div class="bench">'+(function(){var p=player(u.slots[RESI]);
+      return '<button class="rowp'+(sl===RESI?' sel':'')+'" data-act="slot" data-i="'+RESI+'"><span class="pos pos-'+p.pos+'"><i></i>RES</span><div><div class="nm">'+esc(p.n)+'</div><div class="sub2">'+p.pos+' · reserva</div></div><span class="r tn">'+p.r+'</span></button>'})()+'</div>';
   function bar(l,v){return '<div class="stat"><span>'+l+'</span><div class="meter"><i style="width:'+clamp((v-50)/45*100,3,100)+'%"></i></div><b class="tn">'+Math.round(v)+'</b></div>'}
-  view.innerHTML='<div class="lineup"><section>'+pitch+'<p class="hint">Toque em um jogador e depois em outro para trocar de lugar. Reservas só entram no lugar de quem joga na mesma posição.</p></section>'+
-  '<section class="card pan"><h2>Força do time</h2><p class="sub">Calculada com os titulares e uma fração dos reservas.</p><div class="stats">'+bar('Ataque',r.att)+bar('Defesa',r.def)+bar('Geral',r.ovr)+'</div>'+
+  view.innerHTML='<div class="lineup"><section>'+pitch+'<p class="hint">Toque em um jogador e depois em outro para trocar de lugar. O reserva só entra no lugar de quem joga na mesma posição.</p></section>'+
+  '<section class="card pan"><h2>Força do time</h2><p class="sub">Calculada com os titulares e uma fração do reserva.</p><div class="stats">'+bar('Ataque',r.att)+bar('Defesa',r.def)+bar('Geral',r.ovr)+'</div>'+
   '<h2 style="margin-top:22px">Estilo de jogo</h2><p class="sub">Muda o equilíbrio entre atacar e defender.</p><div class="styles">'+STYLES.map(function(s){return '<button class="'+(u.style===s[2]?'on':'')+'" data-act="style" data-v="'+s[2]+'"><b>'+s[0]+'</b><small>'+s[1]+'</small></button>'}).join('')+'</div>'+
   '<div style="margin-top:18px"><button class="btn" data-act="auto">Escalar o melhor time</button></div></section></div>';
 }
@@ -1807,27 +2748,32 @@ function resultsHtml(){
 function scorersHtml(){
   var sn=S.sn,ids=Object.keys(sn.scorers).sort(function(a,b){return sn.scorers[b]-sn.scorers[a]}).slice(0,6);
   if(!ids.length)return '<p class="muted">Sem gols ainda.</p>';
-  return '<ul class="scorers">'+ids.map(function(id){var p=player(+id),c=coach(p.owner);
+  return '<ul class="scorers">'+ids.map(function(id){var p=player(+id),c=coach(p.owner!=null?p.owner:0);
     return '<li>'+badge(clubOf(c.club),18)+'<span>'+esc(p.n)+' <span class="muted">· '+esc(c.name)+'</span></span><span class="g tn">'+sn.scorers[id]+'</span></li>'}).join('')+'</ul>';
+}
+function histHtml(){
+  if(!S.hist.length)return '';
+  return '<div class="hist">'+S.hist.map(function(h){var c=coach(h.champ);return '<span>T'+h.season+': '+esc(c.name)+(h.champ===0?' (você)':'')+' · você '+h.userPos+'º</span>'}).join('')+'</div>';
 }
 function finalHtml(){
   var rows=S.coaches.slice().sort(function(a,b){return S.total[b.id].titles-S.total[a.id].titles||S.total[b.id].pts-S.total[a.id].pts});
   var champ=rows[0],me=rows.indexOf(coach(0))+1;
-  return '<div class="card banner"><div><p class="kicker">Fim das 3 temporadas</p><h2>'+(champ.id===0?'Você é o grande campeão!':esc(champ.name)+' é o grande campeão')+'</h2><p>Você terminou em '+me+'º no geral, com '+S.total[0].titles+' título'+(S.total[0].titles===1?'':'s')+' e '+S.total[0].pts+' pontos.</p></div><div class="sp"><button class="btn primary" data-act="restart">Jogar de novo</button></div></div>'+
-  '<div class="card pan"><div class="tablewrap"><table><thead><tr><th>#</th><th>Técnico</th><th>Títulos</th><th>Pontos</th></tr></thead><tbody>'+rows.map(function(c,i){return '<tr class="'+(c.id===0?'me':'')+'"><td class="tn">'+(i+1)+'</td><td><div>'+badge(clubOf(c.club),22)+'<span>'+esc(c.name)+(c.id===0?' (você)':'')+'</span></div></td><td class="tn">'+S.total[c.id].titles+'</td><td class="pts tn">'+S.total[c.id].pts+'</td></tr>'}).join('')+'</tbody></table></div></div>';
+  return '<div class="card banner"><div><p class="kicker">Fim das '+S.M+' temporada'+(S.M>1?'s':'')+'</p><h2>'+(champ.id===0?'Você é o grande campeão!':esc(champ.name)+' é o grande campeão')+'</h2><p>Você terminou em '+me+'º no geral, com '+S.total[0].titles+' título'+(S.total[0].titles===1?'':'s')+' e '+S.total[0].pts+' pontos.</p>'+histHtml()+'</div><div class="sp"><button class="btn primary" data-act="restart">Jogar de novo</button></div></div>'+
+  '<div class="card pan" style="margin-bottom:16px"><div class="tablewrap"><table><thead><tr><th>#</th><th>Técnico</th><th>Títulos</th><th>Pontos</th></tr></thead><tbody>'+rows.map(function(c,i){return '<tr class="'+(c.id===0?'me':'')+'"><td class="tn">'+(i+1)+'</td><td><div>'+badge(clubOf(c.club),22)+'<span>'+esc(c.name)+(c.id===0?' (você)':'')+'</span></div></td><td class="tn">'+S.total[c.id].titles+'</td><td class="pts tn">'+S.total[c.id].pts+'</td></tr>'}).join('')+'</tbody></table></div></div>';
 }
 function renderChamp(){
-  var sn=S.sn,last=S.season>=3&&sn.done;
+  var sn=S.sn,last=S.season>=S.M&&sn.done;
   var ban='';
-  if(sn.done){
+  if(sn.done&&!last){
     var tb=sortedTable(sn),pos=tb.map(function(r){return r.id}).indexOf(0)+1,ch=coach(sn.champ);
-    ban='<div class="card banner"><div><p class="kicker">Temporada '+S.season+' encerrada</p><h2>'+(sn.champ===0?'Você é campeão!':esc(ch.name)+' é campeão')+'</h2><p>Você ficou em '+pos+'º lugar com '+sn.tab[0].pts+' pontos.</p></div><div class="sp">'+(last?'':'<button class="btn primary" data-act="next">Temporada '+(S.season+1)+'</button>')+'</div></div>';
+    ban='<div class="card banner"><div><p class="kicker">Temporada '+S.season+' encerrada</p><h2>'+(sn.champ===0?'Você é campeão!':esc(ch.name)+' é campeão')+'</h2><p>Você ficou em '+pos+'º lugar com '+sn.tab[0].pts+' pontos e ganhou um prêmio de $'+sn.prize[0]+'. Saldo atual: $'+coach(0).balance+'.</p>'+histHtml()+'</div><div class="sp"><button class="btn primary" data-act="next">Temporada '+(S.season+1)+'</button></div></div>';
   }
+  var total=sn.fx.length;
   view.innerHTML=(last?finalHtml():'')+ban+
-  '<div class="progress"><span class="tn">Temporada '+S.season+' de 3 · Rodada '+Math.min(sn.round+(sn.done?0:1),sn.fx.length)+' de '+sn.fx.length+'</span><div class="bar"><i style="width:'+Math.round(sn.round/sn.fx.length*100)+'%"></i></div></div>'+
+  '<div class="progress"><span class="tn">Temporada '+S.season+' de '+S.M+' · Rodada '+Math.min(sn.round+(sn.done?0:1),total)+' de '+total+'</span><div class="bar"><i style="width:'+Math.round(sn.round/total*100)+'%"></i></div></div>'+
   '<div class="ctl"><button class="btn primary" data-act="round"'+(sn.done||sn.running?' disabled':'')+'>Jogar rodada</button><button class="btn" data-act="all"'+(sn.done||sn.running?' disabled':'')+'>Simular temporada</button>'+
   (sn.res.length?'<span class="muted">Ver rodada:</span><button class="btn" data-act="rprev"'+(S.viewRound<=0?' disabled':'')+'>◀</button><b class="tn">'+(S.viewRound+1)+'</b><button class="btn" data-act="rnext"'+(S.viewRound>=sn.res.length-1?' disabled':'')+'>▶</button>':'')+'</div>'+
-  '<div class="champ"><section class="card pan"><h2>Classificação</h2><p class="sub">Campeão é quem somar mais pontos em 30 rodadas.</p>'+tableHtml()+'</section>'+
+  '<div class="champ"><section class="card pan"><h2>Classificação</h2><p class="sub">Campeão é quem somar mais pontos em '+total+' rodadas.</p>'+tableHtml()+'</section>'+
   '<div style="display:grid;gap:16px"><section class="card pan"><h2>Jogos da rodada</h2><div style="margin-top:10px">'+resultsHtml()+'</div></section><section class="card pan"><h2>Artilharia</h2><div style="margin-top:10px">'+scorersHtml()+'</div></section></div></div>';
 }
 function runAll(){
@@ -1837,7 +2783,7 @@ function runAll(){
     simulateRound();
     if(S.tab==='champ')render();
     if(sn.done){clearInterval(iv);sn.running=false;if(S.tab==='champ')render()}
-  },260);
+  },sn.fx.length>20?160:260);
 }
 
 /* ===== eventos ===== */
@@ -1846,13 +2792,15 @@ document.addEventListener('click',function(e){
   var a=t.dataset.act,d=t.dataset;
   switch(a){
     case 'league':S.sel.league=d.id;S.sel.club=null;var nm=$('#coachName');if(nm)S.sel.name=nm.value;renderHome();break;
+    case 'setn':S.sel.n=+d.v;var n1=$('#coachName');if(n1)S.sel.name=n1.value;renderHome();break;
+    case 'setm':S.sel.m=+d.v;var n2=$('#coachName');if(n2)S.sel.name=n2.value;renderHome();break;
     case 'start':startGame();break;
     case 'tab':
-      if(S.phase==='auction'&&d.tab!=='auction'){toast('Disponível depois que o leilão terminar');return}
+      var lk=tabLocked(d.tab);if(lk){toast(lk);return}
       S.tab=d.tab;S.selSlot=null;render();break;
     case 'sound':S.sound=!S.sound;store.set('ldb-sound',S.sound?'1':'0');renderTop();break;
     case 'theme':var nx=effTheme()==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',nx);store.set('ldb-theme',nx);renderTop();break;
-    case 'restart':S.phase='home';S.cur=null;S.sn&&(S.sn.running=false);render();break;
+    case 'restart':S.phase='home';S.cur=null;if(S.sn)S.sn.running=false;render();break;
     case 'pause':S.paused=!S.paused;render();break;
     case 'viewc':S.view=+d.id;if(S.phase==='auction'&&S.tab==='auction'){var r1=$('.roster');if(r1){var dd=document.createElement('div');dd.innerHTML=rosterHtml();r1.replaceWith(dd.firstChild)}renderBidState()}break;
     case 'bid':doBid(d.n);break;
@@ -1860,6 +2808,10 @@ document.addEventListener('click',function(e){
     case 'tmine':S.trade.mine=+d.i;S.trade.theirs=null;renderMarket();break;
     case 'ttheirs':S.trade.theirs=+d.i;renderMarket();break;
     case 'tgo':doTrade();break;
+    case 'xslot':S.ext.slot=+d.i;S.ext.pid=null;renderExt();break;
+    case 'xpick':S.ext.pid=+d.id;renderExt();break;
+    case 'xmode':S.ext.mode=d.v;renderExt();break;
+    case 'xgo':doExt();break;
     case 'slot':
       var i=+d.i,u=coach(0);
       if(S.selSlot==null){S.selSlot=i}
@@ -1879,6 +2831,8 @@ document.addEventListener('click',function(e){
 document.addEventListener('change',function(e){
   if(e.target.id==='clubSel')S.sel.club=e.target.value;
   if(e.target.id==='tcoach'){S.trade.coach=+e.target.value;S.trade.theirs=null;renderMarket()}
+  if(e.target.id==='xlg'){S.ext.lg=e.target.value;S.ext.pid=null;renderExt()}
+  if(e.target.id==='xpos'){S.ext.pos=e.target.value;S.ext.pid=null;renderExt()}
 });
 document.addEventListener('input',function(e){
   if(e.target.id==='cash'){S.trade.cash=+e.target.value;$('#cashv').textContent='$'+S.trade.cash;updateTrade()}
@@ -1922,6 +2876,7 @@ setInterval(function(){
   render();
 })();
 })();
+
 </script>
 
 </body>
