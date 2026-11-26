@@ -523,6 +523,65 @@ body{background:radial-gradient(1200px 600px at 85% -10%,color-mix(in srgb,var(-
 .novo{font-family:var(--body);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--bg);background:var(--accent);border-radius:6px;padding:1px 6px;vertical-align:middle}
 .evento .cat{margin-left:auto;font-size:13px;color:var(--muted)}
 
+/* ondas 1 e 2 */
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.mhd{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+.mhd h2{margin:0;font-family:var(--display);font-size:26px;text-transform:uppercase}
+.togs{display:grid;gap:8px;margin:12px 0}
+.tog{display:flex;gap:10px;align-items:center;font-weight:500}
+.tog input{width:18px;height:18px;accent-color:var(--accent)}
+.saves{margin:18px 0 0}
+.saves h2{font-size:20px;text-transform:uppercase;margin:0 0 8px}
+.saverow{display:flex;gap:10px;align-items:center;background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:8px;width:100%;text-align:left;color:inherit}
+.saverow>div{flex:1;min-width:0;display:grid}
+.saverow .muted{font-size:13px}
+.saverow.tgt{cursor:pointer}
+.saverow.tgt:hover{border-color:var(--accent)}
+.tipbox{position:fixed;left:max(16px,env(safe-area-inset-left,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));width:min(340px,calc(100vw - 32px));z-index:45;background:var(--surface);border:1px solid var(--accent);border-radius:16px;box-shadow:var(--shadow);padding:14px;display:grid;gap:6px}
+.tipbox p{margin:0;color:var(--muted);font-size:14px}
+.tipbox .btn{justify-self:end}
+.tour{position:fixed;inset:0;z-index:70}
+.tour .spot{position:fixed;border-radius:14px;box-shadow:0 0 0 9999px rgba(3,4,8,.72);border:2px solid var(--accent);pointer-events:none;transition:all .25s ease}
+.tourbox{position:fixed;width:320px;max-width:calc(100vw - 24px);background:var(--surface);border:1px solid var(--accent);border-radius:16px;padding:14px;display:grid;gap:6px;box-shadow:var(--shadow)}
+.tourbox b{font-family:var(--display);font-size:22px}
+.tourbox p{margin:0;color:var(--muted)}
+.tourbox .row{display:flex;justify-content:flex-end;gap:8px;margin-top:6px}
+.cardbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.pcard{display:flex;gap:6px;align-items:center;background:linear-gradient(150deg,color-mix(in srgb,var(--violet) 22%,var(--surface2)),var(--surface2));border:1px solid color-mix(in srgb,var(--violet) 50%,var(--line));border-radius:12px;padding:7px 10px;font-weight:600;font-size:13px}
+.pcard span{font-size:18px}
+.pcard:disabled{opacity:.4;cursor:not-allowed}
+.pcard:hover:not(:disabled){border-color:var(--violet)}
+.bst{font-size:14px;margin-left:3px;cursor:help}
+.flagx.dut{color:var(--yellow);border-color:color-mix(in srgb,var(--yellow) 50%,transparent);background:color-mix(in srgb,var(--yellow) 8%,transparent)}
+.flagx.fla{color:var(--pink);border-color:color-mix(in srgb,var(--pink) 50%,transparent);background:color-mix(in srgb,var(--pink) 8%,transparent)}
+.flagx.kit{color:var(--aqua);border-color:color-mix(in srgb,var(--aqua) 50%,transparent);background:color-mix(in srgb,var(--aqua) 8%,transparent)}
+.stage.f-flash{box-shadow:0 0 0 2px color-mix(in srgb,var(--pink) 50%,transparent),var(--shadow)}
+.stage.f-dutch{box-shadow:0 0 0 2px color-mix(in srgb,var(--yellow) 50%,transparent),var(--shadow)}
+.stage.f-kit{box-shadow:0 0 0 2px color-mix(in srgb,var(--aqua) 45%,transparent),var(--shadow)}
+.stage.f-sealed{box-shadow:0 0 0 2px color-mix(in srgb,var(--good) 45%,transparent),var(--shadow)}
+.dutch{display:grid;gap:8px}
+.btn.big{font-size:20px;padding:16px}
+.frozen{padding:14px;border-radius:12px;border:1px dashed var(--baby);color:var(--baby);font-weight:600;text-align:center}
+.peek{margin:0;color:var(--good)}
+.kitrow{display:flex;gap:6px;padding:6px;background:#0b0d14}
+.kitrow div{flex:1;display:grid;gap:2px;font-size:11px;color:var(--muted);line-height:1.2}
+.kitrow svg{width:100%;height:auto;border-radius:6px}
+.histline{display:block;font-size:12px;color:var(--muted);margin-top:4px}
+.notas{display:flex;gap:8px}
+.nota.base b{font-size:26px;color:var(--accent)}
+.bankgrid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.intel .evprev{display:grid;gap:4px;background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:10px}
+.intel .evprev b{font-family:var(--display);font-size:20px}
+.intel .evprev span{color:var(--muted);font-size:13px}
+@media (max-width:1100px){.bankgrid.three{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:560px){.notas .nota{min-width:0;padding:8px 10px}}
+/* acessibilidade */
+html.big{font-size:17.5px}
+html.big body{font-size:17px}
+html.hc{--muted:#c9cee0;--line:#56607a;--surface:#0c0e15;--surface2:#151826}
+html.hc .card,html.hc .btn,html.hc .pill{border-width:2px}
+html.calm *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+
 </style>
 </head>
 <body>
@@ -530,6 +589,9 @@ body{background:radial-gradient(1200px 600px at 85% -10%,color-mix(in srgb,var(-
 <div id="toast" role="status" aria-live="polite"></div>
 <div id="modal" hidden></div>
 <div id="chat" hidden></div>
+<div id="tip" class="tipbox" role="status" hidden></div>
+<div id="tour" class="tour" hidden></div>
+<div id="sr" class="sr-only" aria-live="polite"></div>
 <script>
 window.DL3=window.DL3||{};DL3.data=DL3.data||{};DL3.cloud=null;
 ;
@@ -2391,7 +2453,7 @@ function beep(f,d,type,vol,delay){
   if(!DL3.sound)return;
   try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();
     var t=actx.currentTime+(delay||0),o=actx.createOscillator(),g=actx.createGain();
-    o.type=type||'sine';o.frequency.value=f;g.gain.setValueAtTime(vol||.05,t);g.gain.exponentialRampToValueAtTime(.0001,t+(d||.08));
+    o.type=type||'sine';o.frequency.value=f;var V=(vol||.05)*((DL3.settings&&DL3.settings.vol!=null)?DL3.settings.vol*1.25:1);if(V<=0.0002)return;g.gain.setValueAtTime(V,t);g.gain.exponentialRampToValueAtTime(.0001,t+(d||.08));
     o.connect(g);g.connect(actx.destination);o.start(t);o.stop(t+(d||.08)+.02);}catch(e){}
 }
 DL3.snd={bid:function(){beep(520,.07,'square',.03)},tick:function(){beep(880,.05,'sine',.04)},
@@ -2438,7 +2500,7 @@ DL3.saveProfile=function(){DL3.store.set('profile',DL3.profile)};
 DL3.deviceId=DL3.store.get('device',null);
 if(!DL3.deviceId){DL3.deviceId=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():'xxxxxxxx-xxxx-4xxx-8xxx-xxxxxxxxxxxx'.replace(/x/g,function(){return (Math.random()*16|0).toString(16)});DL3.store.set('device',DL3.deviceId)}
 /* ranking mundial (Supabase via REST). DL3.cloud = {url, key} é injetado no build; sem ele, só o ranking local. */
-var CLOUD_MAP={titles:'titulos',pts:'pontos',patr:'patrimonio',visual:'visual',dinheiro:'dinheiro'};
+var CLOUD_MAP={titles:'titulos',pts:'pontos',patr:'patrimonio',visual:'visual',dinheiro:'dinheiro',anos:'anos'};
 DL3.cloudOn=function(){return !!(DL3.cloud&&DL3.cloud.url&&DL3.cloud.key)};
 function cloudReq(path,opts){
   opts=opts||{};var h={apikey:DL3.cloud.key,Authorization:'Bearer '+DL3.cloud.key,'Content-Type':'application/json'};
@@ -2470,9 +2532,10 @@ DL3.ranking={
     if(DL3.cloudOn()){var q=DL3.store.get('cloudq',[]);q.push(toRow(mod,entry));DL3.store.set('cloudq',q.slice(-20));flushCloud()}
   },
   list:function(mod){return DL3.store.get('rank-'+mod,[])},
-  global:function(mod,col,cb){
+  global:function(mod,col,cb,mes){
     var c=CLOUD_MAP[col]||col,c2=col==='titles'?',pontos.desc.nullslast':'';
-    cloudReq('ranking?select=*&modulo=eq.'+encodeURIComponent(mod)+'&order='+c+'.desc.nullslast'+c2+'&limit=50').then(function(rows){cb(null,rows.map(fromRow))},function(err){cb(err)});
+    var d=new Date(),ini=new Date(Date.UTC(d.getFullYear(),d.getMonth(),1)).toISOString();
+    cloudReq('ranking?select=*&modulo=eq.'+encodeURIComponent(mod)+(mes?'&criado_em=gte.'+encodeURIComponent(ini):'')+'&order='+c+'.desc.nullslast'+c2+'&limit=50').then(function(rows){cb(null,rows.map(fromRow))},function(err){cb(err)});
   }
 };
 DL3.flushCloud=flushCloud;
@@ -2540,7 +2603,7 @@ DL3.ach={
     ACHS.forEach(function(a){
       if(AST.u[a.id]||!a.on[type])return;
       var ok=false;try{ok=a.on[type](d)}catch(e){}
-      if(ok){AST.u[a.id]=new Date().toISOString().slice(0,10);AST.xp=(AST.xp||0)+100;DL3.toast('🏆 Conquista: '+a.n);DL3.snd.win()}
+      if(ok){AST.u[a.id]=new Date().toISOString().slice(0,10);AST.xp=(AST.xp||0)+100;DL3.toast('🏆 Conquista: '+a.n+' · +1 carta de poder');DL3.snd.win();if(A.screen==='game'&&A.engine)setTimeout(function(){DL3.act({type:'bonuscard'})},50)}
     });
     var W=weekly();
     W.ids.forEach(function(id){var w=weekDef(id);if(!w||W.done[id]||w.ev.indexOf(type)<0)return;var ok=true;try{ok=!w.f||w.f(d)}catch(e){ok=false}
@@ -2617,7 +2680,8 @@ DL3.header=function(o){
     return '<button class="tab'+(t[0]===o.tab?' on':'')+(t[2]?' locked':'')+'" data-act="'+(o.tabAct||'tab')+'" data-tab="'+t[0]+'" title="'+esc(t[2]||'')+'">'+t[1]+'</button>'}).join('')+'</nav>';}
   h+='<div class="actions">';
   if(DL3.net.role!=='solo')h+='<span class="pill net">'+(DL3.net.role==='host'?'Sala ':'Sala ')+esc(DL3.net.code)+' · '+DL3.net.peers().length+' online</span>';
-  h+='<button class="pill" data-act="sound">'+(DL3.sound?'Som ligado':'Som mudo')+'</button>';
+  if(A.screen==='game'&&DL3.net.role==='solo')h+='<button class="pill" data-act="savegame">Salvar</button>';
+  h+='<button class="pill" data-act="sound">'+(DL3.sound?'Som ligado':'Som mudo')+'</button><button class="pill" data-act="settings" aria-label="Ajustes">⚙ Ajustes</button>';
   if(o.exit)h+='<button class="pill" data-act="exit">Sair</button>';
   h+='</div>';
   $('#top').innerHTML=h;
@@ -2638,7 +2702,7 @@ DL3.renderHub=function(){
   $('#view').innerHTML=
   '<section class="hubhero"><div><p class="kicker">Leilões · esportes · mercado · 2026 em diante</p><h1 class="mega">Dou-lhe <span class="g3">3!</span></h1>'+
   '<p class="lead">Seis leilões, um martelo. Monte times campeões, vire o rei dos imóveis, restaure carros, decore a casa dos sonhos ou arrisque tudo num box fechado. Contra bots ou com amigos online.</p>'+
-  '<div class="herobtns"><button class="btn" data-act="joinbox">Entrar em sala</button><button class="btn" data-act="ranking">Ranking</button></div></div>'+
+  '<div class="herobtns"><button class="btn" data-act="joinbox">Entrar em sala</button><button class="btn" data-act="ranking">Ranking</button><button class="btn" data-act="importsave">Importar partida</button><input type="file" id="importfile" accept=".json,application/json" hidden></div></div>'+
   '<div class="card profile"><h2>Seu boneco</h2><div class="avpick">'+DL3.AVATARS.map(function(a,i){return '<button class="'+(p.avatar===i?'on':'')+'" data-act="avatar" data-i="'+i+'" title="'+a.nome+'">'+DL3.avatar(i,54)+'</button>'}).join('')+'</div>'+
   '<label for="pname">Seu nome<input id="pname" maxlength="16" placeholder="Como te chamam no leilão" value="'+esc(p.name)+'"></label></div></section>'+
   '<h2 class="sect">Escolha o leilão</h2><div class="modgrid">'+cards+'</div>'+
@@ -2651,14 +2715,14 @@ DL3.renderSetup=function(id){
   DL3.header({cor:e.cor,chip:esc(e.nome)});
   $('#view').innerHTML='<section class="setupwrap"><div class="card setup" style="--mc:'+e.cor+'"><div class="setuphead"><span class="mi big">'+e.icon()+'</span><div><p class="kicker">'+(e.tipo==='esporte'?'Esporte':'Mercado')+'</p><h1>'+esc(e.titulo||e.nome)+'</h1><p class="muted">'+esc(e.desc)+'</p></div></div>'+
     '<div id="engsetup">'+e.setupHtml()+'</div>'+
-    '<div class="setupbtns"><button class="btn primary" data-act="solo">Jogar contra bots</button><button class="btn" data-act="host">Criar sala online</button><button class="btn ghost" data-act="home">Voltar</button></div></div>'+
+    DL3.savesHtml(id)+'<div class="setupbtns"><button class="btn primary" data-act="solo">Jogar contra bots</button><button class="btn" data-act="host">Criar sala online</button><button class="btn ghost" data-act="home">Voltar</button></div></div>'+
     '<aside class="card how"><h2>Como funciona</h2>'+e.howHtml()+'</aside></section>';
 };
 DL3.renderRanking=function(){
   A.screen='ranking';
   DL3.header({cor:'#ffd23f',chip:'Ranking',exit:false});
   var mods=modList(),m=DL3.engines[A.rankMod]||mods[0];A.rankMod=m.id;
-  if(A.rankScope==null)A.rankScope=DL3.cloudOn()?'mundo':'local';
+  if(A.rankScope==null)A.rankScope=DL3.cloudOn()?'mes':'local';
   if(!DL3.cloudOn())A.rankScope='local';
   var cols=m.rankCols();var key=cols[A.rankSort]?cols[A.rankSort][1]:cols[0][1];
   var table=function(list,msg){
@@ -2669,35 +2733,36 @@ DL3.renderRanking=function(){
   };
   var local=DL3.ranking.list(m.id).slice().map(function(r){r.mine=true;return r});
   local.sort(function(a,b){return (b[key]||0)-(a[key]||0)||(b[cols[0][1]]||0)-(a[cols[0][1]]||0)});
-  var scopeBtns=DL3.cloudOn()?'<div class="seg rk3"><button class="'+(A.rankScope==='mundo'?'on':'')+'" data-act="rankscope" data-v="mundo">Mundial</button><button class="'+(A.rankScope==='local'?'on':'')+'" data-act="rankscope" data-v="local">Neste aparelho</button></div>':'';
-  $('#view').innerHTML='<div class="card pan"><h1 class="h1s">Ranking por leilão</h1><p class="sub">'+(A.rankScope==='mundo'?'Melhores carreiras de todos os jogadores. ':'Melhores carreiras jogadas neste aparelho. ')+esc(m.rankDesc())+'</p>'+scopeBtns+
+  var scopeBtns=DL3.cloudOn()?'<div class="seg rk3"><button class="'+(A.rankScope==='mes'?'on':'')+'" data-act="rankscope" data-v="mes">Mundial · este mês</button><button class="'+(A.rankScope==='mundo'?'on':'')+'" data-act="rankscope" data-v="mundo">Mundial · geral</button><button class="'+(A.rankScope==='local'?'on':'')+'" data-act="rankscope" data-v="local">Neste aparelho</button></div>':'';
+  $('#view').innerHTML='<div class="card pan"><h1 class="h1s">Ranking por leilão</h1><p class="sub">'+(A.rankScope!=='local'?(A.rankScope==='mes'?'Melhores carreiras do mês, de todos os jogadores. ':'Melhores carreiras de todos os jogadores. '):'Melhores carreiras jogadas neste aparelho. ')+esc(m.rankDesc())+'</p>'+scopeBtns+
   '<div class="seg rk">'+mods.map(function(x){return '<button style="--mc:'+x.cor+'" class="'+(x.id===m.id?'on':'')+'" data-act="rankmod" data-id="'+x.id+'">'+esc(x.nome)+'</button>'}).join('')+'</div>'+
   '<div class="seg rk2">'+cols.map(function(c,i){return '<button class="'+(i===A.rankSort?'on':'')+'" data-act="ranksort" data-i="'+i+'">Ordenar por '+c[0].toLowerCase()+'</button>'}).join('')+'</div>'+
-  '<div id="rkbody">'+(A.rankScope==='mundo'?table(null):table(local))+'</div>'+
+  '<div id="rkbody">'+(A.rankScope!=='local'?table(null):table(local))+'</div>'+
   '<div style="margin-top:16px"><button class="btn" data-act="home">Voltar ao início</button></div></div>';
-  if(A.rankScope==='mundo'){
+  if(A.rankScope!=='local'){
     var ticket=A.rankTicket=(A.rankTicket||0)+1;
     DL3.ranking.global(m.id,key,function(err,rows){
       if(ticket!==A.rankTicket||A.screen!=='ranking')return;
       var b=$('#rkbody');if(b)b.innerHTML=err?table(null,'Não foi possível carregar o ranking mundial agora. Tente de novo em instantes.'):table(rows);
-    });
+    },A.rankScope==='mes');
     flushCloud();
   }
 };
 
 /* ===== início de partida ===== */
 function seatsFromNet(){
-  var me={name:DL3.profile.name||'Você',avatar:DL3.profile.avatar,human:true,host:true};
+  var me={name:DL3.profile.name||'Você',avatar:DL3.profile.avatar,human:true,host:true,dev:DL3.deviceId};
   if(DL3.net.role!=='host')return [me];
-  return [me].concat(DL3.net.peers().map(function(p){return {name:p.name,avatar:p.avatar,human:true,peer:p.id}}));
+  return [me].concat(DL3.net.peers().map(function(p){return {name:p.name,avatar:p.avatar,human:true,peer:p.id,dev:p.dev}}));
 }
 DL3.startGame=function(){
   var e=DL3.engines[A.mod];var opts=e.readSetup();
   var seats=seatsFromNet();
   A.engine=e;A.screen='game';A.opts=opts;DL3.me=0;
   e.start(opts,seats);
+  var S=e.getState();S.hostSeat=0;S.hostGen=0;S.devSeat={};seats.forEach(function(s,i){if(s.dev)S.devSeat[s.dev]=i});
   if(DL3.net.role==='host'){
-    DL3.net.peers().forEach(function(p,i){DL3.net.sendTo(p.id,{t:'start',engine:e.id,me:i+1,opts:opts,full:e.getState()})});
+    DL3.net.peers().forEach(function(p,i){p.seat=i+1;DL3.net.sendTo(p.id,{t:'start',engine:e.id,me:i+1,opts:opts,full:e.getState()})});
     DL3.net.resetCache();
   }
   e.render();
@@ -2708,68 +2773,118 @@ DL3.endCareer=function(entry){ /* chamado pelo motor no fim da carreira */
   var t={mod:A.mod};Object.keys(entry).forEach(function(k){t[k]=entry[k]});DL3.ach.track('career',t);
 };
 
-/* ===== multiplayer (PeerJS, anfitrião autoritativo) ===== */
-var NET=DL3.net={role:'solo',code:'',peer:null,conns:{},info:{},chat:[],cache:null,
+/* ===== multiplayer (PeerJS, anfitrião autoritativo, com reconexão e troca de anfitrião) ===== */
+var NET=DL3.net={role:'solo',code:'',peer:null,conns:{},info:{},chat:[],cache:null,gen:0,
   peers:function(){return Object.keys(NET.info).map(function(k){return NET.info[k]})},
   sendTo:function(id,msg){var c=NET.conns[id];if(c&&c.open)try{c.send(msg)}catch(e){}},
   broadcast:function(msg){Object.keys(NET.conns).forEach(function(k){NET.sendTo(k,msg)})},
   resetCache:function(){NET.cache={k:{},el:{},res:{}}}
 };
 function code5(){var s='',c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';for(var i=0;i<5;i++)s+=c[Math.floor(Math.random()*c.length)];return s}
+function peerId(code,gen){return 'dl3-'+code+(gen?'-'+gen:'')}
 function needPeer(cb){
   if(window.Peer)return cb();
   var s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.4/peerjs.min.js';
   s.onload=cb;s.onerror=function(){DL3.toast('Não foi possível carregar o módulo online. Verifique a internet.')};document.head.appendChild(s);
 }
+/* o anfitrião (original ou substituto) atende conexões aqui */
+function hostListen(peer){
+  peer.on('connection',function(conn){
+    conn.on('open',function(){NET.conns[conn.peer]=conn});
+    conn.on('data',function(m){hostMsg(conn.peer,m,conn)});
+    conn.on('close',function(){
+      var who=NET.info[conn.peer];delete NET.conns[conn.peer];delete NET.info[conn.peer];
+      if(who){DL3.toast(who.name+' saiu da sala');if(A.screen==='game'&&A.engine&&A.engine.dropHuman&&who.seat!=null)A.engine.dropHuman(who.seat)}
+      if(A.screen==='lobby')DL3.renderLobby();lobbyBroadcast();
+    });
+  });
+}
 DL3.hostRoom=function(){
   if(!DL3.profile.name){DL3.toast('Escreva seu nome no início antes de criar uma sala');}
   needPeer(function(){
     var code=code5();
-    var peer=new window.Peer('dl3-'+code);
-    NET.peer=peer;NET.code=code;
+    var peer=new window.Peer(peerId(code,0));
+    NET.peer=peer;NET.code=code;NET.gen=0;
     peer.on('open',function(){NET.role='host';A.screen='lobby';DL3.renderLobby()});
     peer.on('error',function(err){DL3.toast('Erro na sala: '+(err&&err.type||'desconhecido'));});
-    peer.on('connection',function(conn){
-      conn.on('open',function(){
-        if(A.screen==='game'){conn.send({t:'full-room'});setTimeout(function(){conn.close()},500);return}
-        NET.conns[conn.peer]=conn;
-        if(NET.peers().length>=7){conn.send({t:'full-room'});return}
-      });
-      conn.on('data',function(m){hostMsg(conn.peer,m)});
-      conn.on('close',function(){
-        var who=NET.info[conn.peer];delete NET.conns[conn.peer];delete NET.info[conn.peer];
-        if(who){DL3.toast(who.name+' saiu da sala');if(A.screen==='game'&&A.engine&&A.engine.dropHuman)A.engine.dropHuman(who.seat);}
-        if(A.screen==='lobby')DL3.renderLobby();lobbyBroadcast();
-      });
-    });
+    hostListen(peer);
   });
 };
-function hostMsg(from,m){
+function hostMsg(from,m,conn){
   if(!m||!m.t)return;
-  if(m.t==='hello'){NET.info[from]={id:from,name:String(m.name||'Convidado').slice(0,16),avatar:m.avatar|0,seat:NET.peers().length+1};lobbyBroadcast();if(A.screen==='lobby')DL3.renderLobby();return}
-  if(m.t==='act'&&A.screen==='game'&&A.engine){var info=NET.info[from];if(!info)return;var seat=A.engine.seatOf?A.engine.seatOf(from):info.seat;A.engine.apply(m.a,seat);A.engine.render(true);return}
+  if(m.t==='hello'){
+    var info={id:from,name:String(m.name||'Convidado').slice(0,16),avatar:m.avatar|0,dev:String(m.dev||'')};
+    if(A.screen==='game'&&A.engine){
+      /* durante o jogo só volta quem já tinha assento (mesmo aparelho) */
+      var S=A.engine.getState(),seat=S&&S.devSeat?S.devSeat[info.dev]:null;
+      if(seat==null||seat===DL3.me){NET.sendTo(from,{t:'full-room'});setTimeout(function(){try{conn.close()}catch(e){}},600);return}
+      info.seat=seat;NET.info[from]=info;S.peerSeat=S.peerSeat||{};S.peerSeat[from]=seat;
+      A.engine.rejoin&&A.engine.rejoin(seat);
+      NET.sendTo(from,{t:'start',engine:A.engine.id,me:seat,full:A.engine.getState()});
+      NET.resetCache();NET.broadcast({t:'toast',text:info.name+' voltou para a sala'});DL3.toast(info.name+' voltou para a sala');A.engine.render();
+      return;
+    }
+    if(NET.peers().length>=7){NET.sendTo(from,{t:'full-room'});return}
+    NET.info[from]=info;lobbyBroadcast();if(A.screen==='lobby')DL3.renderLobby();return;
+  }
+  if(m.t==='act'&&A.screen==='game'&&A.engine){var inf=NET.info[from];if(!inf)return;var seat2=A.engine.seatOf?A.engine.seatOf(from):inf.seat;if(seat2==null)return;A.engine.apply(m.a,seat2);A.engine.render(true);return}
   if(m.t==='chat'){var info2=NET.info[from];if(!info2)return;var msg={who:info2.name,av:info2.avatar,text:String(m.text||'').slice(0,140)};NET.chat.push(msg);NET.broadcast({t:'chat',m:msg});DL3.renderChat();return}
 }
 function lobbyBroadcast(){
-  if(NET.role!=='host')return;
+  if(NET.role!=='host'||A.screen==='game')return;
   var seats=seatsFromNet().map(function(s){return {name:s.name,avatar:s.avatar}});
   var e=DL3.engines[A.mod];
   NET.broadcast({t:'lobby',seats:seats,mod:A.mod,modName:e?e.nome:''});
 }
+/* conecta tentando as gerações de anfitrião (0 = original, 1, 2… = substitutos) */
+function connectRoom(code,gens,onFail){
+  needPeer(function(){
+    if(!NET.peer||NET.peer.destroyed){NET.peer=new window.Peer();NET.peer.on('error',function(err){if(err&&err.type==='peer-unavailable'&&NET._try)NET._try()})}
+    var go=function(){
+      var list=gens.slice(),tryNext=function(){
+        var g=list.shift();if(g==null){NET._try=null;onFail&&onFail();return}
+        NET._try=tryNext;
+        var conn=NET.peer.connect(peerId(code,g),{reliable:true});
+        var ok=false,timer=setTimeout(function(){if(!ok){try{conn.close()}catch(e){}tryNext()}},4000);
+        conn.on('open',function(){ok=true;clearTimeout(timer);NET._try=null;NET.conns={host:conn};NET.code=code;NET.gen=g;NET.role='client';
+          conn.send({t:'hello',name:DL3.profile.name||'Convidado',avatar:DL3.profile.avatar,dev:DL3.deviceId});
+          if(A.screen!=='game'){A.screen='lobby';NET.lobby={seats:[],modName:''};DL3.renderLobby()}});
+        conn.on('data',clientMsg);
+        conn.on('close',function(){if(NET.conns.host===conn)hostLost()});
+      };
+      tryNext();
+    };
+    if(NET.peer.open)go();else NET.peer.on('open',go);
+  });
+}
 DL3.joinRoom=function(code){
   code=String(code||'').trim().toUpperCase();if(code.length<4){DL3.toast('Código inválido');return}
-  needPeer(function(){
-    var peer=new window.Peer();NET.peer=peer;
-    peer.on('open',function(){
-      var conn=peer.connect('dl3-'+code,{reliable:true});
-      NET.conns.host=conn;NET.code=code;
-      conn.on('open',function(){NET.role='client';conn.send({t:'hello',name:DL3.profile.name||'Convidado',avatar:DL3.profile.avatar});A.screen='lobby';NET.lobby={seats:[],modName:''};DL3.renderLobby()});
-      conn.on('data',clientMsg);
-      conn.on('close',function(){DL3.toast('A conexão com o anfitrião caiu');NET.role='solo';NET.conns={};DL3.renderHub()});
-    });
-    peer.on('error',function(err){DL3.toast(err&&err.type==='peer-unavailable'?'Sala não encontrada. Confira o código.':'Erro de conexão: '+(err&&err.type||''))});
-  });
+  connectRoom(code,[0,1,2,3,4],function(){DL3.toast('Sala não encontrada. Confira o código.')});
 };
+/* o anfitrião caiu: o humano de menor assento assume; os demais reconectam nele */
+function hostLost(){
+  NET.conns={};
+  if(A.screen!=='game'||!A.engine){DL3.toast('A conexão com o anfitrião caiu');NET.role='solo';DL3.renderHub();return}
+  var S=A.engine.getState(),old=S.hostSeat||0,gen=(S.hostGen||0)+1;
+  var hs=(A.engine.humanSeats?A.engine.humanSeats():[]).filter(function(s){return s!==old}).sort(function(a,b){return a-b});
+  if(!hs.length){DL3.toast('A sala acabou');NET.role='solo';return}
+  if(hs[0]===DL3.me){
+    DL3.toast('O anfitrião caiu. Você assumiu a sala.');
+    var p=new window.Peer(peerId(NET.code,gen));
+    p.on('open',function(){
+      try{NET.peer&&NET.peer!==p&&NET.peer.destroy()}catch(e){}
+      NET.peer=p;NET.role='host';NET.gen=gen;NET.info={};NET.conns={};NET.resetCache();
+      S.hostSeat=DL3.me;S.hostGen=gen;S.peerSeat={};
+      A.engine.dropHuman&&A.engine.dropHuman(old);
+      A.engine.render();
+    });
+    p.on('error',function(err){DL3.toast('Não deu para assumir a sala: '+(err&&err.type||''))});
+    hostListen(p);
+  }else{
+    DL3.toast('O anfitrião caiu. Reconectando…');
+    setTimeout(function(){connectRoom(NET.code,[gen,gen+1],function(){DL3.toast('Não foi possível reconectar à sala');NET.role='solo'})},2500);
+  }
+}
 function clientMsg(m){
   if(!m||!m.t)return;
   if(m.t==='full-room'){DL3.toast('A sala está cheia ou o jogo já começou');return}
@@ -2784,6 +2899,7 @@ DL3.act=function(a){
   A.engine.apply(a,DL3.me);A.engine.render(true);
 };
 DL3.isHost=function(){return NET.role!=='client'};
+
 DL3.sendChat=function(text){
   text=String(text||'').trim();if(!text)return;
   if(NET.role==='client'){NET.sendTo('host',{t:'chat',text:text});return}
@@ -2843,8 +2959,8 @@ DL3.renderLobby=function(){
 /* ===== laço principal (só o anfitrião ou o jogo solo simulam) ===== */
 var last=performance.now();
 setInterval(function(){
-  var now=performance.now(),dt=Math.min(.25,(now-last)/1000);last=now;
-  if(A.screen==='game'&&A.engine&&NET.role!=='client'&&A.engine.tick)A.engine.tick(dt);
+  var now=performance.now(),dt=Math.min(.25,(now-last)/1000)/((DL3.settings&&DL3.settings.clock)||1);last=now;
+  if(A.screen==='game'&&A.engine&&NET.role!=='client'&&A.engine.tick&&!(A.tourOn&&NET.role==='solo'))A.engine.tick(dt);
 },100);
 setInterval(function(){
   if(NET.role!=='host'||A.screen!=='game'||!A.engine)return;
@@ -2861,6 +2977,19 @@ document.addEventListener('click',function(e){
     case 'home':saveName();DL3.renderHub();return; /* a partida fica guardada: “Voltar à partida” na barra */
     case 'exit':leaveNet();A.engine=null;DL3.renderHub();return;
     case 'back':DL3.back();return;
+    case 'settings':DL3.openSettings();return;
+    case 'set':DL3.settings[d.k]=+d.v;DL3.applySettings();DL3.openSettings();return;
+    case 'tipok':DL3.tipOk();return;
+    case 'tournext':DL3.tourNext();return;
+    case 'tourskip':DL3.tourSkip();return;
+    case 'tourreset':DL3.tourReset();return;
+    case 'savegame':DL3.openSaveModal();return;
+    case 'saveslot':DL3.saves.put(A.engine.id,+d.slot);DL3.openSaveModal();return;
+    case 'exportsave':DL3.saves.exportFile();return;
+    case 'importsave':var fi=$('#importfile');if(fi)fi.click();return;
+    case 'loadsave':DL3.saves.load(d.mod,d.slot==='auto'?'auto':+d.slot);return;
+    case 'delsave':DL3.saves.del(d.mod,d.slot==='auto'?'auto':+d.slot);DL3.renderSetup(d.mod);return;
+    case 'cardtarget':DL3.closeModal();if(DL3._cardCb){var cb=DL3._cardCb;DL3._cardCb=null;cb(+d.t)}return;
     case 'resume':if(A.engine){A.screen='game';A.mod=A.engine.id;A.engine.render()}return;
     case 'conquistas':saveName();DL3.renderAch();return;
     case 'navmod':
@@ -2888,6 +3017,7 @@ document.addEventListener('click',function(e){
   if(A.screen==='setup'){var se=DL3.engines[A.mod];if(se&&se.setupClick)se.setupClick(a,d);return}
   if(A.screen==='game'&&A.engine&&A.engine.click)A.engine.click(a,d,t,e);
 });
+document.addEventListener('change',function(e){if(e.target.id==='importfile'&&e.target.files&&e.target.files[0]){DL3.saves.importFile(e.target.files[0]);e.target.value=''}});
 document.addEventListener('submit',function(e){if(e.target.id==='chatform'){e.preventDefault();var i=$('#chatin');DL3.sendChat(i.value);i.value=''}});
 document.addEventListener('change',function(e){
   if(A.screen==='setup'){var se=DL3.engines[A.mod];if(se&&se.setupChange)se.setupChange(e);return}
@@ -2905,6 +3035,7 @@ document.addEventListener('keydown',function(e){
 });
 function saveName(){var i=$('#pname');if(i){DL3.profile.name=i.value.trim();DL3.saveProfile()}}
 function confirmLeave(){return true}
+DL3.leaveNet=function(){leaveNet()};
 function leaveNet(){
   try{Object.keys(NET.conns).forEach(function(k){NET.conns[k].close()})}catch(e){}
   try{NET.peer&&NET.peer.destroy()}catch(e){}
@@ -2921,11 +3052,207 @@ document.addEventListener('click',function(e){
 });
 
 DL3.boot=function(){
+  DL3.applySettings&&DL3.applySettings();
   var q=location.search.match(/[?&]sala=([A-Z0-9]+)/i);
   DL3.renderHub();
   setTimeout(flushCloud,1500);
   if(q){setTimeout(function(){var jb=$('#joinbox');if(jb){jb.hidden=false;$('#jcode').value=q[1].toUpperCase()}},50)}
 };
+})();
+
+;
+/* DOU-LHE 3! — recursos compartilhados das ondas 1 e 2:
+   ajustes e acessibilidade, narrador, dicas e tutorial, salvar/continuar, cartas de poder e estilos de bot */
+(function(){
+'use strict';
+var DL3=window.DL3,u=DL3.u,esc=u.esc,$=DL3.$;
+
+/* ===== ajustes ===== */
+var SET=DL3.settings=Object.assign({clock:1,vol:.8,voz:true,contraste:false,fonte:false,motion:false},DL3.store.get('settings',{}));
+DL3.applySettings=function(){
+  var h=document.documentElement;
+  h.classList.toggle('hc',!!SET.contraste);h.classList.toggle('big',!!SET.fonte);h.classList.toggle('calm',!!SET.motion);
+  DL3.store.set('settings',SET);
+};
+DL3.openSettings=function(){
+  function seg(k,opts){return '<div class="seg">'+opts.map(function(o){return '<button class="'+(SET[k]===o[0]?'on':'')+'" data-act="set" data-k="'+k+'" data-v="'+o[0]+'">'+o[1]+'</button>'}).join('')+'</div>'}
+  function tog(k,label){return '<label class="tog"><input type="checkbox" data-set="'+k+'"'+(SET[k]?' checked':'')+'> '+label+'</label>'}
+  DL3.openModal('<div class="mhd"><h2>Ajustes</h2><button class="pill" data-act="closem">Fechar</button></div>'+
+    '<div class="opt"><span>Velocidade do relógio dos leilões</span>'+seg('clock',[[1.5,'Calma'],[1,'Normal'],[.7,'Turbo']])+'</div>'+
+    '<div class="opt"><span>Volume dos efeitos</span><input type="range" id="setvol" min="0" max="100" value="'+Math.round(SET.vol*100)+'" style="width:100%"></div>'+
+    '<div class="togs">'+tog('voz','Leiloeiro narrando com voz (“dou-lhe uma, dou-lhe duas…”)')+tog('contraste','Alto contraste')+tog('fonte','Letras maiores')+tog('motion','Reduzir animações')+'</div>'+
+    '<div class="setupbtns"><button class="btn" data-act="tourreset">Rever dicas e tutoriais</button></div>'+
+    '<p class="muted" style="font-size:13px">Atalhos nos leilões: 1 a 4 dão lances, 5 = tudo, P = passar, A = aceitar no leilão holandês, Esc fecha janelas.</p>');
+};
+document.addEventListener('change',function(e){
+  var k=e.target&&e.target.dataset&&e.target.dataset.set;if(!k)return;
+  SET[k]=!!e.target.checked;DL3.applySettings();if(k==='voz'&&!SET.voz&&window.speechSynthesis)speechSynthesis.cancel();
+});
+document.addEventListener('input',function(e){if(e.target.id==='setvol'){SET.vol=+e.target.value/100;DL3.applySettings()}});
+
+/* ===== leitor de tela: anúncios ao vivo ===== */
+var lastAnn=0;
+DL3.announce=function(t,force){var n=Date.now();if(!force&&n-lastAnn<1200)return;lastAnn=n;var el=$('#sr');if(el)el.textContent=t};
+
+/* ===== narrador (voz do leiloeiro) ===== */
+var voice=null;
+function pickVoice(){try{var vs=speechSynthesis.getVoices();voice=vs.filter(function(v){return /pt[-_]BR/i.test(v.lang)})[0]||vs.filter(function(v){return /^pt/i.test(v.lang)})[0]||null}catch(e){}}
+if(window.speechSynthesis){pickVoice();try{speechSynthesis.onvoiceschanged=pickVoice}catch(e){}}
+DL3.say=function(t,urgent){
+  if(!SET.voz||!window.speechSynthesis||document.hidden)return;
+  try{
+    if(urgent||speechSynthesis.pending)speechSynthesis.cancel();
+    var m=new SpeechSynthesisUtterance(t);m.lang='pt-BR';if(voice)m.voice=voice;m.rate=1.12;m.volume=Math.max(.2,SET.vol);
+    speechSynthesis.speak(m);
+  }catch(e){}
+};
+var NR={id:null,price:0,leader:null,c1:false,c2:false,lastBidSay:0,status:null};
+/* snap = {id,fmt,status,price,leader,timer,label,n,premium} — chamado a cada atualização, no anfitrião e nos convidados */
+DL3.narrate=function(s){
+  if(!s){NR.id=null;return}
+  var m=DL3.money,now=Date.now();
+  if(s.id!==NR.id){
+    NR={id:s.id,price:s.price,leader:s.leader,c1:false,c2:false,lastBidSay:0,status:s.status};
+    var intro={sealed:'Envelope fechado. Façam suas ofertas.',dutch:'Leilão holandês: o preço começa em '+m(s.price)+' e vai caindo.',flash:'Lote relâmpago! Três segundos!',kit:'Lote em kit.',open:'Quem dá mais?'}[s.fmt]||'Quem dá mais?';
+    DL3.say('Lote '+s.n+': '+s.label+'. '+(s.premium?'Lote premium. ':'')+intro,true);
+    DL3.announce('Novo lote: '+s.label,true);
+    return;
+  }
+  if(s.status!==NR.status){
+    NR.status=s.status;
+    if(s.status==='sold'){DL3.say((s.fmt==='dutch'?'Aceito! ':'Dou-lhe três! ')+'Vendido para '+s.leader+' por '+m(s.price)+'!',true);DL3.announce('Vendido para '+s.leader+' por '+m(s.price),true)}
+    else if(s.status==='unsold'){DL3.say('Sem lances. Próximo lote.',true);DL3.announce('Sem lances',true)}
+    return;
+  }
+  if(s.status!=='bidding'||s.fmt==='sealed'||s.fmt==='dutch')return;
+  if(s.price!==NR.price){
+    var jump=NR.price>=5&&s.price-NR.price>=Math.max(5,NR.price*.3);
+    NR.price=s.price;NR.c1=false;NR.c2=false;
+    if(jump)DL3.toast('🔥 Lance alto de '+s.leader+': '+m(s.price));
+    if(now-NR.lastBidSay>1400){NR.lastBidSay=now;DL3.say(m(s.price)+', '+s.leader,true)}
+    DL3.announce('Lance de '+s.leader+': '+m(s.price));
+  }
+  if(s.leader&&s.timer<=2.2&&!NR.c1){NR.c1=true;DL3.say('Dou-lhe uma…',true)}
+  else if(s.leader&&s.timer<=1.1&&!NR.c2){NR.c2=true;DL3.say('dou-lhe duas…',true)}
+};
+
+/* ===== dicas contextuais e tutorial ===== */
+var SEEN=DL3.store.get('tips',{}),tipQ=[];
+DL3.tip=function(id,title,text){
+  if(SEEN[id]||tipQ.some(function(t){return t.id===id}))return;
+  if(DL3.app&&DL3.app.tourOn)return;
+  tipQ.push({id:id,title:title,text:text});showTip();
+};
+function showTip(){
+  var box=$('#tip');if(!box||!box.hidden||!tipQ.length)return;
+  var t=tipQ[0];box.innerHTML='<b>💡 '+esc(t.title)+'</b><p>'+esc(t.text)+'</p><button class="btn" data-act="tipok">Entendi</button>';box.hidden=false;
+}
+DL3.tipOk=function(){var t=tipQ.shift();if(t){SEEN[t.id]=1;DL3.store.set('tips',SEEN)}var box=$('#tip');if(box){box.hidden=true;box.innerHTML=''}setTimeout(showTip,250)};
+var TOUR=null;
+DL3.tour=function(id,steps){
+  if(SEEN['tour-'+id]||TOUR)return;
+  TOUR={id:id,steps:steps,i:0};DL3.app.tourOn=true;setTimeout(drawTour,350);
+};
+function drawTour(){
+  var ov=$('#tour');if(!ov||!TOUR)return;
+  while(TOUR.i<TOUR.steps.length&&!$(TOUR.steps[TOUR.i].sel))TOUR.i++;
+  if(TOUR.i>=TOUR.steps.length){endTour();return}
+  var st=TOUR.steps[TOUR.i],el=$(st.sel);el.scrollIntoView({block:'center',behavior:SET.motion?'auto':'smooth'});
+  setTimeout(function(){
+    var r=el.getBoundingClientRect(),pad=8;
+    var below=r.bottom+180<window.innerHeight;
+    ov.innerHTML='<div class="spot" style="left:'+(r.left-pad)+'px;top:'+(r.top-pad)+'px;width:'+(r.width+pad*2)+'px;height:'+(r.height+pad*2)+'px"></div>'+
+      '<div class="tourbox" style="left:'+Math.max(12,Math.min(window.innerWidth-332,r.left))+'px;top:'+(below?r.bottom+14:Math.max(12,r.top-170))+'px"><span class="muted">'+(TOUR.i+1)+' de '+TOUR.steps.length+'</span><b>'+esc(st.t)+'</b><p>'+esc(st.d)+'</p><div class="row"><button class="btn ghost" data-act="tourskip">Pular</button><button class="btn primary" data-act="tournext">'+(TOUR.i===TOUR.steps.length-1?'Começar':'Próximo')+'</button></div></div>';
+    ov.hidden=false;
+  },SET.motion?0:260);
+}
+function endTour(){if(TOUR){SEEN['tour-'+TOUR.id]=1;DL3.store.set('tips',SEEN)}TOUR=null;DL3.app.tourOn=false;var ov=$('#tour');if(ov){ov.hidden=true;ov.innerHTML=''}showTip()}
+DL3.tourNext=function(){if(!TOUR)return;TOUR.i++;drawTour()};
+DL3.tourSkip=endTour;
+DL3.tourReset=function(){SEEN={};DL3.store.set('tips',SEEN);DL3.toast('As dicas e os tutoriais vão aparecer de novo')};
+window.addEventListener('resize',function(){if(TOUR)drawTour()});
+
+/* ===== salvar e continuar (partidas solo) ===== */
+function key(mod){return 'save-'+mod}
+DL3.saves={
+  get:function(mod){return DL3.store.get(key(mod),{auto:null,slots:[null,null,null]})},
+  put:function(mod,slot){
+    var A=DL3.app,e=A.engine;if(!e||!e.getState())return false;
+    if(DL3.net.role!=='solo'){if(slot!=='auto')DL3.toast('Partidas online não são salvas: o progresso fica com o anfitrião durante a sala');return false}
+    var rec={date:new Date().toLocaleString('pt-BR'),label:e.summary?e.summary():'',state:JSON.stringify(e.getState())};
+    var all=DL3.saves.get(e.id);if(slot==='auto')all.auto=rec;else all.slots[slot]=rec;
+    try{localStorage.setItem('dl3-'+key(e.id),JSON.stringify(all));if(slot!=='auto')DL3.toast('Partida salva no espaço '+(slot+1));return true}
+    catch(err){DL3.toast('Sem espaço para salvar. Apague um save antigo ou exporte o arquivo.');return false}
+  },
+  load:function(mod,slot){
+    var all=DL3.saves.get(mod),rec=slot==='auto'?all.auto:all.slots[slot];if(!rec)return;
+    DL3.resumeState(mod,JSON.parse(rec.state));
+  },
+  del:function(mod,slot){var all=DL3.saves.get(mod);if(slot==='auto')all.auto=null;else all.slots[slot]=null;DL3.store.set(key(mod),all)},
+  exportFile:function(){
+    var A=DL3.app,e=A.engine;if(!e)return;
+    var blob=new Blob([JSON.stringify({app:'dou-lhe-3',v:1,mod:e.id,date:new Date().toISOString(),label:e.summary?e.summary():'',state:e.getState()})],{type:'application/json'});
+    var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='dou-lhe-3-'+e.id+'-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();
+    setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},1000);DL3.toast('Arquivo da partida baixado');
+  },
+  importFile:function(file){
+    var fr=new FileReader();
+    fr.onload=function(){try{var d=JSON.parse(fr.result);if(d.app!=='dou-lhe-3'||!d.mod||!DL3.engines[d.mod]||!d.state)throw new Error('formato');DL3.resumeState(d.mod,d.state);DL3.toast('Partida importada')}catch(err){DL3.toast('Esse arquivo não é uma partida do Dou-lhe 3!')}};
+    fr.readAsText(file);
+  }
+};
+DL3.resumeState=function(mod,state){
+  var A=DL3.app,e=DL3.engines[mod];
+  if(DL3.net.role!=='solo')DL3.leaveNet&&DL3.leaveNet();
+  e.setState(state);e.afterLoad&&e.afterLoad();
+  A.engine=e;A.mod=mod;A.screen='game';DL3.me=0;e.render();
+};
+DL3.savesHtml=function(mod){
+  var all=DL3.saves.get(mod),rows=[];
+  if(all.auto)rows.push(['auto','Salvamento automático',all.auto]);
+  all.slots.forEach(function(r,i){if(r)rows.push([i,'Espaço '+(i+1),r])});
+  if(!rows.length)return '';
+  return '<div class="saves"><h2>Partidas salvas</h2>'+rows.map(function(r){return '<div class="saverow"><div><b>'+r[1]+'</b><span class="muted">'+esc(r[2].label)+' · '+esc(r[2].date)+'</span></div><button class="btn primary" data-act="loadsave" data-mod="'+mod+'" data-slot="'+r[0]+'">Continuar</button><button class="btn ghost" data-act="delsave" data-mod="'+mod+'" data-slot="'+r[0]+'" title="Apagar">✕</button></div>'}).join('')+'</div>';
+};
+DL3.openSaveModal=function(){
+  var A=DL3.app,e=A.engine;if(!e)return;
+  if(DL3.net.role!=='solo'){DL3.toast('Partidas online não são salvas');return}
+  var all=DL3.saves.get(e.id);
+  DL3.openModal('<div class="mhd"><h2>Salvar partida</h2><button class="pill" data-act="closem">Fechar</button></div><p class="muted">A partida também é salva sozinha a cada 15 segundos.</p>'+
+    [0,1,2].map(function(i){var r=all.slots[i];return '<div class="saverow"><div><b>Espaço '+(i+1)+'</b><span class="muted">'+(r?esc(r.label)+' · '+esc(r.date):'vazio')+'</span></div><button class="btn primary" data-act="saveslot" data-slot="'+i+'">'+(r?'Sobrescrever':'Salvar aqui')+'</button></div>'}).join('')+
+    '<div class="setupbtns"><button class="btn" data-act="exportsave">Baixar arquivo da partida</button></div>');
+};
+setInterval(function(){var A=DL3.app;if(A&&A.screen==='game'&&A.engine&&DL3.net.role==='solo')DL3.saves.put(A.engine.id,'auto')},15000);
+window.addEventListener('beforeunload',function(){var A=DL3.app;if(A&&A.engine&&DL3.net.role==='solo')DL3.saves.put(A.engine.id,'auto')});
+
+/* ===== cartas de poder ===== */
+DL3.CARDS={
+  espiar:{n:'Espiar',i:'👁️',d:'Mostra só para você o maior envelope do lote (envelope fechado).'},
+  tempo:{n:'+3 segundos',i:'⏱️',d:'Dá mais 3 segundos ao relógio (no holandês, segura a queda).'},
+  congelar:{n:'Congelar rival',i:'🧊',d:'Um rival fica sem dar lance neste lote.'},
+  desconto:{n:'Desconto',i:'🏷️',d:'Seu próximo arremate sai 10% mais barato.'}
+};
+DL3.drawCard=function(sport){var ids=Object.keys(DL3.CARDS).filter(function(k){return !(sport&&k==='espiar')});return ids[Math.floor(Math.random()*ids.length)]};
+DL3.cardsHtml=function(hand,ctx){
+  hand=hand||[];if(!hand.length)return '<div class="cardbar"><span class="muted">Sem cartas. Você ganha uma nova a cada ano e ao bater conquistas.</span></div>';
+  return '<div class="cardbar">'+hand.map(function(c,i){var d=DL3.CARDS[c];var ok=ctx.can(c);
+    return '<button class="pcard" data-act="usecard" data-i="'+i+'" data-c="'+c+'"'+(ok?'':' disabled')+' title="'+esc(d.d)+'"><span>'+d.i+'</span><b>'+esc(d.n)+'</b></button>'}).join('')+'</div>';
+};
+DL3.pickTarget=function(players,me,cb){
+  DL3.openModal('<div class="mhd"><h2>Congelar quem?</h2><button class="pill" data-act="closem">Cancelar</button></div><div class="seats">'+players.filter(function(p){return p.id!==me}).map(function(p){return '<button class="saverow tgt" data-act="cardtarget" data-t="'+p.id+'">'+DL3.avatar(p.avatar,32)+'<b>'+esc(p.name)+'</b></button>'}).join('')+'</div>');
+  DL3._cardCb=cb;
+};
+
+/* ===== estilos de bot ===== */
+DL3.BOTSTYLES={
+  sniper:{n:'Sniper',i:'🎯',d:'Só entra nos últimos segundos.',lim:1},
+  blefador:{n:'Blefador',i:'🃏',d:'Entra forte e às vezes some de repente.',lim:1.08},
+  colecionador:{n:'Colecionador',i:'🧩',d:'Paga bem mais pelo que coleciona.',lim:1},
+  cauteloso:{n:'Cauteloso',i:'🐢',d:'Raramente passa do valor justo.',lim:.86},
+  tubarao:{n:'Tubarão',i:'🦈',d:'Agressivo, dá saltos grandes.',lim:1.12}
+};
+DL3.pickStyle=function(){var k=Object.keys(DL3.BOTSTYLES);return k[Math.floor(Math.random()*k.length)]};
+DL3.styleChip=function(st){var s=DL3.BOTSTYLES[st];return s?'<span class="bst" title="'+esc(s.n+': '+s.d)+'">'+s.i+'</span>':''};
 })();
 
 ;
@@ -3139,14 +3466,14 @@ function start(opts,seats){
   var taken={};
   seats.forEach(function(s,i){
     var club=i===0?opts.club:null;
-    S.coaches.push({id:i,name:s.name||('Jogador '+(i+1)),avatar:s.avatar|0,bot:false,club:club,balance:BUDGET,slots:emptySlots(),passed:false,style:0});
+    S.coaches.push({id:i,name:s.name||('Jogador '+(i+1)),avatar:s.avatar|0,bot:false,club:club,balance:BUDGET,slots:emptySlots(),passed:false,style:0,cards:[DL3.drawCard(true),DL3.drawCard(true)],disc:false});
     if(s.peer)S.peerSeat[s.peer]=i;
     if(club)taken[club]=1;
   });
   var sigs=shuffle(Object.keys(S.clubs).filter(function(s){return s.indexOf(':')<0&&!taken[s]}));
   var k=0;S.coaches.forEach(function(c){if(!c.club)c.club=sigs[k++%sigs.length]});
   var nb=shuffle(BOTS);
-  for(var i=seats.length;i<N;i++)S.coaches.push({id:i,name:nb[i%nb.length][0],avatar:rint(0,5),bot:true,agg:nb[i%nb.length][1],margin:rnd(1.04,1.18),club:sigs[k++%sigs.length],balance:BUDGET,slots:emptySlots(),passed:false,style:rint(-1,1),lim:0,at:0});
+  for(var i=seats.length;i<N;i++)S.coaches.push({id:i,name:nb[i%nb.length][0],avatar:rint(0,5),bot:true,agg:nb[i%nb.length][1],margin:rnd(1.04,1.18),club:sigs[k++%sigs.length],balance:BUDGET,slots:emptySlots(),passed:false,style:rint(-1,1),lim:0,at:0,bstyle:DL3.pickStyle(),fav:u.pick(Math.random,cfg.positions),cards:[DL3.drawCard(true),DL3.drawCard(true)],disc:false});
   var nslots=NS();
   var notas=homeIds.map(function(id){return player(id).r}).sort(function(a,b){return b-a}).slice(0,N*nslots);
   var sum=notas.reduce(function(s,r){return s+Math.pow(Math.max(1,r-59),2.4)},0);
@@ -3160,63 +3487,89 @@ function feed(seat,type,d){S.fseq=(S.fseq||0)+1;S.feed.push({i:S.fseq,seat:seat,
 function NS_cfg(cfg){return cfg.slots.length}
 function NST_cfg(cfg){return cfg.slots.filter(function(s){return s!=='RES'}).length}
 
-/* ===== leilão ===== */
+/* ===== leilão (formatos: aberto, relâmpago e holandês) ===== */
 function curPlayer(){return S.cur?player(S.cur.pid):null}
 function allFull(){return S.coaches.every(function(c){return emptyCount(c)===0})}
+function frozen(c){return S.cur&&S.cur.frozen&&S.cur.frozen[c.id]}
+function canTake(c,p){return canBid(c,p)&&!frozen(c)&&maxBid(c)>=S.cur.price}
+function baseVal(p){return Math.max(1,Math.round(worthOf(p)))}
 function nextItem(){
   S.idx++;
   if(S.idx>=S.order.length||allFull()){endAuction();return}
-  var p=player(S.order[S.idx]);
-  S.cur={pid:p.id,price:0,leader:null,timer:6,max:6,status:'bidding',clock:0,until:0,tickSec:6};
+  var p=player(S.order[S.idx]),r=Math.random();
+  var fmt=S.idx<2?'open':(r<.14?'flash':(r<.26?'dutch':'open'));
+  var T=fmt==='flash'?3:(fmt==='dutch'?99:6);
+  S.cur={pid:p.id,fmt:fmt,price:0,leader:null,timer:T,max:T,status:'bidding',clock:0,until:0,tickSec:T,frozen:{},hold:0,dacc:0,still:0};
+  if(fmt==='dutch'){var w=worthOf(p);S.cur.price=Math.max(3,Math.round(w*1.7));S.cur.start=S.cur.price;S.cur.floor=Math.max(1,Math.round(w*.35));S.cur.step=Math.max(1,Math.round((S.cur.start-S.cur.floor)/18))}
   S.coaches.forEach(function(c){
     c.passed=false;if(!c.bot)return;
     var need=openSlot(c,p.pos);
-    if(need<0){c.passed=true;c.lim=0;return}
-    var spec=SLOTS()[need]===p.pos;
-    var lim=Math.floor(worthOf(p)*c.agg*(spec?1:.5)*rnd(.82,1.18));
+    if(need<0){c.passed=true;c.lim=0;c.th=0;return}
+    var spec=SLOTS()[need]===p.pos,st=DL3.BOTSTYLES[c.bstyle]||{lim:1},fav=c.bstyle==='colecionador'&&c.fav===p.pos?1.25:1;
+    var lim=Math.floor(worthOf(p)*c.agg*st.lim*fav*(spec?1:.5)*rnd(.82,1.18));
     if(emptyCount(c)>2)lim=Math.min(lim,Math.floor(c.balance*.55));
-    c.lim=Math.max(0,lim);if(c.lim<1)c.passed=true;c.at=rnd(.7,2.6);
+    c.lim=Math.max(0,lim);c.th=Math.max(0,Math.floor(c.lim*rnd(.65,.9)));
+    if(c.lim<1)c.passed=true;c.at=fmt==='flash'?rnd(.2,1.1):rnd(.7,2.6);
+    var di=(c.cards||[]).indexOf('desconto');if(di>=0&&!c.disc&&Math.random()<.4){c.cards.splice(di,1);c.disc=true}
   });
 }
 function placeBid(id,price){
-  var cur=S.cur;cur.price=price;cur.leader=id;cur.timer=Math.max(cur.timer,3.6);cur.max=Math.max(cur.max,cur.timer);cur.tickSec=Math.ceil(cur.timer);
-  S.coaches.forEach(function(c){if(c.bot&&!c.passed&&c.id!==id)c.at=cur.clock+rnd(.5,2.1)});
+  var cur=S.cur,rs=cur.fmt==='flash'?2:3.6;cur.price=price;cur.leader=id;cur.timer=Math.max(cur.timer,rs);cur.max=Math.max(cur.max,cur.timer);cur.tickSec=Math.ceil(cur.timer);
+  S.coaches.forEach(function(c){if(c.bot&&!c.passed&&c.id!==id)c.at=cur.clock+(cur.fmt==='flash'?rnd(.2,.9):rnd(.5,2.1))});
   var c=coach(id);if(!c.bot)c.passed=false;
   DL3.snd.bid();
 }
 function anyHumanIn(){
   var cur=S.cur,p=curPlayer();
-  return humans().some(function(h){return cur.leader===h.id||(canBid(h,p)&&!h.passed&&maxBid(h)>cur.price)});
+  return humans().some(function(h){if(frozen(h))return false;if(cur.fmt==='dutch')return canTake(h,p)&&!h.passed;return cur.leader===h.id||(canBid(h,p)&&!h.passed&&maxBid(h)>cur.price)});
 }
+function snap(){var c=S.cur;if(!c)return null;var p=curPlayer(),L=c.leader!=null?coach(c.leader):null;return {id:S.season+'-'+S.idx+'-'+c.pid,fmt:c.fmt,status:c.status,price:c.price,leader:L?L.name:'',timer:c.timer,label:p.n+', '+CFG().posn[p.pos],n:S.idx+1,premium:false}}
 function tick(dt){
   if(!S||S.phase!=='auction'||S.paused||!S.cur)return;
   var cur=S.cur;
   if(cur.status!=='bidding'){cur.until-=dt;if(cur.until<=0){nextItem();render()}return}
-  var p=curPlayer(),fast=!anyHumanIn(),k=fast?3:1,step=dt*k;cur.timer-=step;cur.clock+=step;
+  var p=curPlayer(),fast=!anyHumanIn(),k=fast?3:1,step=dt*k;cur.clock+=step;
   var bots=shuffle(S.coaches.filter(function(c){return c.bot}));
+  if(cur.fmt==='dutch'){
+    if(cur.hold>0)cur.hold-=step;
+    else{cur.dacc+=step;while(cur.dacc>=.55){cur.dacc-=.55;if(cur.price>cur.floor)cur.price=Math.max(cur.floor,cur.price-cur.step);else cur.still+=.55}}
+    for(var j=0;j<bots.length;j++){var bd=bots[j];if(bd.passed||cur.clock<bd.at||!canTake(bd,p))continue;if(cur.price<=Math.min(bd.th,maxBid(bd))){takeLot(bd.id);return}}
+    if(cur.still>=2.5){cur.status='unsold';cur.until=1.2;S.sales.unshift({unsold:true,p:p.id});DL3.snd.no();render();return}
+    DL3.narrate(snap());renderBidState();return;
+  }
+  cur.timer-=step;
   for(var i=0;i<bots.length;i++){
     var b=bots[i];
-    if(b.passed||cur.leader===b.id)continue;
+    if(b.passed||cur.leader===b.id||frozen(b))continue;
     if(!canBid(b,p)){b.passed=true;continue}
     if(cur.clock<b.at)continue;
+    if(b.bstyle==='sniper'&&cur.fmt!=='flash'&&cur.timer>1.8)continue;
     var lim=Math.min(b.lim,maxBid(b));
     if(cur.price+1>lim){b.passed=true;continue}
+    if(b.bstyle==='blefador'&&cur.price>lim*.6&&Math.random()<.25){b.passed=true;continue}
+    var ci=(b.cards||[]).indexOf('congelar');if(ci>=0&&cur.leader!=null&&!coach(cur.leader).bot&&lim>cur.price*1.3&&Math.random()<.1){b.cards.splice(ci,1);cur.frozen[cur.leader]=true;S.log.unshift({c:cur.leader,txt:b.name+' congelou você neste leilão 🧊'})}
     var inc=1,room=lim-cur.price-1;
-    if(room>=3&&Math.random()<.3)inc=1+rint(1,Math.min(room,5));
+    if(room>=3&&Math.random()<(b.bstyle==='tubarao'?.6:.3))inc=1+rint(1,Math.min(room,b.bstyle==='tubarao'?8:5));
     placeBid(b.id,cur.price+inc);renderBidState();break;
   }
   if(cur.timer<=0){resolveItem();return}
   var s=Math.ceil(cur.timer);
   if(s!==cur.tickSec){cur.tickSec=s;if(s<=2&&!fast)DL3.snd.tick()}
-  updateTimer();
+  DL3.narrate(snap());updateTimer();
 }
+function sellTo(c,p,price){
+  var pay=c.disc?Math.round(price*.9):price;if(c.disc){c.disc=false;S.log.unshift({c:c.id,txt:'Carta de desconto: pagou '+money(pay)+' em vez de '+money(price)+'.'})}
+  var slot=openSlot(c,p.pos);c.slots[slot]=p.id;c.balance-=pay;p.price=pay;p.owner=c.id;
+  S.sales.unshift({p:p.id,c:c.id,price:pay,fmt:S.cur.fmt});feed(c.id,'buy',{r:p.r,price:pay,mod:S.sport});
+  if(c.id===ME())DL3.snd.win();else DL3.snd.sold();
+}
+function takeLot(id){var cur=S.cur,p=curPlayer();cur.leader=id;sellTo(coach(id),p,cur.price);cur.status='sold';cur.until=1.6;if(S.sales.length>6)S.sales.pop();DL3.narrate(snap());render()}
 function resolveItem(){
   var cur=S.cur,p=curPlayer();
   if(cur.leader==null){cur.status='unsold';cur.until=1.1;S.sales.unshift({unsold:true,p:p.id});DL3.snd.no()}
-  else{var c=coach(cur.leader),slot=openSlot(c,p.pos);c.slots[slot]=p.id;c.balance-=cur.price;p.price=cur.price;p.owner=c.id;
-    cur.status='sold';cur.until=1.5;S.sales.unshift({p:p.id,c:c.id,price:cur.price});feed(c.id,'buy',{r:p.r,price:cur.price,mod:S.sport});if(c.id===ME())DL3.snd.win();else DL3.snd.sold()}
+  else{sellTo(coach(cur.leader),p,cur.price);cur.status='sold';cur.until=1.5}
   if(S.sales.length>6)S.sales.pop();
-  render();
+  DL3.narrate(snap());render();
 }
 function endAuction(){
   var cfg=CFG();
@@ -3308,6 +3661,8 @@ function finishSeason(){
   sn.order=order;sn.done=true;sn.champ=order[0];
   order.forEach(function(id,i){S.total[id].pts+=sn.tab[id].pts;var b=bonusFor(i+1,N);sn.bonus[id]=b;var c=coach(id);c.balance=Math.max(0,c.balance+b)});
   S.total[order[0]].titles++;feed(order[0],'title',{mod:S.sport});
+  var hr=humans().map(function(h){return order.indexOf(h.id)}),best=hr.length?Math.min.apply(null,hr):N;
+  S.coaches.forEach(function(c){if(!c.bot)return;if(best===0)c.agg=Math.min(1.35,c.agg+.04);else if(best>=N*.75)c.agg=Math.max(.75,c.agg-.03)});
   sn.awards=computeAwards(sn);
   S.hist.push({season:S.season,champ:sn.champ,order:order});
   if(S.season>=S.M)S.final=true;
@@ -3327,7 +3682,7 @@ function perfUpdate(){
 }
 function beginRetention(){
   perfUpdate();S.season++;
-  S.coaches.forEach(function(c){if(c.bot)c.style=rint(-1,1)});
+  S.coaches.forEach(function(c){if(c.bot)c.style=rint(-1,1);c.cards=c.cards||[];if(c.cards.length<4)c.cards.push(DL3.drawCard(true))});
   S.rt={};humans().forEach(function(h){var k={};for(var i=0;i<NS();i++)k[i]=true;S.rt[h.id]={keep:k,done:false}});
   S.phase='retain';steer('retain');
 }
@@ -3393,10 +3748,19 @@ function botBuy(c){
 function apply(a,seat){
   if(!S||!a)return;
   var me=coach(seat);if(!me)return;
-  var host=seat===0;
+  var host=seat===(S.hostSeat||0);
   switch(a.type){
-    case 'bid':{var cur=S.cur;if(!cur||cur.status!=='bidding'||S.paused)return;var p=curPlayer();if(!canBid(me,p)||cur.leader===seat)return;
+    case 'bid':{var cur=S.cur;if(!cur||cur.fmt==='dutch'||cur.status!=='bidding'||S.paused||frozen(me))return;var p=curPlayer();if(!canBid(me,p)||cur.leader===seat)return;
       var mb=maxBid(me),np=a.n==='all'?mb:cur.price+(+a.n);if(np>mb||np<=cur.price)return;placeBid(seat,np);return}
+    case 'take':{var ct=S.cur;if(!ct||ct.fmt!=='dutch'||ct.status!=='bidding'||S.paused)return;if(!canTake(me,curPlayer()))return;takeLot(seat);return}
+    case 'card':{var cd=(me.cards||[])[a.i];if(!cd)return;var cc=S.cur;
+      if(cd==='desconto'){if(me.disc)return;me.disc=true}
+      else{if(!cc||cc.status!=='bidding'||S.phase!=='auction')return;
+        if(cd==='tempo'){if(cc.fmt==='dutch')cc.hold=3;else{cc.timer+=3;cc.max=Math.max(cc.max,cc.timer)}}
+        else if(cd==='congelar'){var tg=coach(+a.t);if(!tg||tg.id===seat)return;cc.frozen[tg.id]=true;S.log.unshift({c:tg.id,txt:me.name+' congelou você neste leilão 🧊'})}
+        else return}
+      me.cards.splice(a.i,1);return}
+    case 'bonuscard':{S.bonus=S.bonus||{};S.bonus[seat]=S.bonus[seat]||0;if(S.bonus[seat]>=2||(me.cards||[]).length>=5)return;S.bonus[seat]++;(me.cards=me.cards||[]).push(DL3.drawCard(true));return}
     case 'pass':{var cur2=S.cur;if(!cur2||cur2.status!=='bidding')return;if(!canBid(me,curPlayer()))return;me.passed=!me.passed;return}
     case 'pause':if(host&&S.phase==='auction')S.paused=!S.paused;return;
     case 'trade':{var e=tradeEval(seat,a.t);if(!e||!e.ok)return;
@@ -3426,7 +3790,8 @@ function runAll(){
     if(U.tab==='champ')render();
   },sn.fx.length>20?150:240);
 }
-function dropHuman(seat){var c=coach(seat);if(!c)return;c.bot=true;c.agg=1;c.margin=1.1;c.lim=0;c.at=0;c.name+=' (saiu)';if(S.rt[seat])S.rt[seat].done=true;
+function rejoin(seat){var c=coach(seat);if(!c)return;c.bot=false;c.name=c.baseName||c.name.replace(/ (saiu)$/,'')}
+function dropHuman(seat){var c=coach(seat);if(!c||c.bot)return;c.baseName=c.name;c.bot=true;c.agg=1;c.margin=1.1;c.lim=0;c.at=0;c.bstyle='cauteloso';c.name+=' (saiu)';if(S.rt[seat])S.rt[seat].done=true;
   if(S.phase==='retain'&&humans().every(function(h){return S.rt[h.id]&&S.rt[h.id].done}))startReauction()}
 
 /* ===== render ===== */
@@ -3464,7 +3829,7 @@ function coachesHtml(){
   S.coaches.forEach(function(c){
     var lead=cur&&cur.leader===c.id&&cur.status!=='unsold';
     h+='<button class="cr'+(lead?' leading':'')+(c.id===ME()?' me':'')+(U.view===c.id&&c.id!==ME()?' view':'')+'" data-act="viewc" data-id="'+c.id+'">'+avatarFor(c,30)+
-      '<div style="min-width:0"><div class="n"><span>'+esc(cname(c))+'</span>'+(S.phase==='auction'&&cur&&cur.status==='bidding'&&c.passed&&!lead?'<em>passou</em>':'')+'</div><div class="dots">'+c.slots.map(function(s){return '<i'+(s!=null?' class="f"':'')+'></i>'}).join('')+'</div></div>'+
+      '<div style="min-width:0"><div class="n"><span>'+esc(cname(c))+'</span>'+(c.bot?DL3.styleChip(c.bstyle):'')+(S.phase==='auction'&&cur&&cur.frozen&&cur.frozen[c.id]?'<em>🧊</em>':(S.phase==='auction'&&cur&&cur.status==='bidding'&&c.passed&&!lead?'<em>passou</em>':''))+'</div><div class="dots">'+c.slots.map(function(s){return '<i'+(s!=null?' class="f"':'')+'></i>'}).join('')+'</div></div>'+
       '<div class="bal tn">'+money(c.balance)+'</div></button>';
   });
   return h+'</div>';
@@ -3472,56 +3837,82 @@ function coachesHtml(){
 function rosterHtml(){
   var c=coach(U.view),sl=SLOTS(),h='<div class="card roster"><h3>'+(U.view===ME()?'Seu elenco':'Elenco de '+esc(c.name))+'</h3>';
   c.slots.forEach(function(id,i){var p=id!=null?player(id):null;
-    h+='<div class="slot'+(p?'':' empty')+'"><span class="pos pos-'+sl[i]+'"><i></i>'+sl[i]+'</span>'+(p?'<div class="nm">'+esc(p.n)+'</div><div class="sub tn">Nota '+p.r+(p.filler?'':' · '+money(p.price))+'</div>':'<div class="nm">Vaga aberta</div>')+'</div>'});
+    h+='<div class="slot'+(p?'':' empty')+'"><span class="pos pos-'+sl[i]+'"><i></i>'+sl[i]+'</span>'+(p?'<div class="nm">'+esc(p.n)+'</div><div class="sub tn">Nota '+p.r+(p.filler?'':' · pago '+money(p.price))+' · base '+money(baseVal(p))+'</div>':'<div class="nm">Vaga aberta</div>')+'</div>'});
   return h+'</div>';
+}
+function cardCtx(){var c=S.cur;return {can:function(cd){if(cd==='desconto')return !coach(ME()).disc;return !!(c&&c.status==='bidding'&&S.phase==='auction')}}}
+function controlsHtml(){
+  var cur=S.cur,me=coach(ME());
+  if(frozen(me))return '<div class="frozen">🧊 Você foi congelado neste leilão. Espere o próximo jogador.</div>';
+  if(cur.fmt==='dutch')return '<div class="dutch"><button class="btn primary big" data-act="take" id="takebtn">Aceitar por '+money(cur.price)+'</button><p class="muted" id="dst">O preço cai a cada meio segundo até o mínimo. Quem aceitar primeiro leva. Tecla A.</p></div>';
+  return '<div class="btns" id="btns">'+[1,2,5,10].map(function(n){return '<button class="bid" data-act="bid" data-n="'+n+'"><b>+'+n+'</b><small></small></button>'}).join('')+
+    '<button class="bid all" data-act="bid" data-n="all"><b>Tudo</b><small></small></button><button class="bid pass" data-act="pass"><b>Passar</b><small></small></button></div>';
 }
 function renderAuction(){
   var cur=S.cur;if(!cur){$('#view').innerHTML='';return}
   var cfg=CFG(),p=curPlayer(),me=coach(ME()),cl=clubOf(p.c)||{nome:p.c,cor:'#456',sigla:p.c};
   var mb=maxBid(me),bidding=cur.status==='bidding';
   var ov='';
-  if(!bidding){if(cur.status==='sold'){var w=coach(S.sales[0].c);ov='<div class="overlay'+(w.id===ME()?' me':'')+'"><div class="ic">✓</div><h2>Vendido</h2><p>'+(w.id===ME()?'Você levou':esc(w.name)+' levou')+' por '+money(cur.price)+'</p></div>'}
+  if(!bidding){if(cur.status==='sold'){var w=coach(S.sales[0].c);ov='<div class="overlay'+(w.id===ME()?' me':'')+'"><div class="ic">✓</div><h2>'+(cur.fmt==='dutch'?'Aceito!':'Vendido')+'</h2><p>'+(w.id===ME()?'Você levou':esc(w.name)+' levou')+' por '+money(S.sales[0].price)+'</p></div>'}
     else ov='<div class="overlay"><div class="ic" style="color:var(--muted)">–</div><h2>Sem lances</h2><p>Ninguém quis o jogador</p></div>'}
   else if(S.paused)ov='<div class="overlay"><h2>Pausado</h2><p>'+(DL3.isHost()?'Espaço para continuar':'O anfitrião pausou')+'</p></div>';
   var prog=Math.round(Math.max(0,S.idx)/S.order.length*100);
+  var flag=cur.fmt==='flash'?'<div class="flags"><span class="flagx fla">⚡ Relâmpago: 3 segundos e cada lance dá só mais 2</span></div>':(cur.fmt==='dutch'?'<div class="flags"><span class="flagx dut">📉 Holandês: o preço cai até alguém aceitar</span></div>':'');
   $('#view').innerHTML=
   '<div class="progress"><span class="tn">Temporada '+yearOf()+' · jogador '+(S.idx+1)+' de '+S.order.length+'</span><div class="bar"><i style="width:'+prog+'%"></i></div></div>'+
-  '<div class="game"><div class="stage-col"><section class="card stage'+((!bidding||S.paused)?' dim':'')+'"><div class="inner">'+
+  '<div class="game"><div class="stage-col"><section class="card stage'+((!bidding||S.paused)?' dim':'')+' f-'+cur.fmt+'"><div class="inner">'+
     '<div class="p-head">'+avatarPlayer(p,104)+'<div class="info"><div class="chips"><span class="pos pos-'+p.pos+'"><i></i>'+p.pos+'</span><span class="tag">'+cfg.posn[p.pos]+'</span></div>'+
     '<h1 class="pname">'+esc(p.n)+'</h1><div class="pclub">'+badge(cl,22)+'<b>'+esc(cl.nome)+'</b><span>· '+esc(league().nome)+'</span></div></div>'+
-    '<div class="ring"><svg width="62" height="62" viewBox="0 0 62 62"><circle cx="31" cy="31" r="27" fill="none" stroke="var(--line)" stroke-width="5"/><circle id="ring" cx="31" cy="31" r="27" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round" stroke-dasharray="169.6" stroke-dashoffset="0" transform="rotate(-90 31 31)"/></svg><div class="t"><b id="tnum" class="tn">'+Math.ceil(Math.max(0,cur.timer))+'</b><small>seg</small></div></div></div>'+
-    '<div class="bidrow"><div><div class="lbl" id="bidlbl"></div><div class="amount tn" id="amount"></div></div><div class="nota"><b class="tn">'+p.r+'</b><span>nota</span></div></div>'+
-    '<div class="btns" id="btns">'+[1,2,5,10].map(function(n){return '<button class="bid" data-act="bid" data-n="'+n+'"><b>+'+n+'</b><small></small></button>'}).join('')+
-      '<button class="bid all" data-act="bid" data-n="all"><b>Tudo</b><small></small></button><button class="bid pass" data-act="pass"><b>Passar</b><small></small></button></div>'+
-    '<div class="foot"><span>Saldo <b class="tn" id="mybal">'+money(me.balance)+'</b></span><span>Lance máximo <b class="tn" id="mymax">'+money(mb)+'</b></span><span class="st"></span></div>'+
+    '<div class="ring"><svg width="62" height="62" viewBox="0 0 62 62"><circle cx="31" cy="31" r="27" fill="none" stroke="var(--line)" stroke-width="5"/><circle id="ring" cx="31" cy="31" r="27" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round" stroke-dasharray="169.6" stroke-dashoffset="0" transform="rotate(-90 31 31)"/></svg><div class="t"><b id="tnum" class="tn"></b><small id="tlab">seg</small></div></div></div>'+
+    flag+
+    '<div class="bidrow"><div><div class="lbl" id="bidlbl"></div><div class="amount tn" id="amount"></div></div><div class="notas"><div class="nota"><b class="tn">'+p.r+'</b><span>nota</span></div><div class="nota base"><b class="tn">'+money(baseVal(p))+'</b><span>valor base</span></div></div></div>'+
+    '<div id="ctrl">'+controlsHtml()+'</div><div id="cards">'+DL3.cardsHtml(me.cards,cardCtx())+'</div>'+
+    '<div class="foot"><span>Saldo <b class="tn" id="mybal">'+money(me.balance)+'</b></span><span>Lance máximo <b class="tn" id="mymax">'+money(mb)+'</b></span>'+(me.disc?'<span class="up">🏷️ desconto ativo</span>':'')+'<span class="st"></span></div>'+
   '</div>'+ov+'</section>'+
-  '<p class="hint">Atalhos: 1, 2, 3, 4 = +1, +2, +5, +10 · 5 = tudo · P = passar'+(DL3.isHost()?' · espaço = pausar':'')+'. O lance máximo guarda R$ 1 para cada vaga que ainda falta.</p>'+
+  '<p class="hint">Atalhos: 1, 2, 3, 4 = +1, +2, +5, +10 · 5 = tudo · P = passar · A = aceitar no holandês'+(DL3.isHost()?' · espaço = pausar':'')+'. O valor base é o valor médio de mercado do jogador. O lance máximo guarda R$ 1 para cada vaga que falta.</p>'+
   '<div class="card sales"><h3>Últimas vendas</h3><ul>'+(S.sales.length?S.sales.map(function(s){
     var pp=player(s.p);if(s.unsold)return '<li><span class="pos pos-'+pp.pos+'"><i></i>'+pp.pos+'</span><b>'+esc(pp.n)+'</b><span class="who">sem lances</span></li>';
-    var cc=coach(s.c);return '<li class="'+(cc.id===ME()?'me':'')+'"><span class="pos pos-'+pp.pos+'"><i></i>'+pp.pos+'</span><b>'+esc(pp.n)+'</b><span class="who">'+esc(cc.name)+'</span><b class="tn">'+money(s.price)+'</b></li>'}).join(''):'<li class="muted">Nenhuma venda ainda.</li>')+'</ul></div>'+
+    var cc=coach(s.c);return '<li class="'+(cc.id===ME()?'me':'')+'"><span class="pos pos-'+pp.pos+'"><i></i>'+pp.pos+'</span><b>'+({flash:'⚡ ',dutch:'📉 '}[s.fmt]||'')+esc(pp.n)+'</b><span class="who">'+esc(cc.name)+'</span><b class="tn">'+money(s.price)+'</b><span class="muted tn" style="font-size:12px">base '+money(baseVal(pp))+'</span></li>'}).join(''):'<li class="muted">Nenhuma venda ainda.</li>')+'</ul></div>'+
   (DL3.isHost()?'<div style="margin-top:12px"><button class="btn" data-act="pause">'+(S.paused?'Continuar':'Pausar')+'</button></div>':'')+'</div>'+
   rosterHtml()+coachesHtml()+'</div>';
   renderBidState();updateTimer();
+  DL3.tour('esporte',[{sel:'.p-head',t:'O jogador',d:'Quem está à venda agora: posição, clube e nota.'},{sel:'.notas',t:'Nota e valor base',d:'O valor base é o preço médio de mercado do jogador: uma referência para não pagar caro demais.'},{sel:'#ctrl',t:'Lances',d:'Dê lances antes do relógio zerar. O lance máximo guarda R$ 1 para cada vaga que ainda falta.'},{sel:'#cards',t:'Cartas de poder',d:'+3 segundos, congelar um rival ou desconto no próximo arremate.'},{sel:'.roster',t:'Seu elenco',d:'As vagas que você precisa preencher.'},{sel:'.coaches',t:'Rivais',d:'O ícone ao lado de cada bot mostra o estilo dele.'}]);
+  if(cur.fmt==='flash')DL3.tip('fmt-flash','Relâmpago','Só 3 segundos de relógio, e cada lance dá apenas mais 2. Decida rápido!');
+  if(cur.fmt==='dutch')DL3.tip('fmt-dutch','Leilão holandês','O preço começa alto e cai. Clique em Aceitar (ou tecla A) quando achar justo: quem aceitar primeiro leva.');
 }
 function renderBidState(){
-  var cur=S.cur;if(!cur||U.tab!=='auction'||S.phase!=='auction')return;
+  var cur=S.cur;if(!cur||U.tab!=='auction'||S.phase!=='auction'||DL3.app.screen!=='game')return;
   var lbl=$('#bidlbl'),am=$('#amount');if(!lbl)return;
-  if(cur.leader==null){lbl.textContent='Sem lances ainda';am.textContent=money(0)}
-  else{var c=coach(cur.leader);lbl.innerHTML=avatarFor(c,22)+' Lance de '+esc(cname(c));am.textContent=money(cur.price)}
-  var me=coach(ME()),p=curPlayer(),mb=maxBid(me),iLead=cur.leader===ME(),bidding=cur.status==='bidding',can=bidding&&canBid(me,p)&&!iLead&&!S.paused;
-  var btns=$('#btns');if(!btns)return;
-  Array.prototype.forEach.call(btns.querySelectorAll('[data-act="bid"]'),function(b){
-    var n=b.dataset.n;if(n==='all'){b.disabled=!(can&&mb>cur.price);b.querySelector('small').textContent=money(mb);return}
-    n=+n;b.disabled=!can||cur.price+n>mb;b.querySelector('small').textContent=money(cur.price+n);
-  });
-  var pb=btns.querySelector('.pass');if(pb){pb.disabled=!(bidding&&canBid(me,p));pb.classList.toggle('on',!!me.passed);pb.querySelector('small').textContent=me.passed?'lance para voltar':'não quero'}
-  var st=$('.foot .st');if(st)st.textContent=!canBid(me,p)?(emptyCount(me)===0?'Elenco completo':'Sem vaga para essa posição'):(iLead?'Você está ganhando':(me.passed?'Você passou neste jogador':''));
+  var me=coach(ME()),p=curPlayer(),mb=maxBid(me),iLead=cur.leader===ME(),bidding=cur.status==='bidding';
+  if(cur.fmt==='dutch'){
+    lbl.textContent='Preço atual (cai até '+money(cur.floor)+')';am.textContent=money(cur.price);
+    var tb=$('#takebtn');if(tb){tb.disabled=!bidding||!canTake(me,p)||S.paused;tb.textContent='Aceitar por '+money(cur.price)}
+    var ds=$('#dst');if(ds&&!canTake(me,p))ds.textContent=!canBid(me,p)?(emptyCount(me)===0?'Elenco completo.':'Sem vaga para essa posição.'):'Seu lance máximo não cobre este preço.';
+  }else{
+    if(cur.leader==null){lbl.textContent='Sem lances ainda';am.textContent=money(0)}
+    else{var c=coach(cur.leader);lbl.innerHTML=avatarFor(c,22)+' Lance de '+esc(cname(c));am.textContent=money(cur.price)}
+    var can=bidding&&canBid(me,p)&&!iLead&&!S.paused&&!frozen(me);
+    var btns=$('#btns');
+    if(btns){
+      Array.prototype.forEach.call(btns.querySelectorAll('[data-act="bid"]'),function(b){
+        var n=b.dataset.n;if(n==='all'){b.disabled=!(can&&mb>cur.price);b.querySelector('small').textContent=money(mb);return}
+        n=+n;b.disabled=!can||cur.price+n>mb;b.querySelector('small').textContent=money(cur.price+n);
+      });
+      var pb=btns.querySelector('.pass');if(pb){pb.disabled=!(bidding&&canBid(me,p));pb.classList.toggle('on',!!me.passed);pb.querySelector('small').textContent=me.passed?'lance para voltar':'não quero'}
+    }
+    var st=$('.foot .st');if(st)st.textContent=frozen(me)?'Congelado neste leilão':(!canBid(me,p)?(emptyCount(me)===0?'Elenco completo':'Sem vaga para essa posição'):(iLead?'Você está ganhando':(me.passed?'Você passou neste jogador':'')));
+  }
+  if(frozen(me)&&!$('.frozen')){var ct=$('#ctrl');if(ct)ct.innerHTML=controlsHtml()}
+  var cb=$('#cards');if(cb)cb.innerHTML=DL3.cardsHtml(me.cards,cardCtx());
   var mbal=$('#mybal');if(mbal)mbal.textContent=money(me.balance);var mm=$('#mymax');if(mm)mm.textContent=money(mb);
   var cs=$('.coaches');if(cs){var d=document.createElement('div');d.innerHTML=coachesHtml();cs.replaceWith(d.firstChild)}
+  updateTimer();
 }
 function updateTimer(){
-  var cur=S&&S.cur;if(!cur||S.phase!=='auction'||U.tab!=='auction')return;
-  var t=$('#tnum'),r=$('#ring');if(!t||!r)return;
+  var cur=S&&S.cur;if(!cur||S.phase!=='auction'||U.tab!=='auction'||DL3.app.screen!=='game')return;
+  var t=$('#tnum'),r=$('#ring'),lb=$('#tlab');if(!t||!r)return;
+  if(cur.fmt==='dutch'){var f=(cur.price-cur.floor)/Math.max(1,cur.start-cur.floor);t.textContent=Math.round(f*100);if(lb)lb.textContent='%';r.style.strokeDashoffset=(169.6*(1-clamp(f,0,1))).toFixed(1);r.style.stroke=f<.25?'var(--bad)':'var(--accent)';return}
+  if(lb)lb.textContent='seg';
   var v=Math.max(0,cur.timer);t.textContent=Math.ceil(v);
   r.style.strokeDashoffset=(169.6*(1-clamp(v/cur.max,0,1))).toFixed(1);r.style.stroke=v<=2?'var(--bad)':'var(--accent)';
 }
@@ -3533,7 +3924,7 @@ function renderSummary(){
     return '<tr class="'+(r.c.id===ME()?'me':'')+'"><td class="tn">'+(i+1)+'</td><td><div class="who">'+avatarFor(r.c,24)+badge(clubOf(r.c.club),20)+'<span>'+esc(cname(r.c))+'</span></div></td><td class="pts tn">'+fmt1(r.o)+'</td><td style="text-align:left">'+esc(r.best.n)+' <span class="muted tn">'+r.best.r+'</span></td><td class="tn">'+money(r.c.balance)+'</td></tr>'}).join('')+'</tbody></table></div></div>';
 }
 function rowSlot(act,i,p,sel){var sl=SLOTS();var c=clubOf(p.c);
-  return '<button class="rowp'+(sel?' sel':'')+'" data-act="'+act+'" data-i="'+i+'"><span class="pos pos-'+sl[i]+'"><i></i>'+sl[i]+'</span><div><div class="nm">'+esc(p.n)+'</div><div class="sub2">'+p.pos+' · '+esc(c?c.nome:'')+'</div></div><span class="r tn">'+p.r+'</span></button>'}
+  return '<button class="rowp'+(sel?' sel':'')+'" data-act="'+act+'" data-i="'+i+'"><span class="pos pos-'+sl[i]+'"><i></i>'+sl[i]+'</span><div><div class="nm">'+esc(p.n)+'</div><div class="sub2">'+p.pos+' · '+esc(c?c.nome:'')+' · base '+money(baseVal(p))+'</div></div><span class="r tn">'+p.r+'</span></button>'}
 function renderMarket(){
   var t=U.trade,me=coach(ME()),bots=S.coaches.filter(function(c){return c.bot});
   if(t.coach==null||!coach(t.coach)||!coach(t.coach).bot)t.coach=bots[0]?bots[0].id:null;
@@ -3676,6 +4067,8 @@ function click(a,d){
     case 'viewc':U.view=+d.id;if(U.tab==='auction'){var r1=$('.roster');if(r1){var dd=document.createElement('div');dd.innerHTML=rosterHtml();r1.replaceWith(dd.firstChild)}renderBidState()}return;
     case 'bid':DL3.act({type:'bid',n:d.n});return;
     case 'pass':DL3.act({type:'pass'});return;
+    case 'take':DL3.act({type:'take'});return;
+    case 'usecard':if(d.c==='congelar'){var ci=+d.i;DL3.pickTarget(S.coaches,ME(),function(t){DL3.act({type:'card',i:ci,t:t})})}else DL3.act({type:'card',i:+d.i});return;
     case 'pause':DL3.act({type:'pause'});return;
     case 'tmine':U.trade.mine=+d.i;U.trade.theirs=null;render();return;
     case 'ttheirs':U.trade.theirs=+d.i;render();return;
@@ -3713,6 +4106,7 @@ document.addEventListener('change',function(e){if(e.target.id==='cash'&&S&&U.tab
 function key(e){
   if(!S||S.phase!=='auction'||U.tab!=='auction')return;
   var k=e.key.toLowerCase();
+  if(S.cur&&S.cur.fmt==='dutch'){if(k==='a'||k==='enter')DL3.act({type:'take'});return}
   if(k===' '&&DL3.isHost()){e.preventDefault();DL3.act({type:'pause'})}
   else if(k==='1')DL3.act({type:'bid',n:'1'});else if(k==='2')DL3.act({type:'bid',n:'2'});else if(k==='3')DL3.act({type:'bid',n:'5'});else if(k==='4')DL3.act({type:'bid',n:'10'});else if(k==='5')DL3.act({type:'bid',n:'all'});
   else if(k==='p')DL3.act({type:'pass'});
@@ -3720,6 +4114,7 @@ function key(e){
 function onRemote(d){
   if(DL3.app.screen!=='game'){DL3.ach.consume(S.feed,ME(),U);return}
   var pc=U.prevCur,c=S.cur;
+  DL3.narrate(snap());
   if(c&&pc&&c.pid===pc.pid){if(c.price!==pc.price)DL3.snd.bid();if(c.status!==pc.status&&c.status==='sold')(c.leader===ME()?DL3.snd.win:DL3.snd.sold)()}
   U.prevCur=c?{pid:c.pid,price:c.price,status:c.status}:null;
   var structural=d.pseq||d.phase||d.idx!=null||(d.cur&&pc&&c&&(c.pid!==pc.pid||c.status!==pc.status));
@@ -3765,7 +4160,10 @@ function makeEngine(cfg){
     setState:function(s){S=s;U=freshU();U.fseen=s&&s.fseq||0},
     clientStart:function(){var f=U.fseen;U=freshU();U.fseen=f},
     getTab:function(){return U.tab},setTab:function(t){if(!tabLocked(t))U.tab=t},
-    apply:apply,tick:tick,render:render,click:click,change:change,input:input,key:key,onRemote:onRemote,dropHuman:dropHuman,
+    apply:apply,tick:tick,render:render,click:click,change:change,input:input,key:key,onRemote:onRemote,dropHuman:dropHuman,rejoin:rejoin,
+    summary:function(){return 'Temporada '+yearOf()+' ('+S.season+' de '+S.M+') · '+league().nome+' · '+S.total[0].titles+' título(s)'},
+    humanSeats:function(){return S.coaches.filter(function(c){return !c.bot}).map(function(c){return c.id})},
+    afterLoad:function(){var f=S.fseq||0;U=freshU();U.fseen=f;S.paused=false;S.hostSeat=0;if(S.sn)S.sn.running=false;S.coaches[0].bot=false},
     seatOf:function(peer){return S?S.peerSeat[peer]:null},
     debug:function(){return {S:S,U:U,simulateRound:simulateRound,tick:tick,apply:apply,beginRetention:beginRetention}}
   };
@@ -3777,22 +4175,23 @@ DL3.engines.basquete=makeEngine(SP.basquete);
 
 ;
 /* DOU-LHE 3! — motor de mercado (casas, carros, decoração, storage)
-   Inclui: lances escondidos (envelope), reputação com lote premium, banco (empréstimos) e combos visuais (decoração). */
+   Lotes: aberto, envelope fechado, holandês (preço cai), relâmpago e kit. Reputação + lote premium, banco, combos,
+   cartas de poder, bots com estilo, índice de preços e relatório do analista, narração, catálogo de 15 a 45 itens. */
 (function(){
 'use strict';
 var DL3=window.DL3,u=DL3.u,esc=u.esc,clamp=u.clamp,$=DL3.$,money=DL3.money;
 function rnd(a,b){return a+Math.random()*(b-a)}
 function rint(a,b){return Math.floor(rnd(a,b+1))}
 var R=function(){return Math.random()};
-var MAXWINS=5,BUDGET=100;
+var MAXWINS=5,BUDGET=100,START=15,PERYEAR=5,MAXITEMS=45,PERAUCTION=10;
 var BOTNAMES=['Dona Cotinha','Seu Barreto','Lia Leilões','Tonhão','Marlene Flip','Doutor Lance','Kika Garimpo','Vovó Ruth','Beto Martelo','Nina Ouro','Carlão','Tia Sônia'];
 var DIFF={facil:[.8,.95],normal:[.92,1.1],tubarao:[1.02,1.25]};
-/* reputação: benefícios por nível */
 var LV={Bronze:{disc:0,ltv:.3,rate:.18,err:.2,cor:'#c98f62'},Prata:{disc:.05,ltv:.45,rate:.12,err:.12,cor:'#b8c2d6'},Ouro:{disc:.1,ltv:.6,rate:.09,err:.06,cor:'#ffd23f'},Diamante:{disc:.15,ltv:.75,rate:.06,err:.02,cor:'#8ecbff'}};
 function lvlOf(r){return r>=90?'Diamante':(r>=70?'Ouro':(r>=40?'Prata':'Bronze'))}
 var ELITE={Ouro:1,Diamante:1};
+var FMT={open:'Aberto',sealed:'Envelope fechado',dutch:'Holandês',flash:'Relâmpago',kit:'Kit'};
 
-/* combos visuais (só decoração) */
+/* combos visuais (decoração) */
 var COMBOS={};
 var TEMAS_DECOR=[['Sala de estar',['sofa','tapete','arco']],['Sala de jantar',['mesa','lustre','aparador']],['Canto de leitura',['poltrona','estante','planta']],['Galeria de arte',['quadro','bronze','espelho']],['Hall clássico',['relogio','tapete','lustre']]];
 var ESTILO_N={moderno:'Moderno',classico:'Clássico',boho:'Boho',industrial:'Industrial',minimalista:'Minimalista',escandinavo:'Escandinavo',artdeco:'Art déco'};
@@ -3807,11 +4206,12 @@ COMBOS.decor=function(items){
 DL3.market={register:function(def){DL3.engines[def.id]=makeEngine(def)}};
 
 function makeEngine(M){
-  var S=null,U=freshU();
+  var S=null,U=freshU(),eng;
   var sel=DL3.store.get('sel-'+M.id,{n:4,m:5,dif:'normal'});
   var comboFn=COMBOS[M.id]||null;
   function freshU(){return {tab:'auction',pseq:-1,saved:false,prevCur:null,filter:'all',fseen:0,env:null}}
   function ME(){return DL3.me}
+  function HOST(){return S.hostSeat||0}
   function ctx(){return {ano:DL3.year(S.y),evento:S.evento||{efeito:{}}}}
   function item(id){for(var i=0;i<S.items.length;i++)if(S.items[i].id===id)return S.items[i];return null}
   function pl(id){return S.players[id]}
@@ -3834,14 +4234,11 @@ function makeEngine(M){
   function steps(price){return price>=150?[5,10,25,50]:(price>=40?[2,5,10,20]:[1,2,5,10])}
   function art(it,w,h){try{return M.arte(it,w,h)}catch(e){return '<svg viewBox="0 0 320 200" width="'+w+'" height="'+h+'"><rect width="320" height="200" fill="#222"/></svg>'}}
   function remapIds(list,y){list.forEach(function(it,i){it.id='a'+y+'-'+(it.id||('i'+i));it.dono=null;it.pago=0;it.acaoAno=null;it.historico=[];it.novo=y});return list}
-  /* catálogo cresce: 15 no início, +5 por ano, até 45; nomes repetidos ganham numeração */
-  var START=15,PERYEAR=5,MAXITEMS=45,PERAUCTION=10;
   function uniqueName(n){var c=S.items.filter(function(x){return x.nome===n||x.nome.indexOf(n+' #')===0}).length;return c?n+' #'+(c+1):n}
   function arrivals(){
     var room=MAXITEMS-S.items.length;if(room<=0)return 0;
-    /* boxes vendidos saem do jogo: a chegada completa o leilão até 10 lotes */
     var free=S.items.filter(function(it){return it.dono==null}).length;
-    var want=M.revelar?Math.max(PERYEAR,PERAUCTION-free):PERYEAR;
+    var want=M.revelar?Math.max(PERYEAR,PERAUCTION-free):PERYEAR; /* boxes vendidos saem: completa até 10 lotes */
     var n=Math.min(want,room,15),fresh=u.shuffle(M.catalogo(R,DL3.year(S.y))).slice(0,n);
     remapIds(fresh,S.y);fresh.forEach(function(it){it.nome=uniqueName(it.nome);S.items.push(it)});
     return n;
@@ -3850,110 +4247,146 @@ function makeEngine(M){
   function addRep(p,n){var b=lvl(p);p.rep=clamp(Math.round(p.rep+n),0,100);var a=lvl(p);if(a!==b&&n>0){feed(p.id,'rep',{r:p.rep,lvl:a});S.log.unshift({pid:p.id,txt:p.name+' agora é cliente '+a+'.'})}}
   function costOf(ac,it,p){return Math.max(0,Math.round(ac.custo(it,ctx())*(1-LV[lvl(p)].disc)))}
   function loanLimit(p){return Math.max(0,Math.floor((p.money+itemsVal(p.id))*LV[lvl(p)].ltv)-p.debt)}
-  function eligible(p){return !(S.cur&&S.cur.prem)||!!ELITE[lvl(p)]}
+  function lotIds(c){return c.ids||[c.iid]}
+  function lotItems(c){return lotIds(c).map(item).filter(Boolean)}
+  function eligible(p){var c=S.cur;if(!c)return true;if(c.frozen&&c.frozen[p.id])return false;return !c.prem||!!ELITE[lvl(p)]}
+  function room(p){return p.wins+lotIds(S.cur).length<=MAXWINS}
+  function canBid(p){return room(p)&&p.money>S.cur.price&&eligible(p)}
+  function canSeal(p){return room(p)&&p.money>=1&&eligible(p)}
+  function canTake(p){var c=S.cur;return room(p)&&p.money>=c.price&&eligible(p)}
+  function lotName(c){return lotItems(c).map(function(x){return x.nome}).join(' + ')}
 
   /* ===== início e anos ===== */
   function start(o,seats){
     sel=o;var P=Math.max(o.n,seats.length);
-    S={mod:M.id,M:o.m,y:1,players:[],items:[],fase:'leilao',evento:null,order:[],idx:-1,cur:null,sales:[],log:[],ready:{},peerSeat:{},pseq:0,ptab:'auction',hist:[],final:false,dif:o.dif,sealed:[],premium:null,feed:[],fseq:0};
+    S={mod:M.id,M:o.m,y:1,players:[],items:[],fase:'leilao',evento:null,nextEv:null,order:[],idx:-1,cur:null,sales:[],log:[],ready:{},peerSeat:{},pseq:0,ptab:'auction',hist:[],final:false,dif:o.dif,fmt:{},kits:{},premium:null,feed:[],fseq:0,mkt:[],intel:{},bonus:{},hostSeat:0,hostGen:0,devSeat:{}};
     U=freshU();
-    seats.forEach(function(s,i){S.players.push({id:i,name:s.name||('Jogador '+(i+1)),avatar:s.avatar|0,bot:false,money:BUDGET,wins:0,passed:false,rep:50,debt:0,hadDebt:false,cseen:[]});if(s.peer)S.peerSeat[s.peer]=i});
+    seats.forEach(function(s,i){S.players.push({id:i,name:s.name||('Jogador '+(i+1)),avatar:s.avatar|0,bot:false,money:BUDGET,wins:0,passed:false,rep:50,debt:0,hadDebt:false,cseen:[],cards:[DL3.drawCard(),DL3.drawCard()],disc:false});if(s.peer)S.peerSeat[s.peer]=i});
     var names=u.shuffle(BOTNAMES),d=DIFF[o.dif]||DIFF.normal;
-    for(var i=seats.length;i<P;i++)S.players.push({id:i,name:names[i%names.length],avatar:rint(0,5),bot:true,money:BUDGET,wins:0,passed:false,agg:rnd(d[0],d[1]),lim:0,at:0,rep:rint(35,60),debt:0,hadDebt:false,cseen:[]});
     S.items=remapIds(M.catalogo(R,DL3.year(1)),1);
+    var tags=[];S.items.forEach(function(it){(it.tags||[]).forEach(function(t){if(tags.indexOf(t)<0)tags.push(t)})});
+    for(var i=seats.length;i<P;i++)S.players.push({id:i,name:names[i%names.length],avatar:rint(0,5),bot:true,money:BUDGET,wins:0,passed:false,agg:rnd(d[0],d[1]),lim:0,at:0,rep:rint(35,60),debt:0,hadDebt:false,cseen:[],cards:[DL3.drawCard(),DL3.drawCard()],disc:false,style:DL3.pickStyle(),fav:tags.length?u.pick(R,tags):null});
     beginYear();
   }
   function beginYear(){
-    S.evento=M.evento(DL3.year(S.y),R);
-    S.players.forEach(function(p){p.wins=0});
+    S.evento=S.nextEv||M.evento(DL3.year(S.y),R);S.nextEv=null;
+    S.players.forEach(function(p){p.wins=0;if(S.y>1&&p.cards.length<4)p.cards.push(DL3.drawCard())});
     S.chegaram=S.y>1?arrivals():S.items.length;
-    /* até 10 lotes por leilão: primeiro os recém-chegados, depois os outros sem dono, em ordem aleatória */
+    /* até 10 lotes: recém-chegados primeiro, depois os sem dono; ordem aleatória */
     var free=S.items.filter(function(it){return it.dono==null});
     var novos=u.shuffle(free.filter(function(it){return it.novo===S.y})),velhos=u.shuffle(free.filter(function(it){return it.novo!==S.y}));
     var pick=novos.concat(velhos).slice(0,PERAUCTION);
+    S.fmt={};S.kits={};
+    /* kit: junta os dois lotes mais baratos */
+    if(pick.length>=6){var byv=pick.slice().sort(function(a,b){return val(a)-val(b)});var a=byv[0],b=byv[1];S.kits[a.id]=[a.id,b.id];S.fmt[a.id]='kit';pick=pick.filter(function(x){return x!==b})}
+    var best=null;pick.forEach(function(it){if(!S.kits[it.id]&&(!best||val(it)>val(best)))best=it});
+    S.premium=pick.length>=5&&best?best.id:null;
+    var rest=u.shuffle(pick.filter(function(it){return !S.fmt[it.id]&&it.id!==S.premium}).map(function(it){return it.id}));
+    var n=rest.length,nS=n>=3?Math.max(1,Math.round(n*.22)):0,nD=n>=4?Math.max(1,Math.round(n*.15)):0,nF=n>=5?Math.max(1,Math.round(n*.15)):0;
+    rest.slice(0,nS).forEach(function(id){S.fmt[id]='sealed'});
+    rest.slice(nS,nS+nD).forEach(function(id){S.fmt[id]='dutch'});
+    rest.slice(nS+nD,nS+nD+nF).forEach(function(id){S.fmt[id]='flash'});
     S.order=u.shuffle(pick.map(function(it){return it.id}));
-    /* ~1 em cada 4 lotes vai em envelope fechado; o lote mais valioso do ano é premium */
-    var nS=S.order.length>=4?Math.max(1,Math.round(S.order.length*.25)):0;
-    S.sealed=u.shuffle(S.order).slice(0,nS);
-    var best=null;pick.forEach(function(it){if(!best||val(it)>val(best))best=it});
-    S.premium=S.order.length>=5&&best?best.id:null;
     S.idx=-1;S.sales=[];S.fase='leilao';S.ready={};steer('auction');nextItem();
   }
+  function lotValue(ids,kit){var v=ids.reduce(function(s,id){return s+val(item(id))},0);return Math.round(v*(kit?.9:1))}
   function nextItem(){
     S.idx++;
     var any=S.players.some(function(p){return p.wins<MAXWINS&&p.money>0});
     if(S.idx>=S.order.length||!any){endAuction();return}
-    var it=item(S.order[S.idx]),v=val(it),hidden=!!M.revelar;
-    var sealed=S.sealed.indexOf(it.id)>=0,prem=S.premium===it.id;
-    if(prem&&!S.players.some(function(p){return ELITE[lvl(p)]}))prem=false;
-    S.cur={iid:it.id,price:0,leader:null,timer:sealed?12:7,max:sealed?12:7,status:'bidding',clock:0,until:0,tickSec:sealed?12:7,ap:hidden?null:v,err:rnd(-1,1),sealed:sealed,prem:prem,env:{},reveal:null};
+    var id=S.order[S.idx],it=item(id),fmt=S.fmt[id]||'open',ids=S.kits[id]||[id],hidden=!!M.revelar;
+    var v=lotValue(ids,fmt==='kit'),esp=ids.reduce(function(s,x){var i=item(x);return s+(i.esperado||val(i))},0);
+    var prem=S.premium===id&&S.players.some(function(p){return ELITE[lvl(p)]});
+    var T={open:7,kit:7,flash:3,sealed:12,dutch:99}[fmt];
+    S.cur={iid:id,ids:ids,fmt:fmt,price:0,leader:null,timer:T,max:T,status:'bidding',clock:0,until:0,tickSec:T,ap:hidden?null:v,err:rnd(-1,1),prem:prem,env:{},reveal:null,frozen:{},peek:{},hold:0,dacc:0,still:0};
+    if(fmt==='dutch'){var base=hidden?esp:v;S.cur.price=Math.max(3,Math.round(base*1.7));S.cur.start=S.cur.price;S.cur.floor=Math.max(1,Math.round(base*.35));S.cur.step=Math.max(1,Math.round((S.cur.start-S.cur.floor)/18))}
     var left=S.order.length-S.idx;
     S.players.forEach(function(p){
       p.passed=false;if(!p.bot)return;
-      if(p.wins>=MAXWINS||!eligible(p)){p.passed=true;p.bidv=0;return}
-      var est=hidden?(it.esperado||v)*rnd(.55,1.45):v*rnd(.85,1.15)*(1+(LV[lvl(p)].err<.1?0:rnd(-.08,.08)));
+      if(!room(p)||!eligible(p)){p.passed=true;p.bidv=0;p.th=0;return}
+      var est=hidden?esp*rnd(.55,1.45):v*rnd(.85,1.15);
+      var st=DL3.BOTSTYLES[p.style]||{lim:1},fav=p.style==='colecionador'&&p.fav&&lotItems(S.cur).some(function(x){return (x.tags||[]).indexOf(p.fav)>=0})?1.25:1;
       var cap=Math.floor(p.money*(left>6?.6:.9));
-      p.lim=Math.max(0,Math.min(Math.floor(est*p.agg*rnd(.78,1.02)),cap));
-      p.bidv=Math.max(0,Math.min(Math.floor(est*p.agg*rnd(.6,.88)),cap));
-      if((sealed?p.bidv:p.lim)<1)p.passed=true;
-      p.at=sealed?rnd(1.5,10):rnd(.8,2.8);
+      p.lim=Math.max(0,Math.min(Math.floor(est*p.agg*st.lim*fav*rnd(.78,1.02)),cap));
+      p.bidv=Math.max(0,Math.min(Math.floor(est*p.agg*st.lim*fav*rnd(.6,.88)),cap));
+      p.th=Math.max(0,Math.min(Math.floor(est*p.agg*st.lim*fav*rnd(.55,.85)),p.money));
+      if((fmt==='sealed'?p.bidv:(fmt==='dutch'?p.th:p.lim))<1)p.passed=true;
+      p.at=fmt==='sealed'?rnd(1.5,10):(fmt==='flash'?rnd(.2,1.2):rnd(.8,2.8));
+      /* bots usam cartas de vez em quando */
+      var di=p.cards.indexOf('desconto');if(di>=0&&!p.disc&&Math.random()<.5){p.cards.splice(di,1);p.disc=true}
     });
   }
-  function canBid(p){return p.wins<MAXWINS&&p.money>S.cur.price&&eligible(p)}
-  function placeBid(pid,price){var c=S.cur;c.price=price;c.leader=pid;c.timer=Math.max(c.timer,3.8);c.max=Math.max(c.max,c.timer);c.tickSec=Math.ceil(c.timer);
-    S.players.forEach(function(p){if(p.bot&&!p.passed&&p.id!==pid)p.at=c.clock+rnd(.5,2.2)});if(!pl(pid).bot)pl(pid).passed=false;DL3.snd.bid()}
+  function placeBid(pid,price){var c=S.cur;c.price=price;c.leader=pid;var rs=c.fmt==='flash'?2:3.8;c.timer=Math.max(c.timer,rs);c.max=Math.max(c.max,c.timer);c.tickSec=Math.ceil(c.timer);
+    S.players.forEach(function(p){if(p.bot&&!p.passed&&p.id!==pid)p.at=c.clock+(c.fmt==='flash'?rnd(.2,.9):rnd(.5,2.2))});if(!pl(pid).bot)pl(pid).passed=false;DL3.snd.bid()}
   function anyHumanIn(){var c=S.cur;return humans().some(function(h){
-    if(c.sealed)return canSeal(h)&&!c.env[h.id];
+    if(c.fmt==='sealed')return canSeal(h)&&!c.env[h.id];
+    if(c.fmt==='dutch')return canTake(h)&&!h.passed;
     return c.leader===h.id||(canBid(h)&&!h.passed)})}
-  function canSeal(p){return p.wins<MAXWINS&&p.money>=1&&eligible(p)}
+  function snap(){var c=S.cur;if(!c)return null;var L=c.leader!=null?pl(c.leader):null;return {id:S.y+'-'+S.idx,fmt:c.fmt,status:c.status,price:c.price,leader:L?L.name:'',timer:c.timer,label:lotName(c),n:S.idx+1,premium:c.prem}}
   function tick(dt){
     if(!S||S.fase!=='leilao'||!S.cur||S.paused)return;
     var c=S.cur;
     if(c.status!=='bidding'){c.until-=dt;if(c.until<=0){nextItem();render()}return}
-    var fast=!anyHumanIn(),st=dt*(fast?3:1);c.timer-=st;c.clock+=st;
+    var fast=!anyHumanIn(),st=dt*(fast?3:1);c.clock+=st;
     var bots=u.shuffle(S.players.filter(function(p){return p.bot}));
-    if(c.sealed){
+    if(c.fmt==='dutch'){
+      if(c.hold>0)c.hold-=st;
+      else{c.dacc+=st;while(c.dacc>=.55){c.dacc-=.55;if(c.price>c.floor){c.price=Math.max(c.floor,c.price-c.step)}else c.still+=.55}}
+      for(var j=0;j<bots.length;j++){var bd=bots[j];if(bd.passed||c.clock<bd.at||!canTake(bd))continue;if(c.price<=bd.th){take(bd.id);return}}
+      if(c.still>=2.5){c.status='unsold';c.until=1.2;S.sales.unshift({iid:c.iid,unsold:true});DL3.snd.no();render();return}
+      DL3.narrate(snap());renderBid();return;
+    }
+    c.timer-=st;
+    if(c.fmt==='sealed'){
       bots.forEach(function(b){if(!b.passed&&!c.env[b.id]&&c.clock>=b.at&&canSeal(b)&&b.bidv>=1){c.env[b.id]={v:Math.min(b.bidv,b.money),t:c.clock};renderBid()}});
     }else{
       for(var i=0;i<bots.length;i++){var b=bots[i];
         if(b.passed||c.leader===b.id||c.clock<b.at)continue;
+        if(b.style==='sniper'&&c.fmt!=='flash'&&c.timer>1.8)continue;
         var lim=Math.min(b.lim,b.money);if(c.price+1>lim||!canBid(b)){b.passed=true;continue}
-        var sp=steps(c.price),inc=sp[0],room=lim-c.price;if(room>sp[1]*3&&Math.random()<.3)inc=sp[1];
+        if(b.style==='blefador'&&c.price>lim*.6&&Math.random()<.25){b.passed=true;continue}
+        /* congelar o humano que lidera um lote que o bot quer muito */
+        var ci=b.cards.indexOf('congelar');if(ci>=0&&c.leader!=null&&!pl(c.leader).bot&&lim>c.price*1.3&&Math.random()<.12){b.cards.splice(ci,1);c.frozen[c.leader]=true;S.log.unshift({pid:c.leader,txt:b.name+' congelou você neste lote 🧊'})}
+        var sp=steps(c.price),inc=sp[0],roomv=lim-c.price;if(roomv>sp[1]*3&&Math.random()<(b.style==='tubarao'?.6:.3))inc=sp[b.style==='tubarao'?2:1];
         placeBid(b.id,Math.min(lim,c.price+inc));renderBid();break;}
     }
-    if(c.timer<=0){c.sealed?resolveSealed():resolve();return}
+    if(c.timer<=0){c.fmt==='sealed'?resolveSealed():resolve();return}
     var s=Math.ceil(c.timer);if(s!==c.tickSec){c.tickSec=s;if(s<=2&&!fast)DL3.snd.tick()}
-    updTimer();
+    DL3.narrate(snap());updTimer();
   }
-  function win(p,it,price,sealed){
-    p.money-=price;p.wins++;it.dono=p.id;it.pago=price;it.anoCompra=S.y;
-    addRep(p,sealed?3:2);
-    feed(p.id,'lot',{price:price,ap:S.cur.ap,sealed:sealed,mod:M.id});
-    S.sales.unshift({iid:it.id,pid:p.id,price:price,sealed:sealed});
+  function win(p,price,how){
+    var c=S.cur,ids=lotIds(c),pay=p.disc?Math.round(price*.9):price;
+    if(p.disc){p.disc=false;S.log.unshift({pid:p.id,txt:'Carta de desconto usada: pagou '+money(pay)+' em vez de '+money(price)+'.'})}
+    p.money-=pay;p.wins+=ids.length;
+    ids.forEach(function(id){var it=item(id);it.dono=p.id;it.pago=Math.max(1,Math.round(pay/ids.length));it.anoCompra=S.y;it.ultimoArremate={v:pay,ano:DL3.year(S.y)}});
+    addRep(p,how==='open'||how==='flash'||how==='kit'?2:3);
+    feed(p.id,'lot',{price:pay,ap:c.ap,sealed:how==='sealed',fmt:how,mod:M.id});
+    S.sales.unshift({iid:c.iid,pid:p.id,price:pay,fmt:how,n:ids.length});
     DL3.snd.gavel();(p.id===ME()?DL3.snd.win:DL3.snd.sold)();
   }
+  function take(pid){var c=S.cur;c.leader=pid;win(pl(pid),c.price,'dutch');c.status='sold';c.until=1.8;if(S.sales.length>6)S.sales.pop();render()}
   function resolve(){
-    var c=S.cur,it=item(c.iid);
-    if(c.leader==null){c.status='unsold';c.until=1.1;S.sales.unshift({iid:it.id,unsold:true});DL3.snd.no()}
-    else{win(pl(c.leader),it,c.price,false);c.status='sold';c.until=1.6}
-    if(S.sales.length>6)S.sales.pop();render();
+    var c=S.cur;
+    if(c.leader==null){c.status='unsold';c.until=1.1;S.sales.unshift({iid:c.iid,unsold:true});DL3.snd.no()}
+    else{win(pl(c.leader),c.price,c.fmt);c.status='sold';c.until=1.6}
+    if(S.sales.length>6)S.sales.pop();DL3.narrate(snap());render();
   }
   function resolveSealed(){
-    var c=S.cur,it=item(c.iid);
+    var c=S.cur;
     var list=Object.keys(c.env).map(function(k){return {pid:+k,v:c.env[k].v,t:c.env[k].t}}).filter(function(x){return x.v>=1&&x.v<=pl(x.pid).money}).sort(function(a,b){return b.v-a.v||a.t-b.t});
     c.reveal=list.map(function(x){return [x.pid,x.v]});
-    if(!list.length){c.status='unsold';c.until=1.4;S.sales.unshift({iid:it.id,unsold:true});DL3.snd.no()}
-    else{c.leader=list[0].pid;c.price=list[0].v;win(pl(c.leader),it,c.price,true);c.status='sold';c.until=3.4}
-    if(S.sales.length>6)S.sales.pop();render();
+    if(!list.length){c.status='unsold';c.until=1.4;S.sales.unshift({iid:c.iid,unsold:true});DL3.snd.no()}
+    else{c.leader=list[0].pid;c.price=list[0].v;win(pl(c.leader),c.price,'sealed');c.status='sold';c.until=3.4}
+    if(S.sales.length>6)S.sales.pop();DL3.narrate(snap());render();
   }
-  function endAuction(){S.cur=null;S.fase='gestao';S.ready={};S.players.forEach(function(p){if(p.bot)botManage(p)});steer('collection')}
+  function endAuction(){S.cur=null;DL3.narrate(null);S.fase='gestao';S.ready={};S.players.forEach(function(p){if(p.bot)botManage(p)});steer('collection')}
   function sell(p,it,silent){
     var v=ival(it),pago=it.pago;p.money+=v;
     S.log.unshift({pid:p.id,txt:p.name+' vendeu '+it.nome+' por '+money(v)+(pago?' (pagou '+money(pago)+')':'')});
     if(!silent)feed(p.id,'sell',{v:v,pago:pago,mod:M.id});
+    it.ultimaVenda={v:v,ano:DL3.year(S.y)};
     it.dono=null;it.pago=0;it.vendido=S.y;if(S.log.length>80)S.log.pop();
-    /* box aberto e vendido sai do jogo (o conteúdo já é conhecido); abre espaço para lotes novos */
-    if(M.revelar){var k=S.items.indexOf(it);if(k>=0)S.items.splice(k,1)}
+    if(M.revelar){var k=S.items.indexOf(it);if(k>=0)S.items.splice(k,1)} /* box vendido sai do jogo */
   }
   function botManage(p){
     owned(p.id).forEach(function(it){
@@ -3973,7 +4406,6 @@ function makeEngine(M){
       owned(p.id).forEach(function(it){try{var r=M.passarAno(it,ctx(),R)||{};renda+=Math.max(0,Math.round(r.renda||0))}catch(e){}it.historico=(it.historico||[]).concat([val(it)]).slice(-15)});
       p.money+=renda;
       if(p.debt>0){juros=Math.ceil(p.debt*LV[lvl(p)].rate);p.debt+=juros}
-      /* inadimplência: dívida acima de 90% dos bens força a venda */
       var gross=p.money+itemsVal(p.id);
       if(p.debt>0&&p.debt>gross*.9){
         liq=true;var its=owned(p.id).sort(function(a,b){return ival(b)-ival(a)});
@@ -3981,27 +4413,42 @@ function makeEngine(M){
         var pay=Math.min(p.money,p.debt);p.money-=pay;p.debt-=pay;
         addRep(p,-15);S.log.unshift({pid:p.id,txt:'O banco executou a dívida de '+p.name+': itens vendidos à força.'});feed(p.id,'default',{});
       }else addRep(p,p.debt>0?1:4);
-      /* combos novos viram conquista */
       combos(p.id).forEach(function(c){if(p.cseen.indexOf(c.nome)<0){p.cseen.push(c.nome);feed(p.id,'combo',{nome:c.nome,tema:c.tema})}});
       return {id:p.id,money:p.money,renda:renda,juros:juros,debt:p.debt,liq:liq,rep:p.rep,patr:patr(p.id),visual:visual(p.id),n:owned(p.id).length};
     });
+    /* índice de preços por categoria */
+    var cat={};S.items.forEach(function(it){var t=(it.tags&&it.tags[0])||'outros';cat[t]=cat[t]||{s:0,n:0};cat[t].s+=val(it);cat[t].n++});
+    var idx={};Object.keys(cat).forEach(function(t){idx[t]=Math.round(cat[t].s/cat[t].n)});S.mkt.push({ano:DL3.year(S.y),cat:idx});
+    /* dificuldade adaptativa */
+    var hp=Math.max.apply(null,rows.filter(function(r){return !pl(r.id).bot}).map(function(r){return r.patr}).concat([0]));
+    var br=rows.filter(function(r){return pl(r.id).bot}),bavg=br.length?br.reduce(function(s,r){return s+r.patr},0)/br.length:hp;
+    S.players.forEach(function(p){if(!p.bot)return;if(hp>bavg*1.4)p.agg=Math.min(1.35,p.agg+.04);else if(hp<bavg*.8)p.agg=Math.max(.75,p.agg-.03)});
     S.hist.push({ano:DL3.year(S.y),evento:S.evento,rows:rows});
     if(S.y>=S.M){S.final=true;S.fase='final';steer('year');return}
     S.fase='virada';steer('year');
   }
-  function nextYear(){
-    S.y++;
-    beginYear();
-  }
+  function nextYear(){S.y++;beginYear()}
 
   /* ===== ações (o anfitrião aplica) ===== */
   function apply(a,seat){
-    if(!S||!a)return;var p=pl(seat);if(!p)return;var host=seat===0;
+    if(!S||!a)return;var p=pl(seat);if(!p)return;var host=seat===HOST(),c=S.cur;
     switch(a.type){
-      case 'bid':{var c=S.cur;if(!c||c.sealed||c.status!=='bidding'||S.fase!=='leilao'||c.leader===seat||!canBid(p))return;var np=a.n==='all'?p.money:c.price+(+a.n);if(np>p.money||np<=c.price)return;placeBid(seat,np);return}
-      case 'envelope':{var c2=S.cur;if(!c2||!c2.sealed||c2.status!=='bidding'||!canSeal(p))return;var v=Math.floor(+a.v);if(!(v>=1)||v>p.money)return;c2.env[seat]={v:v,t:c2.clock};DL3.snd.bid();return}
-      case 'pass':{if(!S.cur||S.cur.status!=='bidding')return;p.passed=!p.passed;return}
+      case 'bid':{if(!c||c.fmt==='sealed'||c.fmt==='dutch'||c.status!=='bidding'||S.fase!=='leilao'||c.leader===seat||!canBid(p))return;var np=a.n==='all'?p.money:c.price+(+a.n);if(np>p.money||np<=c.price)return;placeBid(seat,np);return}
+      case 'take':{if(!c||c.fmt!=='dutch'||c.status!=='bidding'||!canTake(p))return;take(seat);return}
+      case 'envelope':{if(!c||c.fmt!=='sealed'||c.status!=='bidding'||!canSeal(p))return;var v=Math.floor(+a.v);if(!(v>=1)||v>p.money)return;c.env[seat]={v:v,t:c.clock};DL3.snd.bid();return}
+      case 'pass':{if(!c||c.status!=='bidding')return;p.passed=!p.passed;return}
       case 'pause':if(host&&S.fase==='leilao')S.paused=!S.paused;return;
+      case 'card':{
+        var cd=p.cards[a.i];if(!cd)return;
+        if(cd==='desconto'){if(p.disc)return;p.disc=true}
+        else{
+          if(!c||c.status!=='bidding'||S.fase!=='leilao')return;
+          if(cd==='tempo'){if(c.fmt==='dutch')c.hold=3;else{c.timer+=3;c.max=Math.max(c.max,c.timer)}}
+          else if(cd==='congelar'){var t=pl(+a.t);if(!t||t.id===seat)return;c.frozen[t.id]=true;if(c.leader===t.id&&c.fmt!=='sealed'){}S.log.unshift({pid:t.id,txt:p.name+' congelou você neste lote 🧊'})}
+          else if(cd==='espiar'){if(c.fmt!=='sealed')return;var mx=0;Object.keys(c.env).forEach(function(k){if(+k!==seat)mx=Math.max(mx,c.env[k].v)});c.peek[seat]=mx}
+        }
+        p.cards.splice(a.i,1);S.log.unshift({pid:seat,txt:'Você usou a carta '+DL3.CARDS[cd].n+'.'});return}
+      case 'bonuscard':{S.bonus[seat]=(S.bonus[seat]||0);if(S.bonus[seat]>=2||p.cards.length>=5)return;S.bonus[seat]++;p.cards.push(DL3.drawCard());return}
       case 'acao':{if(S.fase!=='gestao'||S.ready[seat])return;var it=item(a.iid);if(!it||it.dono!==seat||it.acaoAno===S.y)return;
         var ac=(M.acoes||[]).filter(function(x){return x.id===a.aid})[0];if(!ac||!ac.pode(it,ctx()))return;var cst=costOf(ac,it,p);if(cst>p.money)return;
         p.money-=cst;var msg='';try{msg=ac.aplicar(it,ctx(),R)||''}catch(e){}it.acaoAno=S.y;it.ultimaAcao=msg;S.log.unshift({pid:seat,txt:it.nome+': '+msg});feed(seat,'action',{aid:ac.id,mod:M.id});return}
@@ -4010,11 +4457,14 @@ function makeEngine(M){
       case 'vender':{if(S.fase!=='gestao'||S.ready[seat])return;var it3=item(a.iid);if(!it3||it3.dono!==seat)return;if(M.revelar&&!it3.aberto)M.revelar(it3,R);sell(p,it3);return}
       case 'loan':{if(S.final)return;var v2=Math.floor(+a.v);if(!(v2>=1)||v2>loanLimit(p))return;p.money+=v2;p.debt+=v2;p.hadDebt=true;S.log.unshift({pid:seat,txt:'Empréstimo de '+money(v2)+' a '+Math.round(LV[lvl(p)].rate*100)+'% ao ano.'});return}
       case 'repay':{var v3=Math.min(Math.floor(+a.v)||0,p.money,p.debt);if(v3<1)return;p.money-=v3;p.debt-=v3;S.log.unshift({pid:seat,txt:'Pagou '+money(v3)+' ao banco.'});if(p.debt===0&&p.hadDebt){p.hadDebt=false;feed(seat,'loanpaid',{})}return}
+      case 'intel':{if(S.fase!=='gestao'||S.intel[seat]===S.y||S.y>=S.M)return;var cost=Math.max(1,Math.round(5*(1-LV[lvl(p)].disc)));if(p.money<cost)return;p.money-=cost;
+        if(!S.nextEv)S.nextEv=M.evento(DL3.year(S.y+1),R);S.intel[seat]=S.y;S.log.unshift({pid:seat,txt:'Relatório do analista comprado por '+money(cost)+'.'});return}
       case 'pronto':if(S.fase!=='gestao')return;S.ready[seat]=true;maybeTurn();return;
       case 'proximo':if(!host||S.fase!=='virada')return;nextYear();return;
     }
   }
-  function dropHuman(seat){var p=pl(seat);if(!p)return;p.bot=true;p.agg=1;p.name+=' (saiu)';if(S.fase==='gestao'){botManage(p);maybeTurn()}}
+  function dropHuman(seat){var p=pl(seat);if(!p||p.bot)return;p.baseName=p.name;p.bot=true;p.agg=1;p.style='cauteloso';p.name+=' (saiu)';if(S.fase==='gestao'){botManage(p);maybeTurn()}}
+  function rejoin(seat){var p=pl(seat);if(!p)return;p.bot=false;p.name=p.baseName||p.name.replace(/ \(saiu\)$/,'')}
 
   /* ===== render ===== */
   function header(){
@@ -4037,61 +4487,82 @@ function makeEngine(M){
       DL3.endCareer({patr:me.patr,visual:me.visual,dinheiro:me.money,rank:rank,anos:S.M,det:S.players.length+' jogadores · '+S.M+(S.M>1?' anos':' ano')+' ('+DL3.year(1)+'–'+DL3.year(S.M)+')'})}
   }
   function repChip(p){var l=lvl(p);return '<span class="lvl" style="--lc:'+LV[l].cor+'" title="Reputação '+p.rep+'/100">'+l+'</span>'}
-  function eventoHtml(){var e=S.evento;if(!e)return '';return '<div class="evento card"><span class="ek">Evento de '+DL3.year(S.y)+'</span><b>'+esc(e.nome)+'</b><span>'+esc(e.desc||'')+'</span><span class="cat">'+(S.y>1&&S.chegaram?'+'+S.chegaram+' lotes novos · ':'')+S.items.length+' de 45 '+esc(M.unidade[1])+' no catálogo</span></div>'}
+  function eventoHtml(){var e=S.evento;if(!e)return '';return '<div class="evento card"><span class="ek">Evento de '+DL3.year(S.y)+'</span><b>'+esc(e.nome)+'</b><span>'+esc(e.desc||'')+'</span><span class="cat">'+(S.y>1&&S.chegaram?'+'+S.chegaram+' lotes novos · ':'')+S.items.length+' de '+MAXITEMS+' '+esc(M.unidade[1])+' no catálogo</span></div>'}
   function playersHtml(){
     var c=S.cur;
     return '<div class="card coaches"><h3>Jogadores<small>dinheiro · arremates no ano (máx. 5)</small></h3>'+S.players.map(function(p){
-      var lead=c&&!c.sealed&&c.leader===p.id&&c.status!=='unsold';
-      var tag=c&&c.status==='bidding'?(c.sealed?(c.env[p.id]?'<em class="env">✉️ enviou</em>':''):(p.passed&&!lead?'<em>passou</em>':'')):'';
-      if(c&&c.prem&&!ELITE[lvl(p)])tag='<em>sem acesso</em>';
-      return '<div class="cr'+(lead?' leading':'')+(p.id===ME()?' me':'')+'">'+DL3.avatar(p.avatar,30)+'<div style="min-width:0"><div class="n"><span>'+esc(p.name)+(p.bot?' (bot)':(p.id===ME()?' (você)':''))+'</span>'+repChip(p)+tag+'</div><div class="dots">'+[0,1,2,3,4].map(function(k){return '<i'+(k<p.wins?' class="f"':'')+'></i>'}).join('')+'</div></div><div class="bal tn">'+money(p.money)+'</div></div>'}).join('')+'</div>';
+      var lead=c&&c.fmt!=='sealed'&&c.leader===p.id&&c.status!=='unsold';
+      var tag=c&&c.status==='bidding'?(c.fmt==='sealed'?(c.env[p.id]?'<em class="env">✉️ enviou</em>':''):(p.passed&&!lead?'<em>passou</em>':'')):'';
+      if(c&&c.frozen&&c.frozen[p.id])tag='<em>🧊 congelado</em>';else if(c&&c.prem&&!ELITE[lvl(p)])tag='<em>sem acesso</em>';
+      return '<div class="cr'+(lead?' leading':'')+(p.id===ME()?' me':'')+'">'+DL3.avatar(p.avatar,30)+'<div style="min-width:0"><div class="n"><span>'+esc(p.name)+(p.bot?'':(p.id===ME()?' (você)':''))+'</span>'+(p.bot?DL3.styleChip(p.style):'')+repChip(p)+tag+'</div><div class="dots">'+[0,1,2,3,4].map(function(k){return '<i'+(k<p.wins?' class="f"':'')+'></i>'}).join('')+'</div></div><div class="bal tn">'+money(p.money)+'</div></div>'}).join('')+'</div>';
   }
   function apRange(c){
     if(c.ap==null)return null;var e=LV[lvl(pl(ME()))].err,mid=c.ap*(1+c.err*e*.8);
     return [Math.max(1,Math.round(mid*(1-e))),Math.round(mid*(1+e))];
   }
+  function cardCtx(){var c=S.cur;return {can:function(cd){
+    if(cd==='desconto')return !pl(ME()).disc;
+    if(!c||c.status!=='bidding'||S.fase!=='leilao')return false;
+    if(cd==='espiar')return c.fmt==='sealed';return true}}}
+  function controlsHtml(c,me,rg,it){
+    if(c.frozen&&c.frozen[ME()])return '<div class="frozen">🧊 Você foi congelado neste lote. Espere o próximo.</div>';
+    if(c.fmt==='sealed'){var myEnv=c.env[ME()];
+      return '<form id="envform" class="envbox"><label for="envv">Seu envelope</label><div class="row"><button type="button" class="btn" data-act="envstep" data-v="-5">−5</button><button type="button" class="btn" data-act="envstep" data-v="-1">−1</button><input id="envv" type="number" inputmode="numeric" min="1" max="'+me.money+'" value="'+(U.env!=null?U.env:(myEnv?myEnv.v:Math.max(1,Math.round((rg?rg[0]:(it.esperado||10))*.7))))+'"><button type="button" class="btn" data-act="envstep" data-v="1">+1</button><button type="button" class="btn" data-act="envstep" data-v="5">+5</button></div><button class="btn primary" type="submit" id="envgo">'+(myEnv?'Trocar envelope':'Enviar envelope')+'</button><p class="muted" id="envst"></p>'+(c.peek[ME()]!=null?'<p class="peek">👁️ Maior envelope dos rivais agora: <b>'+money(c.peek[ME()])+'</b></p>':'')+'</form>'}
+    if(c.fmt==='dutch')return '<div class="dutch"><button class="btn primary big" data-act="take" id="takebtn">Aceitar por '+money(c.price)+'</button><p class="muted" id="dst">O preço cai a cada meio segundo até o mínimo. Quem aceitar primeiro leva.</p></div>';
+    var sp=steps(c.price);
+    return '<div class="btns" id="btns">'+sp.map(function(n){return '<button class="bid" data-act="bid" data-n="'+n+'"><b>+'+n+'</b><small></small></button>'}).join('')+'<button class="bid all" data-act="bid" data-n="all"><b>Tudo</b><small></small></button><button class="bid pass" data-act="pass"><b>Passar</b><small></small></button></div>';
+  }
   function rAuction(){
     var c=S.cur;if(!c){$('#view').innerHTML='';return}
-    var it=item(c.iid),me=pl(ME()),bidding=c.status==='bidding',ov='';
+    var its=lotItems(c),it=its[0],me=pl(ME()),bidding=c.status==='bidding',ov='';
     if(!bidding){
       if(c.status==='sold'){var w=pl(c.leader);
-        ov='<div class="overlay'+(w.id===ME()?' me':'')+'"><div class="ic">'+(c.sealed?'✉️':'🔨')+'</div><h2>'+(c.sealed?'Envelopes abertos':'Arrematado!')+'</h2><p>'+(w.id===ME()?'Você levou':esc(w.name)+' levou')+' por '+money(c.price)+'</p>'+
+        ov='<div class="overlay'+(w.id===ME()?' me':'')+'"><div class="ic">'+(c.fmt==='sealed'?'✉️':'🔨')+'</div><h2>'+(c.fmt==='sealed'?'Envelopes abertos':(c.fmt==='dutch'?'Aceito!':'Arrematado!'))+'</h2><p>'+(w.id===ME()?'Você levou':esc(w.name)+' levou')+' por '+money(c.price)+'</p>'+
           (c.reveal&&c.reveal.length?'<ul class="reveal">'+c.reveal.map(function(x,i){var p=pl(x[0]);return '<li class="'+(i===0?'w':'')+'">'+DL3.avatar(p.avatar,20)+'<span>'+esc(p.name)+'</span><b class="tn">'+money(x[1])+'</b></li>'}).join('')+'</ul>':'')+'</div>'}
       else ov='<div class="overlay"><div class="ic">–</div><h2>Sem lances</h2><p>Volta ao catálogo</p></div>';
     }else if(S.paused)ov='<div class="overlay"><h2>Pausado</h2></div>';
     var attrs=(M.atributos(it)||[]).map(function(a){return '<div><span>'+esc(a[0])+'</span><b>'+esc(a[1])+'</b></div>'}).join('');
-    var next=S.order.slice(S.idx+1,S.idx+5).map(function(id){var x=item(id);return '<div class="nx">'+art(x,96,60)+'<span>'+(S.sealed.indexOf(id)>=0?'✉️ ':'')+(S.premium===id?'💠 ':'')+esc(x.nome)+'</span></div>'}).join('');
-    var rg=apRange(c),sp=steps(c.price),myEnv=c.env[ME()];
-    var flags=(c.sealed?'<span class="flagx env">✉️ Lance escondido: cada um manda um envelope, o maior leva e paga o que ofereceu</span>':'')+(c.prem?'<span class="flagx prem">💠 Lote premium: só clientes Ouro ou Diamante</span>':'');
-    var controls=c.sealed?
-      '<form id="envform" class="envbox"><label for="envv">Seu envelope</label><div class="row"><button type="button" class="btn" data-act="envstep" data-v="-5">−5</button><button type="button" class="btn" data-act="envstep" data-v="-1">−1</button><input id="envv" type="number" inputmode="numeric" min="1" max="'+me.money+'" value="'+(U.env!=null?U.env:(myEnv?myEnv.v:Math.max(1,Math.round((rg?rg[0]:(it.esperado||10))*.7))))+'"><button type="button" class="btn" data-act="envstep" data-v="1">+1</button><button type="button" class="btn" data-act="envstep" data-v="5">+5</button></div><button class="btn primary" type="submit" id="envgo">'+(myEnv?'Trocar envelope':'Enviar envelope')+'</button><p class="muted" id="envst"></p></form>':
-      '<div class="btns" id="btns">'+sp.map(function(n){return '<button class="bid" data-act="bid" data-n="'+n+'"><b>+'+n+'</b><small></small></button>'}).join('')+'<button class="bid all" data-act="bid" data-n="all"><b>Tudo</b><small></small></button><button class="bid pass" data-act="pass"><b>Passar</b><small></small></button></div>';
+    var next=S.order.slice(S.idx+1,S.idx+5).map(function(id){var x=item(id),f=S.fmt[id];return '<div class="nx">'+art(x,96,60)+'<span>'+({sealed:'✉️ ',dutch:'📉 ',flash:'⚡ ',kit:'📦 '}[f]||'')+(S.premium===id?'💠 ':'')+esc(x.nome)+'</span></div>'}).join('');
+    var rg=apRange(c);
+    var fl={sealed:'<span class="flagx env">✉️ Envelope fechado: cada um manda um valor, o maior leva e paga o que ofereceu</span>',dutch:'<span class="flagx dut">📉 Leilão holandês: o preço começa alto e cai até alguém aceitar</span>',flash:'<span class="flagx fla">⚡ Relâmpago: 3 segundos e cada lance dá só mais 2</span>',kit:'<span class="flagx kit">📦 Kit com '+its.length+' itens (conta '+its.length+' arremates)</span>'}[c.fmt]||'';
+    var flags=fl+(c.prem?'<span class="flagx prem">💠 Lote premium: só clientes Ouro ou Diamante</span>':'');
+    var hist=it.ultimoArremate?'<span class="histline">Último arremate: '+money(it.ultimoArremate.v)+' em '+it.ultimoArremate.ano+(it.ultimaVenda?' · última venda: '+money(it.ultimaVenda.v)+' em '+it.ultimaVenda.ano:'')+'</span>':'';
+    var kitrow=its.length>1?'<div class="kitrow">'+its.slice(1).map(function(x){return '<div>'+art(x,120,75)+'<span>'+esc(x.nome)+'</span></div>'}).join('')+'</div>':'';
     $('#view').innerHTML=eventoHtml()+
-    '<div class="progress"><span class="tn">Ano '+DL3.year(S.y)+' ('+S.y+' de '+S.M+') · lote '+(S.idx+1)+' de '+S.order.length+'</span><div class="bar"><i style="width:'+Math.round(S.idx/Math.max(1,S.order.length)*100)+'%"></i></div></div>'+
-    '<div class="game mk"><div class="stage-col"><section class="card stage'+(!bidding||S.paused?' dim':'')+(c.sealed?' sealed':'')+(c.prem?' prem':'')+'"><div class="inner">'+
-      '<div class="mkart">'+art(it,640,400)+'</div>'+
-      '<div class="mkhead"><div style="min-width:0;flex:1"><p class="kicker" style="margin:0">'+esc(M.unidade[0])+' · lote '+(S.idx+1)+'</p><h1 class="pname sm">'+esc(it.nome)+'</h1><p class="dica">'+esc(M.dica(it))+'</p></div>'+
-      '<div class="ring"><svg width="62" height="62" viewBox="0 0 62 62"><circle cx="31" cy="31" r="27" fill="none" stroke="var(--line)" stroke-width="5"/><circle id="ring" cx="31" cy="31" r="27" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round" stroke-dasharray="169.6" transform="rotate(-90 31 31)"/></svg><div class="t"><b id="tnum" class="tn">'+Math.ceil(c.timer)+'</b><small>seg</small></div></div></div>'+
+    '<div class="progress"><span class="tn">Ano '+DL3.year(S.y)+' ('+S.y+' de '+S.M+') · lote '+(S.idx+1)+' de '+S.order.length+' · '+FMT[c.fmt]+'</span><div class="bar"><i style="width:'+Math.round(S.idx/Math.max(1,S.order.length)*100)+'%"></i></div></div>'+
+    '<div class="game mk"><div class="stage-col"><section class="card stage'+(!bidding||S.paused?' dim':'')+' f-'+c.fmt+(c.prem?' prem':'')+'"><div class="inner">'+
+      '<div class="mkart">'+art(it,640,400)+kitrow+'</div>'+
+      '<div class="mkhead"><div style="min-width:0;flex:1"><p class="kicker" style="margin:0">'+esc(M.unidade[0])+' · lote '+(S.idx+1)+'</p><h1 class="pname sm">'+esc(lotName(c))+'</h1><p class="dica">'+esc(M.dica(it))+'</p>'+hist+'</div>'+
+      '<div class="ring"><svg width="62" height="62" viewBox="0 0 62 62"><circle cx="31" cy="31" r="27" fill="none" stroke="var(--line)" stroke-width="5"/><circle id="ring" cx="31" cy="31" r="27" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round" stroke-dasharray="169.6" transform="rotate(-90 31 31)"/></svg><div class="t"><b id="tnum" class="tn"></b><small id="tlab">seg</small></div></div></div>'+
       (flags?'<div class="flags">'+flags+'</div>':'')+
       '<div class="attrs">'+attrs+'</div>'+
       '<div class="bidrow"><div><div class="lbl" id="bidlbl"></div><div class="amount tn" id="amount"></div></div><div class="nota"><b class="tn">'+(rg?money(rg[0])+'–'+rg[1]:'???')+'</b><span>'+(rg?'avaliação ('+lvl(me)+': ±'+Math.round(LV[lvl(me)].err*100)+'%)':'conteúdo oculto')+'</span></div></div>'+
-      controls+
-      '<div class="foot"><span>Seu dinheiro <b class="tn" id="mymoney">'+money(me.money)+'</b></span><span>Arremates no ano <b class="tn">'+me.wins+' de '+MAXWINS+'</b></span><span class="st"></span></div>'+
+      '<div id="ctrl">'+controlsHtml(c,me,rg,it)+'</div>'+
+      '<div id="cards">'+DL3.cardsHtml(me.cards,cardCtx())+'</div>'+
+      '<div class="foot"><span>Seu dinheiro <b class="tn" id="mymoney">'+money(me.money)+'</b></span><span>Arremates no ano <b class="tn">'+me.wins+' de '+MAXWINS+'</b></span>'+(me.disc?'<span class="up">🏷️ desconto ativo</span>':'')+'<span class="st"></span></div>'+
     '</div>'+ov+'</section>'+
     (next?'<div class="card nextlots"><h3>Próximos lotes</h3><div class="nxs">'+next+'</div></div>':'')+
-    '<div class="card sales"><h3>Arremates recentes</h3><ul>'+(S.sales.length?S.sales.map(function(s){var x=item(s.iid);if(!x)return '';if(s.unsold)return '<li><b>'+esc(x.nome)+'</b><span class="who">sem lances</span></li>';var w=pl(s.pid);return '<li class="'+(w.id===ME()?'me':'')+'"><b>'+(s.sealed?'✉️ ':'')+esc(x.nome)+'</b><span class="who">'+esc(w.name)+'</span><b class="tn">'+money(s.price)+'</b></li>'}).join(''):'<li class="muted">Nenhum ainda.</li>')+'</ul></div>'+
+    '<div class="card sales"><h3>Arremates recentes</h3><ul>'+(S.sales.length?S.sales.map(function(s){var x=item(s.iid);if(!x)return '';if(s.unsold)return '<li><b>'+esc(x.nome)+'</b><span class="who">sem lances</span></li>';var w=pl(s.pid);return '<li class="'+(w.id===ME()?'me':'')+'"><b>'+({sealed:'✉️ ',dutch:'📉 ',flash:'⚡ ',kit:'📦 '}[s.fmt]||'')+esc(x.nome)+(s.n>1?' + '+(s.n-1):'')+'</b><span class="who">'+esc(w.name)+'</span><b class="tn">'+money(s.price)+'</b></li>'}).join(''):'<li class="muted">Nenhum ainda.</li>')+'</ul></div>'+
     (DL3.isHost()?'<div style="margin-top:12px"><button class="btn" data-act="mpause">'+(S.paused?'Continuar':'Pausar')+'</button></div>':'')+'</div>'+
     playersHtml()+'</div>';
     renderBid();updTimer();
+    DL3.tour('mercado',[{sel:'.mkart',t:'O lote',d:'Este é o item à venda. Veja o estado, os atributos e a dica do leiloeiro.'},{sel:'.nota',t:'Avaliação',d:'Faixa de preço estimada. Quanto melhor sua reputação, mais precisa ela fica.'},{sel:'#ctrl',t:'Seus lances',d:'Dê lances antes do relógio zerar. Cada jogador arremata no máximo 5 itens por ano.'},{sel:'#cards',t:'Cartas de poder',d:'Use para espiar envelopes, ganhar tempo, congelar um rival ou pagar menos.'},{sel:'.coaches',t:'Rivais',d:'Bots e amigos. O ícone ao lado do nome mostra o estilo de cada bot.'},{sel:'#top .tabs',t:'Depois do leilão',d:'Em Minha coleção você reforma, aluga, vende, pega empréstimo e vira o ano.'}]);
+    var tips={sealed:['fmt-sealed','Envelope fechado','Mande um valor único sem ver os outros. O maior envelope leva e paga o que ofereceu.'],dutch:['fmt-dutch','Leilão holandês','O preço começa alto e cai. Clique em Aceitar (ou tecla A) quando achar justo: quem aceitar primeiro leva.'],flash:['fmt-flash','Relâmpago','Só 3 segundos de relógio, e cada lance dá apenas mais 2. Decida rápido!'],kit:['fmt-kit','Lote em kit','Vários itens juntos, mais baratos, mas contam vários arremates do seu limite anual.']}[c.fmt];
+    if(tips)DL3.tip(tips[0],tips[1],tips[2]);
+    if(c.prem)DL3.tip('premium','Lote premium 💠','O item mais valioso do ano só pode ser disputado por clientes Ouro ou Diamante. Suba a reputação arrematando e pagando o banco em dia.');
   }
   function renderBid(){
-    var c=S.cur;if(!c||U.tab!=='auction'||S.fase!=='leilao')return;
+    var c=S.cur;if(!c||U.tab!=='auction'||S.fase!=='leilao'||DL3.app.screen!=='game')return;
     var lbl=$('#bidlbl'),am=$('#amount');if(!lbl)return;
     var me=pl(ME()),bidding=c.status==='bidding';
-    if(c.sealed){
+    if(c.fmt==='sealed'){
       var n=Object.keys(c.env).length;lbl.textContent=n+' envelope'+(n===1?'':'s')+' na mesa';am.textContent=c.env[ME()]?money(c.env[ME()].v):'✉️';
-      var st=$('#envst');if(st)st.textContent=!canSeal(me)?(me.wins>=MAXWINS?'Limite de 5 arremates no ano.':(!eligible(me)?'Lote exclusivo para clientes Ouro ou Diamante.':'Sem dinheiro.')):(c.env[ME()]?'Envelope enviado com '+money(c.env[ME()].v)+'. Você pode trocar até o tempo acabar.':'Ninguém vê seu valor até o fim.');
+      var st=$('#envst');if(st)st.textContent=!canSeal(me)?(!room(me)?'Limite de 5 arremates no ano.':(!eligible(me)?'Você não pode participar deste lote.':'Sem dinheiro.')):(c.env[ME()]?'Envelope enviado com '+money(c.env[ME()].v)+'. Você pode trocar até o tempo acabar.':'Ninguém vê seu valor até o fim.');
       var g=$('#envgo');if(g){g.disabled=!bidding||!canSeal(me)||S.paused;g.textContent=c.env[ME()]?'Trocar envelope':'Enviar envelope'}
+    }else if(c.fmt==='dutch'){
+      lbl.textContent='Preço atual (cai até '+money(c.floor)+')';am.textContent=money(c.price);
+      var tb=$('#takebtn');if(tb){tb.disabled=!bidding||!canTake(me)||S.paused;tb.textContent='Aceitar por '+money(c.price)}
+      var ds=$('#dst');if(ds&&!canTake(me))ds.textContent=!room(me)?'Limite de arremates no ano.':(!eligible(me)?'Você não pode participar deste lote.':'Dinheiro insuficiente para este preço.');
     }else{
       if(c.leader==null){lbl.textContent='Sem lances ainda';am.textContent=money(0)}else{var p=pl(c.leader);lbl.innerHTML=DL3.avatar(p.avatar,22)+' Lance de '+esc(p.name)+(p.id===ME()?' (você)':'');am.textContent=money(c.price)}
       var can=bidding&&canBid(me)&&c.leader!==ME()&&!S.paused;
@@ -4099,12 +4570,21 @@ function makeEngine(M){
         Array.prototype.forEach.call(btns.querySelectorAll('[data-act="bid"]'),function(b){var nn=b.dataset.n;if(nn==='all'){b.disabled=!(can&&me.money>c.price);b.querySelector('small').textContent=money(me.money);return}
           nn=+nn;b.disabled=!can||c.price+nn>me.money;b.querySelector('small').textContent=money(c.price+nn)});
         var pb=btns.querySelector('.pass');if(pb){pb.disabled=!bidding;pb.classList.toggle('on',!!me.passed);pb.querySelector('small').textContent=me.passed?'lance para voltar':'não quero'}}
-      var st2=$('.foot .st');if(st2)st2.textContent=!eligible(me)?'Lote premium: você precisa de reputação Ouro':(me.wins>=MAXWINS?'Limite de 5 arremates no ano':(c.leader===ME()?'Você está ganhando':(me.passed?'Você passou':'')));
+      var st2=$('.foot .st');if(st2)st2.textContent=!eligible(me)?(c.frozen[ME()]?'Congelado neste lote':'Lote premium: você precisa de reputação Ouro'):(!room(me)?'Limite de 5 arremates no ano':(c.leader===ME()?'Você está ganhando':(me.passed?'Você passou':'')));
     }
+    if(c.frozen&&c.frozen[ME()]&&!$('.frozen')){var ct=$('#ctrl');if(ct)ct.innerHTML=controlsHtml(c,me,null,lotItems(c)[0])}
+    var cb=$('#cards');if(cb)cb.innerHTML=DL3.cardsHtml(me.cards,cardCtx());
+    var pk=$('#envform');if(pk&&c.peek[ME()]!=null&&!pk.querySelector('.peek'))pk.insertAdjacentHTML('beforeend','<p class="peek">👁️ Maior envelope dos rivais agora: <b>'+money(c.peek[ME()])+'</b></p>');
     var mm=$('#mymoney');if(mm)mm.textContent=money(me.money);
     var cs=$('.coaches');if(cs){var d=document.createElement('div');d.innerHTML=playersHtml();cs.replaceWith(d.firstChild)}
+    updTimer();
   }
-  function updTimer(){var c=S&&S.cur;if(!c||U.tab!=='auction')return;var t=$('#tnum'),r=$('#ring');if(!t||!r)return;var v=Math.max(0,c.timer);t.textContent=Math.ceil(v);r.style.strokeDashoffset=(169.6*(1-clamp(v/c.max,0,1))).toFixed(1);r.style.stroke=v<=2?'var(--bad)':'var(--accent)'}
+  function updTimer(){
+    var c=S&&S.cur;if(!c||U.tab!=='auction'||DL3.app.screen!=='game')return;var t=$('#tnum'),r=$('#ring'),lb=$('#tlab');if(!t||!r)return;
+    if(c.fmt==='dutch'){var f=(c.price-c.floor)/Math.max(1,c.start-c.floor);t.textContent=Math.round(f*100);if(lb)lb.textContent='%';r.style.strokeDashoffset=(169.6*(1-clamp(f,0,1))).toFixed(1);r.style.stroke=f<.25?'var(--bad)':'var(--accent)';return}
+    if(lb)lb.textContent='seg';
+    var v=Math.max(0,c.timer);t.textContent=Math.ceil(v);r.style.strokeDashoffset=(169.6*(1-clamp(v/c.max,0,1))).toFixed(1);r.style.stroke=v<=2?'var(--bad)':'var(--accent)';
+  }
   function itemCard(it,mine){
     var v=ival(it),me=pl(ME()),acted=it.acaoAno===S.y,gest=S.fase==='gestao'&&!S.ready[ME()],b=bonus(it);
     var delta=it.pago?Math.round((v-it.pago)/it.pago*100):0,hidden=M.revelar&&!it.aberto,acts='';
@@ -4136,14 +4616,20 @@ function makeEngine(M){
   function repHtml(){
     var p=pl(ME()),l=lvl(p),L=LV[l],nxt=p.rep>=90?null:(p.rep>=70?['Diamante',90]:(p.rep>=40?['Ouro',70]:['Prata',40]));
     return '<div class="card bank"><div><h3>Reputação '+repChip(p)+'</h3><p class="muted">'+p.rep+'/100. Sobe quando você arremata e honra dívidas; cai com execução do banco.'+(nxt?' Faltam '+(nxt[1]-p.rep)+' pontos para '+nxt[0]+'.':'')+'</p></div>'+
-      '<ul class="perks"><li>Avaliação do leiloeiro com margem de ±'+Math.round(L.err*100)+'%</li><li>Desconto de '+Math.round(L.disc*100)+'% nas ações</li><li>Empréstimo até '+Math.round(L.ltv*100)+'% dos bens</li><li>'+(ELITE[l]?'Acesso ao lote premium do ano 💠':'Lote premium do ano só a partir de Ouro')+'</li></ul></div>';
+      '<ul class="perks"><li>Avaliação do leiloeiro com margem de ±'+Math.round(L.err*100)+'%</li><li>Desconto de '+Math.round(L.disc*100)+'% nas ações e no analista</li><li>Empréstimo até '+Math.round(L.ltv*100)+'% dos bens</li><li>'+(ELITE[l]?'Acesso ao lote premium do ano 💠':'Lote premium do ano só a partir de Ouro')+'</li></ul></div>';
+  }
+  function intelHtml(){
+    var p=pl(ME()),bought=S.intel[ME()]===S.y,cost=Math.max(1,Math.round(5*(1-LV[lvl(p)].disc)));
+    if(S.y>=S.M)return '';
+    if(bought&&S.nextEv)return '<div class="card bank intel"><div><h3>Relatório do analista</h3><p class="muted">Previsão para '+DL3.year(S.y+1)+':</p></div><div class="evprev"><b>'+esc(S.nextEv.nome)+'</b><span>'+esc(S.nextEv.desc||'')+'</span></div></div>';
+    return '<div class="card bank intel"><div><h3>Relatório do analista</h3><p class="muted">Descubra agora qual será o evento de '+DL3.year(S.y+1)+' e posicione sua coleção antes dos outros.</p></div><div class="bankbtns"><button class="btn" data-act="intel"'+(S.fase!=='gestao'||p.money<cost||S.ready[ME()]?' disabled':'')+'>Comprar relatório por '+money(cost)+'</button></div></div>';
   }
   function comboHtml(){
     if(!comboFn)return '';
     var cs=combos(ME());
     return '<div class="card pan" style="margin-bottom:16px"><h2>Combos de decoração</h2><p class="sub">Peças do mesmo estilo e ambientes completos valem mais visual e mais dinheiro enquanto estiverem juntos.</p>'+
       (cs.length?'<div class="combos">'+cs.map(function(c){return '<span class="combochip'+(c.tema?' tema':'')+'">'+(c.tema?'🏛️ ':'🎨 ')+esc(c.nome)+' · +'+Math.round(c.vis*100)+'% visual · +'+Math.round(c.val*100)+'% valor</span>'}).join('')+'</div>':'<p class="muted">Nenhum combo ainda.</p>')+
-      '<details class="guia"><summary>Ambientes possíveis</summary><ul>'+TEMAS_DECOR.map(function(t){return '<li><b>'+t[0]+'</b>: '+t[1].map(function(k){var x=S.items.filter(function(i){return i.k===k})[0];return x?esc(x.nome):k}).join(' + ')+'</li>'}).join('')+'<li><b>Estilo</b>: 2 peças do mesmo estilo dão +15% de visual; 3 ou mais, +35% e +10% de valor.</li></ul></details></div>';
+      '<details class="guia"><summary>Ambientes possíveis</summary><ul>'+TEMAS_DECOR.map(function(t){return '<li><b>'+t[0]+'</b>: '+t[1].map(function(k){var x=S.items.filter(function(i){return i.k===k})[0];return x?esc(x.nome.replace(/ #\d+$/,'')):k}).join(' + ')+'</li>'}).join('')+'<li><b>Estilo</b>: 2 peças do mesmo estilo dão +15% de visual; 3 ou mais, +35% e +10% de valor.</li></ul></details></div>';
   }
   function rCollection(){
     var me=pl(ME()),mine=owned(ME()),gest=S.fase==='gestao';
@@ -4152,17 +4638,29 @@ function makeEngine(M){
     $('#view').innerHTML=eventoHtml()+
     '<div class="card banner"><div><p class="kicker">'+(gest?'Gestão de '+DL3.year(S.y):'Sua coleção')+'</p><h2>'+money(me.money)+' em caixa · patrimônio '+money(patr(ME()))+'</h2><p>'+(gest?'Uma ação por item no ano. Venda o que quiser pelo valor de hoje. Quando terminar, vire o ano: o tempo passa, a renda entra, os juros correm e os valores mudam.':'O leilão está rolando. A gestão abre quando ele terminar, mas o banco já funciona.')+'</p></div><div class="sp">'+
       (gest?(S.ready[ME()]?'<span class="muted">Pronto. Aguardando: '+esc(waiting.join(', ')||'—')+'</span>':'<button class="btn primary" data-act="pronto">Virar o ano</button>'):'')+'</div></div>'+
-    '<div class="bankgrid">'+bankHtml()+repHtml()+'</div>'+comboHtml()+
+    '<div class="bankgrid three">'+bankHtml()+repHtml()+intelHtml()+'</div>'+comboHtml()+
     (mine.length?'<div class="mkgrid">'+mine.map(function(it){return itemCard(it,true)}).join('')+'</div>':'<div class="card pan"><p class="muted">Você não tem nenhum '+esc(M.unidade[0])+' agora. Arremate no próximo leilão.</p></div>')+
     (mylog.length?'<div class="card pan" style="margin-top:16px"><h2>Seu diário</h2><ul class="log">'+mylog.map(function(x){return '<li>'+esc(x.txt)+'</li>'}).join('')+'</ul></div>':'');
+    if(gest){DL3.tip('banco','Banco e reputação','Pegue empréstimo para aproveitar um bom ano, mas cuidado: juros correm na virada e dívida alta faz o banco vender seus itens.');DL3.tip('analista','Relatório do analista','Por alguns reais você descobre o evento do próximo ano e pode vender ou segurar antes dos rivais.')}
+  }
+  function indexHtml(){
+    if(!S.mkt.length)return '<p class="muted">O índice aparece depois da primeira virada de ano.</p>';
+    var last=S.mkt[S.mkt.length-1],prev=S.mkt[S.mkt.length-2];
+    var rows=Object.keys(last.cat).sort(function(a,b){return last.cat[b]-last.cat[a]}).map(function(t){
+      var v=last.cat[t],pv=prev&&prev.cat[t],d=pv?Math.round((v-pv)/pv*100):null;
+      var serie=S.mkt.map(function(m){return m.cat[t]}).filter(function(x){return x!=null}),sp='';
+      if(serie.length>1){var mx=Math.max.apply(null,serie),mn=Math.min.apply(null,serie);sp='<svg class="spark" viewBox="0 0 100 24" preserveAspectRatio="none"><polyline fill="none" stroke="var(--accent)" stroke-width="2" points="'+serie.map(function(h,i){return (i/(serie.length-1)*100).toFixed(1)+','+(22-(mx===mn?10:(h-mn)/(mx-mn)*20)).toFixed(1)}).join(' ')+'"/></svg>'}
+      return '<tr><td style="text-align:left">'+esc(t)+'</td><td class="tn">'+money(v)+'</td><td class="tn" style="color:var(--'+(d==null?'muted':(d>=0?'good':'bad'))+')">'+(d==null?'—':(d>=0?'+':'')+d+'%')+'</td><td style="width:120px">'+sp+'</td></tr>'}).join('');
+    return '<div class="tablewrap"><table><thead><tr><th style="text-align:left">Categoria</th><th>Preço médio</th><th>No ano</th><th>Tendência</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
   }
   function rMarket(){
     var rows=S.players.map(function(p){return {p:p,patr:patr(p.id),vis:visual(p.id),n:owned(p.id).length}}).sort(function(a,b){return b.patr-a.patr});
     var list=S.items.slice().sort(function(a,b){return ival(b)-ival(a)});
     if(U.filter==='free')list=list.filter(function(it){return it.dono==null});
-    $('#view').innerHTML='<div class="card pan" style="margin-bottom:16px"><h2>Ranking da partida</h2><div class="tablewrap"><table><thead><tr><th>#</th><th>Jogador</th><th>Reputação</th><th>Dinheiro</th><th>Dívida</th><th>Itens</th><th>Visual</th><th>Patrimônio</th></tr></thead><tbody>'+rows.map(function(r,i){
-      return '<tr class="'+(r.p.id===ME()?'me':'')+'"><td class="tn">'+(i+1)+'</td><td><div class="who">'+DL3.avatar(r.p.avatar,24)+'<span>'+esc(r.p.name)+(r.p.bot?' (bot)':'')+'</span></div></td><td>'+repChip(r.p)+'</td><td class="tn">'+money(r.p.money)+'</td><td class="tn">'+(r.p.debt?money(r.p.debt):'—')+'</td><td class="tn">'+r.n+'</td><td class="tn">'+r.vis+'</td><td class="pts tn">'+money(r.patr)+'</td></tr>'}).join('')+'</tbody></table></div></div>'+
-    '<div class="seg" style="margin-bottom:12px;max-width:360px"><button class="'+(U.filter==='all'?'on':'')+'" data-act="mfilter" data-v="all">Todos os itens</button><button class="'+(U.filter==='free'?'on':'')+'" data-act="mfilter" data-v="free">Sem dono</button></div>'+
+    $('#view').innerHTML='<div class="champ"><section class="card pan"><h2>Ranking da partida</h2><div class="tablewrap"><table><thead><tr><th>#</th><th>Jogador</th><th>Reputação</th><th>Dinheiro</th><th>Dívida</th><th>Itens</th><th>Visual</th><th>Patrimônio</th></tr></thead><tbody>'+rows.map(function(r,i){
+      return '<tr class="'+(r.p.id===ME()?'me':'')+'"><td class="tn">'+(i+1)+'</td><td><div class="who">'+DL3.avatar(r.p.avatar,24)+'<span>'+esc(r.p.name)+'</span>'+(r.p.bot?DL3.styleChip(r.p.style):'')+'</div></td><td>'+repChip(r.p)+'</td><td class="tn">'+money(r.p.money)+'</td><td class="tn">'+(r.p.debt?money(r.p.debt):'—')+'</td><td class="tn">'+r.n+'</td><td class="tn">'+r.vis+'</td><td class="pts tn">'+money(r.patr)+'</td></tr>'}).join('')+'</tbody></table></div></section>'+
+    '<section class="card pan"><h2>Índice de preços</h2><p class="sub">Preço médio por categoria no catálogo, ano a ano.</p>'+indexHtml()+'</section></div>'+
+    '<div class="seg" style="margin:16px 0 12px;max-width:360px"><button class="'+(U.filter==='all'?'on':'')+'" data-act="mfilter" data-v="all">Todos os itens</button><button class="'+(U.filter==='free'?'on':'')+'" data-act="mfilter" data-v="free">Sem dono</button></div>'+
     '<div class="mkgrid">'+list.map(function(it){return itemCard(it,false)}).join('')+'</div>';
   }
   function rYear(){
@@ -4172,7 +4670,7 @@ function makeEngine(M){
     var top=rows[0],tp=pl(top.id),vis=h.rows.slice().sort(function(a,b){return b.visual-a.visual})[0];
     var head=S.final?
       '<div class="card banner"><div><p class="kicker">Fim de jogo · '+DL3.year(1)+'–'+DL3.year(S.M)+'</p><h2>'+(top.id===ME()?'Você é o magnata do leilão!':esc(tp.name)+' é o magnata do leilão')+'</h2><p>Seu patrimônio final: '+money(me.patr)+' ('+(rows.map(function(r){return r.id}).indexOf(ME())+1)+'º). Melhor visual: '+esc(pl(vis.id).name)+'. Resultado salvo no ranking.</p></div><div class="sp"><button class="btn primary" data-act="home">Voltar ao início</button></div></div>':
-      '<div class="card banner"><div><p class="kicker">Virada de '+h.ano+' para '+(h.ano+1)+'</p><h2>Você fechou o ano com '+money(me.patr)+'</h2><p>Renda: '+money(me.renda)+'. Juros pagos: '+money(me.juros)+'. Em caixa: '+money(me.money)+'.'+(me.liq?' O banco executou sua dívida.':'')+' Líder: '+esc(tp.name)+' ('+money(top.patr)+').</p></div><div class="sp">'+(host?'<button class="btn primary" data-act="proximo">Começar '+(h.ano+1)+'</button>':'<span class="muted">Aguardando o anfitrião</span>')+'</div></div>';
+      '<div class="card banner"><div><p class="kicker">Virada de '+h.ano+' para '+(h.ano+1)+'</p><h2>Você fechou o ano com '+money(me.patr)+'</h2><p>Renda: '+money(me.renda)+'. Juros pagos: '+money(me.juros)+'. Em caixa: '+money(me.money)+'.'+(me.liq?' O banco executou sua dívida.':'')+' Líder: '+esc(tp.name)+' ('+money(top.patr)+'). Você ganhou uma carta de poder nova para o próximo ano.</p></div><div class="sp">'+(host?'<button class="btn primary" data-act="proximo">Começar '+(h.ano+1)+'</button>':'<span class="muted">Aguardando o anfitrião</span>')+'</div></div>';
     $('#view').innerHTML=head+'<div class="champ"><section class="card pan"><h2>Classificação de '+h.ano+'</h2><div class="tablewrap"><table><thead><tr><th>#</th><th>Jogador</th><th>Caixa</th><th>Renda</th><th>Dívida</th><th>Visual</th><th>Patrimônio</th><th>Δ</th></tr></thead><tbody>'+rows.map(function(r,i){
       var pv=prev?prev.rows[r.id].patr:BUDGET,d=r.patr-pv,p=pl(r.id);
       return '<tr class="'+(r.id===ME()?'me':'')+'"><td class="tn">'+(i+1)+'</td><td><div class="who">'+DL3.avatar(p.avatar,24)+'<span>'+esc(p.name)+'</span>'+repChip(p)+'</div></td><td class="tn">'+money(r.money)+'</td><td class="tn">'+money(r.renda)+'</td><td class="tn">'+(r.debt?money(r.debt):'—')+'</td><td class="tn">'+r.visual+'</td><td class="pts tn">'+money(r.patr)+'</td><td class="tn" style="color:var(--'+(d>=0?'good':'bad')+')">'+(d>=0?'+':'')+money(d)+'</td></tr>'}).join('')+'</tbody></table></div></section>'+
@@ -4195,14 +4693,17 @@ function makeEngine(M){
     switch(a){
       case 'mtab':if(d.tab==='auction'&&S.fase!=='leilao'){DL3.toast('O leilão deste ano acabou');return}U.tab=d.tab;render();return;
       case 'bid':DL3.act({type:'bid',n:d.n});return;
+      case 'take':DL3.act({type:'take'});return;
       case 'pass':DL3.act({type:'pass'});return;
       case 'mpause':DL3.act({type:'pause'});return;
-      case 'envstep':{var i=$('#envv');if(!i)return;var v=Math.max(1,Math.min(pl(ME()).money,(+i.value||0)+(+d.v)));i.value=v;U.env=v;return}
+      case 'usecard':if(d.c==='congelar'){var i=+d.i;DL3.pickTarget(S.players,ME(),function(t){DL3.act({type:'card',i:i,t:t})})}else DL3.act({type:'card',i:+d.i});return;
+      case 'envstep':{var inp=$('#envv');if(!inp)return;var v=Math.max(1,Math.min(pl(ME()).money,(+inp.value||0)+(+d.v)));inp.value=v;U.env=v;return}
       case 'acao':DL3.act({type:'acao',iid:d.id,aid:d.a});setTimeout(function(){var it=item(d.id);if(it&&it.ultimaAcao)DL3.toast(it.ultimaAcao)},300);return;
       case 'abrir':DL3.act({type:'abrir',iid:d.id});DL3.snd.gavel();return;
       case 'vender':DL3.act({type:'vender',iid:d.id});DL3.snd.sold();return;
       case 'loan':DL3.act({type:'loan',v:+d.v});DL3.snd.bid();return;
       case 'repay':DL3.act({type:'repay',v:+d.v});DL3.snd.win();return;
+      case 'intel':DL3.act({type:'intel'});return;
       case 'pronto':DL3.act({type:'pronto'});return;
       case 'proximo':DL3.act({type:'proximo'});return;
       case 'mfilter':U.filter=d.v;render();return;
@@ -4216,8 +4717,11 @@ function makeEngine(M){
   });
   document.addEventListener('input',function(e){if(e.target.id==='envv'&&S)U.env=+e.target.value});
   function key(e){
-    if(!S||S.fase!=='leilao'||U.tab!=='auction'||(S.cur&&S.cur.sealed))return;
-    var k=e.key.toLowerCase(),sp=steps(S.cur?S.cur.price:0);
+    if(!S||S.fase!=='leilao'||U.tab!=='auction'||!S.cur)return;
+    var k=e.key.toLowerCase(),c=S.cur;
+    if(c.fmt==='dutch'){if(k==='a'||k==='enter')DL3.act({type:'take'});return}
+    if(c.fmt==='sealed')return;
+    var sp=steps(c.price);
     if(k>='1'&&k<='4')DL3.act({type:'bid',n:String(sp[+k-1])});else if(k==='5')DL3.act({type:'bid',n:'all'});else if(k==='p')DL3.act({type:'pass'});
     else if(k===' '&&DL3.isHost()){e.preventDefault();DL3.act({type:'pause'})}
   }
@@ -4225,31 +4729,37 @@ function makeEngine(M){
     DL3.ach&&DL3.ach.consume(S.feed,ME(),U);
     if(DL3.app.screen!=='game')return;
     var pc=U.prevCur,c=S.cur;
-    if(c&&pc&&c.iid===pc.iid){if(c.price!==pc.price&&!c.sealed)DL3.snd.bid();if(c.status!==pc.status&&c.status==='sold')DL3.snd.gavel()}
+    if(c&&pc&&c.iid===pc.iid){if(c.price!==pc.price&&c.fmt!=='sealed'&&c.fmt!=='dutch')DL3.snd.bid();if(c.status!==pc.status&&c.status==='sold')DL3.snd.gavel()}
     var structural=d.pseq||d.fase||d.idx!=null||(c&&pc&&(c.iid!==pc.iid||c.status!==pc.status))||(!!c!==!!pc);
     U.prevCur=c?{iid:c.iid,price:c.price,status:c.status}:null;
+    DL3.narrate(snap());
     if(structural)U.env=null;
-    if(U.tab==='auction'&&S.fase==='leilao'&&!structural){renderBid();updTimer();return}
+    if(U.tab==='auction'&&S.fase==='leilao'&&!structural){renderBid();return}
     if(!structural&&U.tab==='auction')return;
     render(!structural);
   }
-  var eng={
+  eng={
     id:M.id,nome:M.nome,titulo:M.titulo,cor:M.cor,tipo:'mercado',desc:M.descricao,maxAnos:15,
     icon:function(){var x=M.catalogo(DL3.rng(7),2026)[0];x.id='ic';return '<span class="mkicon">'+art(x,120,75)+'</span>'},
     setupHtml:function(){
       return '<div class="opt"><span>Jogadores na mesa (humanos + bots)</span><div class="seg">'+[2,3,4,5,6,7,8].map(function(n){return '<button class="'+(n===sel.n?'on':'')+'" data-act="setn" data-v="'+n+'">'+n+'</button>'}).join('')+'</div></div>'+
       '<div class="opt"><span>Anos de jogo (a partir de 2026)</span><div class="seg">'+[1,3,5,8,10,12,15].map(function(n){return '<button class="'+(n===sel.m?'on':'')+'" data-act="setm" data-v="'+n+'">'+n+'</button>'}).join('')+'</div></div>'+
-      '<div class="opt"><span>Bots</span><div class="seg">'+[['facil','Tranquilos'],['normal','Espertos'],['tubarao','Tubarões']].map(function(x){return '<button class="'+(x[0]===sel.dif?'on':'')+'" data-act="setd" data-v="'+x[0]+'">'+x[1]+'</button>'}).join('')+'</div></div>';
+      '<div class="opt"><span>Bots</span><div class="seg">'+[['facil','Tranquilos'],['normal','Espertos'],['tubarao','Tubarões']].map(function(x){return '<button class="'+(x[0]===sel.dif?'on':'')+'" data-act="setd" data-v="'+x[0]+'">'+x[1]+'</button>'}).join('')+'</div><p class="muted" style="font-size:13px;margin:6px 0 0">Os bots ajustam a força ao longo da partida conforme o seu desempenho.</p></div>';
     },
     setupClick:function(a,d){if(a==='setn')sel.n=+d.v;else if(a==='setm')sel.m=+d.v;else if(a==='setd')sel.dif=d.v;else return;DL3.store.set('sel-'+M.id,sel);var b=$('#engsetup');if(b)b.innerHTML=eng.setupHtml()},
     readSetup:function(){return {n:sel.n,m:sel.m,dif:sel.dif}},
-    setupSummary:function(o){o=o||sel;return '<p>'+o.n+' jogadores na mesa · '+o.m+' ano'+(o.m>1?'s':'')+' a partir de 2026 · bots '+({facil:'tranquilos',normal:'espertos',tubarao:'tubarões'}[o.dif]||'')+'.</p><p class="muted">Cada humano tem seu caixa, sua reputação e sua conta no banco. O anfitrião começa cada ano.</p>'},
-    howHtml:function(){return '<ol class="howl"><li><b>R$ 100</b> para começar. Cada ano traz um <b>evento</b> que mexe nos preços.</li><li><b>Catálogo</b> de 15 '+esc(M.unidade[1])+' no início; todo ano chegam <b>5 lotes novos</b>, até <b>45</b> no total.</li><li><b>Leilão</b> com até <b>10 lotes</b> por ano (novos primeiro), em ordem aleatória, e no máximo <b>5 arremates</b> por jogador. Alguns lotes são <b>envelope fechado ✉️</b> e o mais valioso é <b>premium 💠</b>.</li><li><b>Reputação</b> Bronze → Diamante: avaliação mais precisa, descontos, crédito e acesso ao premium.</li><li><b>Banco</b>: empréstimo com juros; inadimplência vende seus itens.</li>'+(comboFn?'<li><b>Combos</b>: peças do mesmo estilo e ambientes completos valem mais.</li>':'')+'<li>Até 15 anos. Ranking por <b>patrimônio</b> e por <b>visual</b>.</li></ol>'},
+    setupSummary:function(o){o=o||sel;return '<p>'+o.n+' jogadores na mesa · '+o.m+' ano'+(o.m>1?'s':'')+' a partir de 2026 · bots '+({facil:'tranquilos',normal:'espertos',tubarao:'tubarões'}[o.dif]||'')+'.</p><p class="muted">Cada humano tem seu caixa, sua reputação, suas cartas e sua conta no banco. Se o anfitrião cair, outro jogador assume a sala.</p>'},
+    howHtml:function(){return '<ol class="howl"><li><b>R$ 100</b> para começar. Cada ano traz um <b>evento</b> que mexe nos preços.</li><li><b>Catálogo</b> de 15 '+esc(M.unidade[1])+' no início; todo ano chegam <b>5 lotes novos</b>, até <b>45</b> no total.</li><li><b>Leilão</b> com até <b>10 lotes</b> por ano, no máximo <b>5 arremates</b> por jogador, em vários formatos: aberto, <b>envelope ✉️</b>, <b>holandês 📉</b>, <b>relâmpago ⚡</b> e <b>kit 📦</b>. O mais valioso é <b>premium 💠</b>.</li><li><b>Cartas de poder</b>: espiar, +3 s, congelar e desconto. Ganhe uma por ano e ao bater conquistas.</li><li><b>Reputação</b>, <b>banco</b>, <b>índice de preços</b> e <b>relatório do analista</b>.</li>'+(comboFn?'<li><b>Combos</b>: peças do mesmo estilo e ambientes completos valem mais.</li>':'')+'<li>Até 15 anos. Ranking por <b>patrimônio</b> e por <b>visual</b>.</li></ol>'},
     rankCols:function(){return [['Patrimônio','patr',money],['Visual','visual'],['Dinheiro','dinheiro',money]]},
     rankDesc:function(){return 'Critérios: patrimônio final (dinheiro + itens − dívida) ou visual da coleção.'},
-    start:start,getState:function(){return S},state:function(){return S},setState:function(s){S=s;U=freshU();U.fseen=S&&S.fseq||0},clientStart:function(){U=freshU();U.fseen=S&&S.fseq||0},
+    start:start,getState:function(){return S},state:function(){return S},
+    setState:function(s){S=s;U=freshU();U.fseen=S&&S.fseq||0},
+    clientStart:function(){U=freshU();U.fseen=S&&S.fseq||0},
+    afterLoad:function(){U=freshU();U.fseen=S.fseq||0;S.paused=false;S.hostSeat=0;S.players.forEach(function(p,i){if(i===0)p.bot=false})},
+    summary:function(){return 'Ano '+DL3.year(S.y)+' ('+S.y+' de '+S.M+') · patrimônio '+money(patr(0))},
+    humanSeats:function(){return S.players.filter(function(p){return !p.bot}).map(function(p){return p.id})},
     getTab:function(){return U.tab},setTab:function(t){if(t==='auction'&&S&&S.fase!=='leilao')return;U.tab=t},
-    apply:apply,tick:tick,render:render,click:click,key:key,onRemote:onRemote,dropHuman:dropHuman,
+    apply:apply,tick:tick,render:render,click:click,key:key,onRemote:onRemote,dropHuman:dropHuman,rejoin:rejoin,
     seatOf:function(peer){return S?S.peerSeat[peer]:null},
     debug:function(){return {S:S,U:U,apply:apply,tick:tick,turnYear:turnYear,nextYear:nextYear,combos:combos,patr:patr}}
   };
