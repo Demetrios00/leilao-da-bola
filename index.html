@@ -520,6 +520,8 @@ body{background:radial-gradient(1200px 600px at 85% -10%,color-mix(in srgb,var(-
 .guia summary{cursor:pointer;color:var(--accent);font-weight:600}
 .guia ul{color:var(--muted);font-size:14px;margin:8px 0 0;padding-left:18px;display:grid;gap:4px}
 @media (max-width:860px){.weekly,.bankgrid{grid-template-columns:minmax(0,1fr)}}
+.novo{font-family:var(--body);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--bg);background:var(--accent);border-radius:6px;padding:1px 6px;vertical-align:middle}
+.evento .cat{margin-left:auto;font-size:13px;color:var(--muted)}
 
 </style>
 </head>
@@ -3831,7 +3833,19 @@ function makeEngine(M){
   function steer(t){S.pseq=(S.pseq||0)+1;S.ptab=t}
   function steps(price){return price>=150?[5,10,25,50]:(price>=40?[2,5,10,20]:[1,2,5,10])}
   function art(it,w,h){try{return M.arte(it,w,h)}catch(e){return '<svg viewBox="0 0 320 200" width="'+w+'" height="'+h+'"><rect width="320" height="200" fill="#222"/></svg>'}}
-  function remapIds(list,y){list.forEach(function(it,i){it.id=(M.catalogoAnual?('a'+y+'-'):'')+(it.id||('i'+i));it.dono=null;it.pago=0;it.acaoAno=null;it.historico=[]});return list}
+  function remapIds(list,y){list.forEach(function(it,i){it.id='a'+y+'-'+(it.id||('i'+i));it.dono=null;it.pago=0;it.acaoAno=null;it.historico=[];it.novo=y});return list}
+  /* catálogo cresce: 15 no início, +5 por ano, até 45; nomes repetidos ganham numeração */
+  var START=15,PERYEAR=5,MAXITEMS=45,PERAUCTION=10;
+  function uniqueName(n){var c=S.items.filter(function(x){return x.nome===n||x.nome.indexOf(n+' #')===0}).length;return c?n+' #'+(c+1):n}
+  function arrivals(){
+    var room=MAXITEMS-S.items.length;if(room<=0)return 0;
+    /* boxes vendidos saem do jogo: a chegada completa o leilão até 10 lotes */
+    var free=S.items.filter(function(it){return it.dono==null}).length;
+    var want=M.revelar?Math.max(PERYEAR,PERAUCTION-free):PERYEAR;
+    var n=Math.min(want,room,15),fresh=u.shuffle(M.catalogo(R,DL3.year(S.y))).slice(0,n);
+    remapIds(fresh,S.y);fresh.forEach(function(it){it.nome=uniqueName(it.nome);S.items.push(it)});
+    return n;
+  }
   function feed(seat,type,d){S.fseq=(S.fseq||0)+1;S.feed.push({i:S.fseq,seat:seat,t:type,d:d||{}});if(S.feed.length>80)S.feed.shift()}
   function addRep(p,n){var b=lvl(p);p.rep=clamp(Math.round(p.rep+n),0,100);var a=lvl(p);if(a!==b&&n>0){feed(p.id,'rep',{r:p.rep,lvl:a});S.log.unshift({pid:p.id,txt:p.name+' agora é cliente '+a+'.'})}}
   function costOf(ac,it,p){return Math.max(0,Math.round(ac.custo(it,ctx())*(1-LV[lvl(p)].disc)))}
@@ -3852,12 +3866,16 @@ function makeEngine(M){
   function beginYear(){
     S.evento=M.evento(DL3.year(S.y),R);
     S.players.forEach(function(p){p.wins=0});
+    S.chegaram=S.y>1?arrivals():S.items.length;
+    /* até 10 lotes por leilão: primeiro os recém-chegados, depois os outros sem dono, em ordem aleatória */
     var free=S.items.filter(function(it){return it.dono==null});
-    S.order=u.shuffle(free.map(function(it){return it.id}));
+    var novos=u.shuffle(free.filter(function(it){return it.novo===S.y})),velhos=u.shuffle(free.filter(function(it){return it.novo!==S.y}));
+    var pick=novos.concat(velhos).slice(0,PERAUCTION);
+    S.order=u.shuffle(pick.map(function(it){return it.id}));
     /* ~1 em cada 4 lotes vai em envelope fechado; o lote mais valioso do ano é premium */
     var nS=S.order.length>=4?Math.max(1,Math.round(S.order.length*.25)):0;
     S.sealed=u.shuffle(S.order).slice(0,nS);
-    var best=null;free.forEach(function(it){if(!best||val(it)>val(best))best=it});
+    var best=null;pick.forEach(function(it){if(!best||val(it)>val(best))best=it});
     S.premium=S.order.length>=5&&best?best.id:null;
     S.idx=-1;S.sales=[];S.fase='leilao';S.ready={};steer('auction');nextItem();
   }
@@ -3934,6 +3952,8 @@ function makeEngine(M){
     S.log.unshift({pid:p.id,txt:p.name+' vendeu '+it.nome+' por '+money(v)+(pago?' (pagou '+money(pago)+')':'')});
     if(!silent)feed(p.id,'sell',{v:v,pago:pago,mod:M.id});
     it.dono=null;it.pago=0;it.vendido=S.y;if(S.log.length>80)S.log.pop();
+    /* box aberto e vendido sai do jogo (o conteúdo já é conhecido); abre espaço para lotes novos */
+    if(M.revelar){var k=S.items.indexOf(it);if(k>=0)S.items.splice(k,1)}
   }
   function botManage(p){
     owned(p.id).forEach(function(it){
@@ -3971,7 +3991,6 @@ function makeEngine(M){
   }
   function nextYear(){
     S.y++;
-    if(M.catalogoAnual)S.items=S.items.filter(function(it){return it.dono!=null}).concat(remapIds(M.catalogo(R,DL3.year(S.y)),S.y));
     beginYear();
   }
 
@@ -4018,7 +4037,7 @@ function makeEngine(M){
       DL3.endCareer({patr:me.patr,visual:me.visual,dinheiro:me.money,rank:rank,anos:S.M,det:S.players.length+' jogadores · '+S.M+(S.M>1?' anos':' ano')+' ('+DL3.year(1)+'–'+DL3.year(S.M)+')'})}
   }
   function repChip(p){var l=lvl(p);return '<span class="lvl" style="--lc:'+LV[l].cor+'" title="Reputação '+p.rep+'/100">'+l+'</span>'}
-  function eventoHtml(){var e=S.evento;if(!e)return '';return '<div class="evento card"><span class="ek">Evento de '+DL3.year(S.y)+'</span><b>'+esc(e.nome)+'</b><span>'+esc(e.desc||'')+'</span></div>'}
+  function eventoHtml(){var e=S.evento;if(!e)return '';return '<div class="evento card"><span class="ek">Evento de '+DL3.year(S.y)+'</span><b>'+esc(e.nome)+'</b><span>'+esc(e.desc||'')+'</span><span class="cat">'+(S.y>1&&S.chegaram?'+'+S.chegaram+' lotes novos · ':'')+S.items.length+' de 45 '+esc(M.unidade[1])+' no catálogo</span></div>'}
   function playersHtml(){
     var c=S.cur;
     return '<div class="card coaches"><h3>Jogadores<small>dinheiro · arremates no ano (máx. 5)</small></h3>'+S.players.map(function(p){
@@ -4100,7 +4119,7 @@ function makeEngine(M){
     var hist=(it.historico||[]).slice(-8),spark='';
     if(hist.length>1){var mx=Math.max.apply(null,hist),mn=Math.min.apply(null,hist);spark='<svg class="spark" viewBox="0 0 100 24" preserveAspectRatio="none"><polyline fill="none" stroke="var(--accent)" stroke-width="2" points="'+hist.map(function(h,i){return (i/(hist.length-1)*100).toFixed(1)+','+(22-(mx===mn?10:(h-mn)/(mx-mn)*20)).toFixed(1)}).join(' ')+'"/></svg>'}
     var owner=it.dono!=null?pl(it.dono):null;
-    return '<article class="card mkcard'+(b.vis>0?' combo':'')+'"><div class="mkart">'+art(it,480,300)+'</div><div class="mkbody"><h3>'+esc(it.nome)+'</h3>'+
+    return '<article class="card mkcard'+(b.vis>0?' combo':'')+'"><div class="mkart">'+art(it,480,300)+'</div><div class="mkbody"><h3>'+esc(it.nome)+(it.novo===S.y&&S.y>1?' <span class="novo">novo</span>':'')+'</h3>'+
       '<div class="mkline"><span>Valor hoje <b class="tn">'+(hidden?'???':money(v))+'</b></span>'+(it.pago?'<span>Pago <b class="tn">'+money(it.pago)+'</b> <em class="'+(delta>=0?'up':'down')+'">'+(delta>=0?'+':'')+delta+'%</em></span>':'')+'<span>Visual <b class="tn">'+Math.round(ivis(it))+'</b></span>'+(b.vis>0?'<span class="combotag">combo +'+Math.round(b.vis*100)+'% visual · +'+Math.round(b.val*100)+'% valor</span>':'')+'</div>'+
       (owner&&!mine?'<p class="muted who">'+DL3.avatar(owner.avatar,20)+' '+esc(owner.name)+'</p>':'')+
       '<div class="attrs sm">'+(M.atributos(it)||[]).map(function(a){return '<div><span>'+esc(a[0])+'</span><b>'+esc(a[1])+'</b></div>'}).join('')+'</div>'+spark+cont+
@@ -4225,7 +4244,7 @@ function makeEngine(M){
     setupClick:function(a,d){if(a==='setn')sel.n=+d.v;else if(a==='setm')sel.m=+d.v;else if(a==='setd')sel.dif=d.v;else return;DL3.store.set('sel-'+M.id,sel);var b=$('#engsetup');if(b)b.innerHTML=eng.setupHtml()},
     readSetup:function(){return {n:sel.n,m:sel.m,dif:sel.dif}},
     setupSummary:function(o){o=o||sel;return '<p>'+o.n+' jogadores na mesa · '+o.m+' ano'+(o.m>1?'s':'')+' a partir de 2026 · bots '+({facil:'tranquilos',normal:'espertos',tubarao:'tubarões'}[o.dif]||'')+'.</p><p class="muted">Cada humano tem seu caixa, sua reputação e sua conta no banco. O anfitrião começa cada ano.</p>'},
-    howHtml:function(){return '<ol class="howl"><li><b>R$ 100</b> para começar. Cada ano traz um <b>evento</b> que mexe nos preços.</li><li><b>Leilão</b> com '+(M.catalogoAnual?'15 lotes novos por ano':'os '+esc(M.unidade[1])+' sem dono')+' em ordem aleatória, no máximo <b>5 arremates</b> por ano. Alguns lotes são <b>envelope fechado ✉️</b> e o mais valioso é <b>premium 💠</b>.</li><li><b>Reputação</b> Bronze → Diamante: avaliação mais precisa, descontos, crédito e acesso ao premium.</li><li><b>Banco</b>: empréstimo com juros; inadimplência vende seus itens.</li>'+(comboFn?'<li><b>Combos</b>: peças do mesmo estilo e ambientes completos valem mais.</li>':'')+'<li>Até 15 anos. Ranking por <b>patrimônio</b> e por <b>visual</b>.</li></ol>'},
+    howHtml:function(){return '<ol class="howl"><li><b>R$ 100</b> para começar. Cada ano traz um <b>evento</b> que mexe nos preços.</li><li><b>Catálogo</b> de 15 '+esc(M.unidade[1])+' no início; todo ano chegam <b>5 lotes novos</b>, até <b>45</b> no total.</li><li><b>Leilão</b> com até <b>10 lotes</b> por ano (novos primeiro), em ordem aleatória, e no máximo <b>5 arremates</b> por jogador. Alguns lotes são <b>envelope fechado ✉️</b> e o mais valioso é <b>premium 💠</b>.</li><li><b>Reputação</b> Bronze → Diamante: avaliação mais precisa, descontos, crédito e acesso ao premium.</li><li><b>Banco</b>: empréstimo com juros; inadimplência vende seus itens.</li>'+(comboFn?'<li><b>Combos</b>: peças do mesmo estilo e ambientes completos valem mais.</li>':'')+'<li>Até 15 anos. Ranking por <b>patrimônio</b> e por <b>visual</b>.</li></ol>'},
     rankCols:function(){return [['Patrimônio','patr',money],['Visual','visual'],['Dinheiro','dinheiro',money]]},
     rankDesc:function(){return 'Critérios: patrimônio final (dinheiro + itens − dívida) ou visual da coleção.'},
     start:start,getState:function(){return S},state:function(){return S},setState:function(s){S=s;U=freshU();U.fseen=S&&S.fseq||0},clientStart:function(){U=freshU();U.fseen=S&&S.fseq||0},
